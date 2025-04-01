@@ -1,18 +1,17 @@
 ---
-title: 'Running httpx'
-description: "Learn about running httpx with examples including commands and output"
-sidebarTitle: 'Running'
+title: '运行 httpx'
+description: "了解如何通过示例运行 httpx，包括命令和输出"
+sidebarTitle: '运行'
 ---
 
-For all of the flags and options available for `httpx` be sure to check out the [Usage](/tools/httpx/usage) page. On this page we'll share examples running httpx with specific flags and goals
-and the output you can expect from each. 
+有关 `httpx` 可用的所有标志和选项，请务必查看[使用方法](/tools/httpx/usage)页面。在本页中，我们将分享使用特定标志和目标运行 httpx 的示例，以及每个示例的预期输出。
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
+<Note> 如果您有问题，请通过[帮助](/help)联系我们。</Note>
 
-## Basic Examples
+## 基础示例
 
-### ASN Fingerprint
-Use `httpx` with the `-asn` flag for ASN (Autonomous System Number) fingerprinting, an effective technique for mapping the network affiliations of various domains. 
+### ASN 指纹识别
+使用带有 `-asn` 标志的 `httpx` 进行 ASN（自治系统编号）指纹识别，这是一种有效的技术，可以映射各种域名的网络归属关系。
 
 ```
 subfinder -d hackerone.com -silent | httpx -asn
@@ -38,8 +37,8 @@ https://docs.hackerone.com [AS54113, FASTLY, US]
 https://api.hackerone.com [AS13335, CLOUDFLARENET, US]
 ```
 
-### ASN Input 
-Specify an [autonomous system's number (ASN)](https://en.wikipedia.org/wiki/Autonomous_system_(Internet)) and `httpx` will fetch all ip addresses of that autonomous system and probe them
+### ASN 输入
+指定一个[自治系统编号(ASN)](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))，`httpx` 将获取该自治系统的所有 IP 地址并对它们进行探测
 
 ```
 echo AS14421 | httpx -silent
@@ -51,8 +50,8 @@ https://216.101.17.251
 https://216.101.17.252
 ```
 
-### CIDR Input 
-Run `httpx` with CIDR input (for example 173.0.84.0/24)
+### CIDR 输入
+使用 CIDR 输入运行 `httpx`（例如 173.0.84.0/24）
 
 ```
 echo 173.0.84.0/24 | httpx -silent
@@ -76,8 +75,8 @@ https://173.0.84.6
 https://173.0.84.16
 https://173.0.84.34
 ```
-### Docker Run
-Use Docker to run `httpx` in an isolated container. For example, by piping subdomain lists into the Docker container, you can seamlessly perform probing across multiple targets, harnessing the power of `httpx` without direct installation requirements.
+### Docker 运行
+使用 Docker 在隔离容器中运行 `httpx`。例如，通过将子域列表导入到 Docker 容器中，您可以在多个目标上无缝执行探测，利用 `httpx` 的强大功能，而无需直接安装。
 
 ```
 cat sub_domains.txt | docker run -i projectdiscovery/httpx
@@ -103,11 +102,11 @@ https://resources.hackerone.com
 https://docs.hackerone.com
 https://support.hackerone.com
 ```
-### Error Page Classifier and Filtering
-The Error Page Classifier and Filtering feature aims to add intelligence to `httpx` by enabling `httpx` to classify and filter out common error pages returned by web applications. 
-It is an enhancement geared towards reducing noise and helping focus on actual results. 
+### 错误页面分类与过滤
+错误页面分类与过滤功能旨在为 `httpx` 添加智能，使 `httpx` 能够对 Web 应用程序返回的常见错误页面进行分类和过滤。
+这是一项增强功能，旨在减少噪音并帮助专注于实际结果。
 
-Using the `-fep` or `-filter-error-page` option creates a filtered error page in the file `filtered_error_page.json` in jsonline format.
+使用 `-fep` 或 `-filter-error-page` 选项会在 jsonline 格式的文件 `filtered_error_page.json` 中创建一个过滤后的错误页面。
 
 ```
 httpx -l urls.txt -path /v1/api -fep
@@ -124,8 +123,8 @@ httpx -l urls.txt -path /v1/api -fep
 [INF] Current httpx version v1.3.3 (latest)
 https://scanme.sh/v1/api
 ```
-### Favicon Hash
-Extract and display the mmh3 hash of the '/favicon.ico' file from given targets.
+### Favicon 哈希
+提取并显示给定目标中 '/favicon.ico' 文件的 mmh3 哈希值。
 
 ```
 subfinder -d hackerone.com -silent | httpx -favicon
@@ -152,8 +151,8 @@ https://api.hackerone.com/favicon.ico [566218143]
 https://mta-sts.hackerone.com/favicon.ico [-1700323260]
 https://www.hackerone.com/favicon.ico [778073381]
 ```
-### File/Path Bruteforce
-Use `httpx` with the `-path` option for efficient File/Path Bruteforcing. This feature allows probing specific paths across multiple URLs, uncovering response codes and revealing potentially vulnerable or unsecured endpoints in web applications.
+### 文件/路径暴力破解
+使用带有 `-path` 选项的 `httpx` 进行高效的文件/路径暴力破解。此功能允许在多个 URL 上探测特定路径，揭示响应代码并显示 Web 应用程序中潜在的漏洞或不安全的端点。
 
 ```
 httpx -l urls.txt -path /v1/api -sc
@@ -181,8 +180,8 @@ https://gslink.hackerone.com/v1/api [404]
 http://www.hackerone.com/v1/api [301]
 ```
 
-### File Input
-Run `httpx` with the `-probe` flag against all the hosts in hosts.txt to return URLs with probed status.
+### 文件输入
+使用 `-probe` 标志对 hosts.txt 中的所有主机运行 `httpx`，返回带有探测状态的 URL。
 
 ```
 httpx -list hosts.txt -silent -probe
@@ -208,10 +207,9 @@ http://go.hackerone.com [FAILED]
 http://a.ns.hackerone.com [FAILED]
 http://b.ns.hackerone.com [FAILED]
 ```
-### JARM Fingerprint
-Use `httpx` with the `-jarm` flag to leverage JARM fingerprinting, a specialized tool for active TLS server fingerprinting. 
-This approach enables the identification and categorization of servers based on their TLS configurations, making it an effective method for detecting and analyzing diverse internet servers, 
-including potential security threats.
+### JARM 指纹识别
+使用带有 `-jarm` 标志的 `httpx` 进行 JARM 指纹识别，这是一种专门用于主动 TLS 服务器指纹识别的工具。
+这种方法可以基于 TLS 配置识别和分类服务器，使其成为检测和分析各种互联网服务器（包括潜在安全威胁）的有效方法。
 
 ```
 subfinder -d hackerone.com -silent | httpx -jarm
@@ -235,9 +233,9 @@ https://api.hackerone.com [29d3dd00029d29d00042d43d00041d5de67cc9954cc8537252305
 https://mta-sts.forwarding.hackerone.com [29d29d00029d29d00042d43d00041d2aa5ce6a70de7ba95aef77a77b00a0af]
 https://resources.hackerone.com [2ad2ad0002ad2ad0002ad2ad2ad2ad043bfbd87c13813505a1b60adf4f6ff5]
 ```
-### Tool Chain 
-Combining `httpx` with other tools like `subfinder` can elevate your web reconnaissance. 
-For example, pipe results from `subfinder` directly into 'httpx' to efficiently identify active web servers and their technologies across various subdomains of a given target.
+### 工具链
+将 `httpx` 与其他工具（如 `subfinder`）结合使用可以提升您的 Web 侦察能力。
+例如，直接将 `subfinder` 的结果导入到 'httpx' 中，可以高效地识别给定目标的各个子域上的活动 Web 服务器及其技术。
 
 ```
 subfinder -d hackerone.com -silent| httpx -title -tech-detect -status-code
@@ -261,8 +259,8 @@ https://support.hackerone.com [301,302,301,200] [HackerOne] [Cloudflare,Ruby on 
 https://resources.hackerone.com [301,301,404] [Sorry, no Folders found.]
 ```
 
-### URL probe
-Run `httpx` against all the hosts and subdomains in hosts.txt to return URLs running an HTTP webserver.
+### URL 探测
+对 hosts.txt 中的所有主机和子域运行 `httpx`，返回运行 HTTP Web 服务器的 URL。
 
 ```
 cat hosts.txt | httpx 
@@ -289,42 +287,42 @@ https://api.hackerone.com
 https://support.hackerone.com
 ```
 
-## UI Dashboard (PDCP Integration)
+## UI 仪表盘 (PDCP 集成)
 
-#### Configure API Key
+#### 配置 API 密钥
 
-To upload your assets to PDCP you will need to create a free API Key 
+要将您的资产上传到 PDCP，您需要创建一个免费的 API 密钥
 
-- **Obtain API Key:**
+- **获取 API 密钥：**
 
-  - Visit https://cloud.projectdiscovery.io 
-  - Open the setting menu from the top right and select "API Key" to create your API Key
+  - 访问 https://cloud.projectdiscovery.io 
+  - 从右上角打开设置菜单，选择 "API Key" 创建您的 API 密钥
     <img class="block" src="/images/pdcp-api-key.png" alt="PDCP API Key" />
-  - Use the `httpx -auth` command, and enter your API key when prompted.
+  - 使用 `httpx -auth` 命令，并在提示时输入您的 API 密钥。
 
-#### Configure Team (Optional)
+#### 配置团队 (可选)
 
-If you want to upload the asset results to a team workspace instead of your personal workspace, you can configure the Team ID. You can use either the CLI option or the environment variable, depending on your preference.
+如果您想将资产结果上传到团队工作区而不是个人工作区，您可以配置团队 ID。您可以根据偏好使用 CLI 选项或环境变量。
 
-- **Obtain Team ID:**
-  - To obtain your Team ID, navigate to [https://cloud.projectdiscovery.io/settings/team](https://cloud.projectdiscovery.io/settings/team) and copy the Team ID from the top right section.
+- **获取团队 ID：**
+  - 要获取您的团队 ID，导航至 [https://cloud.projectdiscovery.io/settings/team](https://cloud.projectdiscovery.io/settings/team) 并从右上方部分复制团队 ID。
 
   ![image](https://github.com/user-attachments/assets/76a9f102-1626-4c87-8d9e-37c30417f19e)
 
 
-- **CLI Option:**
-  - Use the `-tid` or `-team-id` option to specify the team ID.
-  - Example: `nuclei -tid XXXXXX -dashboard`
+- **CLI 选项：**
+  - 使用 `-tid` 或 `-team-id` 选项指定团队 ID。
+  - 示例: `nuclei -tid XXXXXX -dashboard`
 
-- **ENV Variable:**
-  - Set the `PDCP_TEAM_ID` environment variable to your team ID.
-  - Example: `export PDCP_TEAM_ID=XXXXX`
+- **环境变量：**
+  - 将 `PDCP_TEAM_ID` 环境变量设置为您的团队 ID。
+  - 示例: `export PDCP_TEAM_ID=XXXXX`
 
-Either of these options is sufficient to configure the Team ID.
+这两个选项中的任何一个都足以配置团队 ID。
 
-#### Run httpx with UI Dashboard
+#### 使用 UI 仪表盘运行 httpx
 
-To run `httpx` and upload the results to the UI Dashboard:
+要运行 `httpx` 并将结果上传到 UI 仪表盘：
 
 ```console
 $ chaos -d hackerone.com | httpx -dashboard
@@ -354,58 +352,58 @@ https://gslink.hackerone.com
 
 ![image](https://blog.projectdiscovery.io/content/images/size/w1600/2024/08/image.png)
 
-#### Uploading to an Existing Asset Group
+#### 上传到现有资产组
 
-To upload new assets to an existing asset group:
+要将新资产上传到现有资产组：
 
 ```console
 $ chaos -d hackerone.com | httpx -dashboard -aid existing-asset-id
 ```
 
-#### Setting an Asset Group Name
+#### 设置资产组名称
 
-To set a custom asset group name:
+要设置自定义资产组名称：
 
 ```console
 $ chaos -d hackerone.com | httpx -dashboard -aname "Custom Asset Group"
 ```
 
-### Additional upload options
+### 额外上传选项
 
-- `-pd, -dashboard`: Enable uploading of `httpx` results to the ProjectDiscovery Cloud (PDCP) UI Dashboard.
-- `-aid, -asset-id string`: Upload new assets to an existing asset ID (optional).
-- `-aname, -asset-name string`: Set the asset group name (optional).
-- `-pdu, -dashboard-upload string`: Upload `httpx` output file (jsonl) to the ProjectDiscovery Cloud (PDCP) UI Dashboard.
+- `-pd, -dashboard`: 启用将 `httpx` 结果上传到 ProjectDiscovery Cloud (PDCP) UI 仪表盘。
+- `-aid, -asset-id string`: 将新资产上传到现有资产 ID（可选）。
+- `-aname, -asset-name string`: 设置资产组名称（可选）。
+- `-pdu, -dashboard-upload string`: 将 `httpx` 输出文件 (jsonl) 上传到 ProjectDiscovery Cloud (PDCP) UI 仪表盘。
 
-### Environment Variables
+### 环境变量
 
-- `export ENABLE_CLOUD_UPLOAD=true`: Enable dashboard upload by default.
-- `export DISABLE_CLOUD_UPLOAD_WARN=true`: Disable dashboard warning.
-- `export PDCP_TEAM_ID=XXXXX`: Set the team ID for the ProjectDiscovery Cloud Platform.
+- `export ENABLE_CLOUD_UPLOAD=true`: 默认启用仪表盘上传。
+- `export DISABLE_CLOUD_UPLOAD_WARN=true`: 禁用仪表盘警告。
+- `export PDCP_TEAM_ID=XXXXX`: 设置 ProjectDiscovery Cloud Platform 的团队 ID。
 
-## Expanded Examples
+## 扩展示例
 
-### Using httpx as a library
+### 将 httpx 作为库使用
 
-httpx can be used as a library by creating an instance of the Option struct and populating it with the same options that would be specified via CLI. 
-Once validated, the struct should be passed to a runner instance (to be closed at the end of the program) and the RunEnumeration method should be called. 
-- A basic example of how to use httpx as a library is available in the [GitHub examples](https://github.com/projectdiscovery/httpx/tree/main/examples) folder. 
+httpx 可以通过创建 Option 结构的实例并使用与通过 CLI 指定的相同选项来填充它作为库使用。
+一旦验证通过，应该将结构传递给 runner 实例（在程序结束时关闭），并调用 RunEnumeration 方法。
+- 关于如何将 httpx 作为库使用的基本示例可在 [GitHub examples](https://github.com/projectdiscovery/httpx/tree/main/examples) 文件夹中找到。
 
-### Using httpx screenshot
+### 使用 httpx 截图
 
-Httpx includes support for taking a screenshot with `-screenshot` that gives users the ability to take screenshots of target URLs, pages, or endpoints along with the rendered DOM. 
-This functionality enables a comprehensive view of the target's visual content.
+Httpx 包含使用 `-screenshot` 进行截图的支持，使用户能够获取目标 URL、页面或端点的截图以及渲染的 DOM。
+此功能可以全面查看目标的视觉内容。
 
-Rendered DOM body is also included in json line output when `-screenshot` option is used with `-json` option.
+当 `-screenshot` 选项与 `-json` 选项一起使用时，渲染的 DOM 正文也包含在 json line 输出中。
 
-To use this feature, add the `-screenshot` flag to the `httpx` command. 
+要使用此功能，请将 `-screenshot` 标志添加到 `httpx` 命令中。
 
 `httpx -screenshot -u https://example.com`
 
-<Tip> Screenshots are captured using a headless browser, and as a result `httpx` will be slower when using the `-screenshot` option.</Tip>
+<Tip> 截图是使用无头浏览器捕获的，因此在使用 `-screenshot` 选项时，`httpx` 会较慢。</Tip>
 
-#### Domain, Subdomain, and Path Support
-The `-screenshot` option is versatile and can be used to capture screenshots for domains, subdomains, and even specific paths when used in conjunction with the `-path` option:
+#### 域名、子域和路径支持
+`-screenshot` 选项用途广泛，可用于捕获域名、子域，甚至在与 `-path` 选项结合使用时捕获特定路径的截图：
 
 ```
 httpx -screenshot -u example.com
@@ -413,31 +411,31 @@ httpx -screenshot -u https://example.com/login
 httpx -screenshot -path fuzz_path.txt -u https://example.com
 ```
 
-#### Using with Other Tools
+#### 与其他工具一起使用
 
-In the example below we're providing subfinder output to the `httpx` screenshot.
+在下面的示例中，我们将 subfinder 输出提供给 `httpx` 截图。
 
 ```
 subfinder -d example.com | httpx -screenshot
 ```
 
-#### System Chrome Support
-By default, `httpx` uses the go-rod library to install and manage Chrome for taking screenshots. 
-However, if you prefer to use your locally installed system Chrome, add the `-system-chrome` flag:
+#### 系统 Chrome 支持
+默认情况下，`httpx` 使用 go-rod 库安装和管理 Chrome 进行截图。
+但是，如果您更喜欢使用本地安装的系统 Chrome，请添加 `-system-chrome` 标志：
 
 ```
 httpx -screenshot -system-chrome -u https://example.com
 ```
 
-#### Output Directory
-Screenshots are stored in the output/screenshot directory by default. To specify a custom output directory, use the `-srd` option:
+#### 输出目录
+截图默认存储在 output/screenshot 目录中。要指定自定义输出目录，请使用 `-srd` 选项：
 
 ```
 httpx -screenshot -srd /path/to/custom/directory -u https://example.com
 ```
 
-#### Body Preview
-Body preview shows first N characters of response. And strip html tags in response.
+#### 正文预览
+正文预览显示响应的前 N 个字符。并从响应中删除 html 标签。
 
 ```
 httpx -u https://example.com -silent -body-preview

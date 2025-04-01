@@ -1,174 +1,174 @@
 ---
-title: "Httpx Usage"
-description: "Learn httpx usage including flags, probes, and options"
-sidebarTitle: "Usage"
+title: "Httpx 使用方法"
+description: "学习 httpx 的使用方法，包括参数、探测选项和配置"
+sidebarTitle: "使用方法"
 ---
-## Access help 
+## 获取帮助
 
-Use `httpx - h` to display all help options. 
+使用 `httpx -h` 显示所有帮助选项。
 
-## Httpx help options
+## Httpx 帮助选项
 ```
 Flags:
 INPUT:
-   -l, -list string      input file containing list of hosts to process
-   -rr, -request string  file containing raw request
-   -u, -target string[]  input target host(s) to probe
+   -l, -list string              包含要处理的主机列表的输入文件
+   -rr, -request string          包含原始请求的文件
+   -u, -target string[]          要探测的输入目标主机
 
 PROBES:
-   -sc, -status-code     display response status-code
-   -cl, -content-length  display response content-length
-   -ct, -content-type    display response content-type
-   -location             display response redirect location
-   -favicon              display mmh3 hash for '/favicon.ico' file
-   -hash string          display response body hash (supported: md5,mmh3,simhash,sha1,sha256,sha512)
-   -jarm                 display jarm fingerprint hash
-   -rt, -response-time   display response time
-   -lc, -line-count      display response body line count
-   -wc, -word-count      display response body word count
-   -title                display page title
-   -bp, -body-preview    display first N characters of response body (default 100)
-   -server, -web-server  display server name
-   -td, -tech-detect     display technology in use based on wappalyzer dataset
-   -method               display http request method
-   -websocket            display server using websocket
-   -ip                   display host ip
-   -cname                display host cname
-   -asn                  display host asn information
-   -cdn                  display cdn/waf in use
-   -probe                display probe status
+   -sc, -status-code             显示响应状态码
+   -cl, -content-length          显示响应内容长度
+   -ct, -content-type            显示响应内容类型
+   -location                     显示响应重定向位置
+   -favicon                      显示 '/favicon.ico' 文件的 mmh3 哈希值
+   -hash string                  显示响应体哈希值 (支持: md5,mmh3,simhash,sha1,sha256,sha512)
+   -jarm                         显示 jarm 指纹哈希值
+   -rt, -response-time           显示响应时间
+   -lc, -line-count              显示响应体行数
+   -wc, -word-count              显示响应体字数
+   -title                        显示页面标题
+   -bp, -body-preview            显示响应体的前 N 个字符 (默认 100)
+   -server, -web-server          显示服务器名称
+   -td, -tech-detect             基于 wappalyzer 数据集显示使用的技术
+   -method                       显示 HTTP 请求方法
+   -websocket                    显示使用 websocket 的服务器
+   -ip                           显示主机 IP
+   -cname                        显示主机 CNAME
+   -asn                          显示主机 ASN 信息
+   -cdn                          显示使用的 CDN/WAF
+   -probe                        显示探测状态
 
 HEADLESS:
-   -ss, -screenshot                 enable saving screenshot of the page using headless browser
-   -system-chrome                   enable using local installed chrome for screenshot
-   -esb, -exclude-screenshot-bytes  enable excluding screenshot bytes from json output
-   -ehb, -exclude-headless-body     enable excluding headless header from json output
+   -ss, -screenshot              启用使用无头浏览器保存页面截图
+   -system-chrome                启用使用本地安装的 chrome 进行截图
+   -esb, -exclude-screenshot-bytes 从 json 输出中排除截图字节
+   -ehb, -exclude-headless-body  从 json 输出中排除无头请求头
 
 MATCHERS:
-   -mc, -match-code string            match response with specified status code (-mc 200,302)
-   -ml, -match-length string          match response with specified content length (-ml 100,102)
-   -mlc, -match-line-count string     match response body with specified line count (-mlc 423,532)
-   -mwc, -match-word-count string     match response body with specified word count (-mwc 43,55)
-   -mfc, -match-favicon string[]      match response with specified favicon hash (-mfc 1494302000)
-   -ms, -match-string string          match response with specified string (-ms admin)
-   -mr, -match-regex string           match response with specified regex (-mr admin)
-   -mcdn, -match-cdn string[]         match host with specified cdn provider (cloudfront, fastly, google, leaseweb, stackpath)
-   -mrt, -match-response-time string  match response with specified response time in seconds (-mrt '< 1')
-   -mdc, -match-condition string      match response with dsl expression condition
+   -mc, -match-code string       匹配指定状态码的响应 (-mc 200,302)
+   -ml, -match-length string     匹配指定内容长度的响应 (-ml 100,102)
+   -mlc, -match-line-count string 匹配指定行数的响应体 (-mlc 423,532)
+   -mwc, -match-word-count string 匹配指定字数的响应体 (-mwc 43,55)
+   -mfc, -match-favicon string[] 匹配指定 favicon 哈希值的响应 (-mfc 1494302000)
+   -ms, -match-string string     匹配包含指定字符串的响应 (-ms admin)
+   -mr, -match-regex string      匹配符合指定正则表达式的响应 (-mr admin)
+   -mcdn, -match-cdn string[]    匹配指定 CDN 提供商的主机 (cloudfront, fastly, google, leaseweb, stackpath)
+   -mrt, -match-response-time string 匹配指定响应时间的响应，以秒为单位 (-mrt '< 1')
+   -mdc, -match-condition string 使用 DSL 表达式条件匹配响应
 
 EXTRACTOR:
-   -er, -extract-regex string[]   display response content with matched regex
-   -ep, -extract-preset string[]  display response content matched by a pre-defined regex (ipv4,mail,url)
+   -er, -extract-regex string[]  显示与正则表达式匹配的响应内容
+   -ep, -extract-preset string[] 显示与预定义正则表达式匹配的响应内容 (ipv4,mail,url)
 
 FILTERS:
-   -fc, -filter-code string            filter response with specified status code (-fc 403,401)
-   -fep, -filter-error-page            filter response with ML based error page detection
-   -fd, -filter-duplicates             filter out near-duplicate responses (only first response is retained)
-   -fl, -filter-length string          filter response with specified content length (-fl 23,33)
-   -flc, -filter-line-count string     filter response body with specified line count (-flc 423,532)
-   -fwc, -filter-word-count string     filter response body with specified word count (-fwc 423,532)
-   -ffc, -filter-favicon string[]      filter response with specified favicon hash (-ffc 1494302000)
-   -fs, -filter-string string          filter response with specified string (-fs admin)
-   -fe, -filter-regex string           filter response with specified regex (-fe admin)
-   -fcdn, -filter-cdn string[]         filter host with specified cdn provider (cloudfront, fastly, google, leaseweb, stackpath)
-   -frt, -filter-response-time string  filter response with specified response time in seconds (-frt '> 1')
-   -fdc, -filter-condition string      filter response with dsl expression condition
-   -strip                              strips all tags in response. supported formats: html,xml (default html)
+   -fc, -filter-code string      过滤指定状态码的响应 (-fc 403,401)
+   -fep, -filter-error-page      使用基于机器学习的错误页面检测过滤响应
+   -fd, -filter-duplicates       过滤近似重复的响应（仅保留第一个响应）
+   -fl, -filter-length string    过滤指定内容长度的响应 (-fl 23,33)
+   -flc, -filter-line-count string 过滤指定行数的响应体 (-flc 423,532)
+   -fwc, -filter-word-count string 过滤指定字数的响应体 (-fwc 423,532)
+   -ffc, -filter-favicon string[] 过滤指定 favicon 哈希值的响应 (-ffc 1494302000)
+   -fs, -filter-string string    过滤包含指定字符串的响应 (-fs admin)
+   -fe, -filter-regex string     过滤符合指定正则表达式的响应 (-fe admin)
+   -fcdn, -filter-cdn string[]   过滤指定 CDN 提供商的主机 (cloudfront, fastly, google, leaseweb, stackpath)
+   -frt, -filter-response-time string 过滤指定响应时间的响应，以秒为单位 (-frt '> 1')
+   -fdc, -filter-condition string 使用 DSL 表达式条件过滤响应
+   -strip                        剥离响应中的所有标签。支持的格式：html,xml (默认 html)
 
 RATE-LIMIT:
-   -t, -threads int              number of threads to use (default 50)
-   -rl, -rate-limit int          maximum requests to send per second (default 150)
-   -rlm, -rate-limit-minute int  maximum number of requests to send per minute
+   -t, -threads int              要使用的线程数 (默认 50)
+   -rl, -rate-limit int          每秒最大请求数 (默认 150)
+   -rlm, -rate-limit-minute int  每分钟最大请求数
 
 MISCELLANEOUS:
-   -pa, -probe-all-ips        probe all the ips associated with same host
-   -p, -ports string[]        ports to probe (nmap syntax: eg http:1,2-10,11,https:80)
-   -path string               path or list of paths to probe (comma-separated, file)
-   -tls-probe                 send http probes on the extracted TLS domains (dns_name)
-   -csp-probe                 send http probes on the extracted CSP domains
-   -tls-grab                  perform TLS(SSL) data grabbing
-   -pipeline                  probe and display server supporting HTTP1.1 pipeline
-   -http2                     probe and display server supporting HTTP2
-   -vhost                     probe and display server supporting VHOST
-   -ldv, -list-dsl-variables  list json output field keys name that support dsl matcher/filter
+   -pa, -probe-all-ips           探测与同一主机关联的所有 IP
+   -p, -ports string[]           要探测的端口 (nmap 语法: 例如 http:1,2-10,11,https:80)
+   -path string                  要探测的路径或路径列表 (逗号分隔，文件)
+   -tls-probe                    在提取的 TLS 域名 (dns_name) 上发送 HTTP 探测
+   -csp-probe                    在提取的 CSP 域名上发送 HTTP 探测
+   -tls-grab                     执行 TLS(SSL) 数据获取
+   -pipeline                     探测并显示支持 HTTP1.1 管道的服务器
+   -http2                        探测并显示支持 HTTP2 的服务器
+   -vhost                        探测并显示支持 VHOST 的服务器
+   -ldv, -list-dsl-variables     列出支持 DSL 匹配器/过滤器的 json 输出字段键名
 
 UPDATE:
-   -up, -update                 update httpx to latest version
-   -duc, -disable-update-check  disable automatic httpx update check
+   -up, -update                  更新 httpx 到最新版本
+   -duc, -disable-update-check   禁用自动 httpx 更新检查
 
 OUTPUT:
-   -o, -output string                  file to write output results
-   -oa, -output-all                    filename to write output results in all formats
-   -sr, -store-response                store http response to output directory
-   -srd, -store-response-dir string    store http response to custom directory
-   -csv                                store output in csv format
-   -csvo, -csv-output-encoding string  define output encoding
-   -j, -json                           store output in JSONL(ines) format
-   -irh, -include-response-header      include http response (headers) in JSON output (-json only)
-   -irr, -include-response             include http request/response (headers + body) in JSON output (-json only)
-   -irrb, -include-response-base64     include base64 encoded http request/response in JSON output (-json only)
-   -include-chain                      include redirect http chain in JSON output (-json only)
-   -store-chain                        include http redirect chain in responses (-sr only)
-   -svrc, -store-vision-recon-cluster  include visual recon clusters (-ss and -sr only)
+   -o, -output string            写入输出结果的文件
+   -oa, -output-all              以所有格式写入输出结果的文件名
+   -sr, -store-response          将 HTTP 响应存储到输出目录
+   -srd, -store-response-dir string 将 HTTP 响应存储到自定义目录
+   -csv                          以 csv 格式存储输出
+   -csvo, -csv-output-encoding string 定义输出编码
+   -j, -json                     以 JSONL(行) 格式存储输出
+   -irh, -include-response-header 在 JSON 输出中包含 HTTP 响应 (头) (-json 专用)
+   -irr, -include-response       在 JSON 输出中包含 HTTP 请求/响应 (头 + 体) (-json 专用)
+   -irrb, -include-response-base64 在 JSON 输出中包含 base64 编码的 HTTP 请求/响应 (-json 专用)
+   -include-chain                在 JSON 输出中包含重定向 HTTP 链 (-json 专用)
+   -store-chain                  在响应中包含 HTTP 重定向链 (-sr 专用)
+   -svrc, -store-vision-recon-cluster 包含视觉识别集群 (-ss 和 -sr 专用)
 
 CONFIGURATIONS:
-   -config string                path to the httpx configuration file (default $HOME/.config/httpx/config.yaml)
-   -r, -resolvers string[]       list of custom resolver (file or comma separated)
-   -allow string[]               allowed list of IP/CIDR's to process (file or comma separated)
-   -deny string[]                denied list of IP/CIDR's to process (file or comma separated)
-   -sni, -sni-name string        custom TLS SNI name
-   -random-agent                 enable Random User-Agent to use (default true)
-   -H, -header string[]          custom http headers to send with request
-   -http-proxy, -proxy string    http proxy to use (eg http://127.0.0.1:8080)
-   -unsafe                       send raw requests skipping golang normalization
-   -resume                       resume scan using resume.cfg
-   -fr, -follow-redirects        follow http redirects
-   -maxr, -max-redirects int     max number of redirects to follow per host (default 10)
-   -fhr, -follow-host-redirects  follow redirects on the same host
-   -rhsts, -respect-hsts         respect HSTS response headers for redirect requests
-   -vhost-input                  get a list of vhosts as input
-   -x string                     request methods to probe, use 'all' to probe all HTTP methods
-   -body string                  post body to include in http request
-   -s, -stream                   stream mode - start elaborating input targets without sorting
-   -sd, -skip-dedupe             disable dedupe input items (only used with stream mode)
-   -ldp, -leave-default-ports    leave default http/https ports in host header (eg. http://host:80 - https://host:443
-   -ztls                         use ztls library with autofallback to standard one for tls13
-   -no-decode                    avoid decoding body
-   -tlsi, -tls-impersonate       enable experimental client hello (ja3) tls randomization
-   -no-stdin                     Disable Stdin processing
+   -config string                httpx 配置文件的路径 (默认 $HOME/.config/httpx/config.yaml)
+   -r, -resolvers string[]       自定义解析器列表 (文件或逗号分隔)
+   -allow string[]               允许处理的 IP/CIDR 列表 (文件或逗号分隔)
+   -deny string[]                禁止处理的 IP/CIDR 列表 (文件或逗号分隔)
+   -sni, -sni-name string        自定义 TLS SNI 名称
+   -random-agent                 启用随机 User-Agent (默认为 true)
+   -H, -header string[]          要发送的自定义 HTTP 头
+   -http-proxy, -proxy string    要使用的 HTTP 代理 (例如 http://127.0.0.1:8080)
+   -unsafe                       发送原始请求，跳过 golang 规范化
+   -resume                       使用 resume.cfg 恢复扫描
+   -fr, -follow-redirects        跟随 HTTP 重定向
+   -maxr, -max-redirects int     每个主机跟随的最大重定向数 (默认 10)
+   -fhr, -follow-host-redirects  跟随相同主机上的重定向
+   -rhsts, -respect-hsts         遵守重定向请求的 HSTS 响应头
+   -vhost-input                  将 vhost 列表作为输入
+   -x string                     要探测的请求方法，使用 'all' 探测所有 HTTP 方法
+   -body string                  在 HTTP 请求中包含的 post 主体
+   -s, -stream                   流模式 - 开始处理输入目标，无需排序
+   -sd, -skip-dedupe             禁用输入项去重 (仅在流模式下使用)
+   -ldp, -leave-default-ports    在主机头中保留默认 http/https 端口 (例如 http://host:80 - https://host:443)
+   -ztls                         使用 ztls 库，自动回退到标准库处理 tls13
+   -no-decode                    避免解码主体
+   -tlsi, -tls-impersonate       启用实验性客户端 hello (ja3) tls 随机化
+   -no-stdin                     禁用标准输入处理
 
 DEBUG:
-   -health-check, -hc        run diagnostic check up
-   -debug                    display request/response content in cli
-   -debug-req                display request content in cli
-   -debug-resp               display response content in cli
-   -version                  display httpx version
-   -stats                    display scan statistic
-   -profile-mem string       optional httpx memory profile dump file
-   -silent                   silent mode
-   -v, -verbose              verbose mode
-   -si, -stats-interval int  number of seconds to wait between showing a statistics update (default: 5)
-   -nc, -no-color            disable colors in cli output
+   -health-check, -hc            运行诊断检查
+   -debug                        在命令行中显示请求/响应内容
+   -debug-req                    在命令行中显示请求内容
+   -debug-resp                   在命令行中显示响应内容
+   -version                      显示 httpx 版本
+   -stats                        显示扫描统计
+   -profile-mem string           可选的 httpx 内存配置转储文件
+   -silent                       静默模式
+   -v, -verbose                  详细模式
+   -si, -stats-interval int      显示统计更新之间等待的秒数 (默认: 5)
+   -nc, -no-color                禁用命令行输出中的颜色
 
 OPTIMIZATIONS:
-   -nf, -no-fallback                  display both probed protocol (HTTPS and HTTP)
-   -nfs, -no-fallback-scheme          probe with protocol scheme specified in input 
-   -maxhr, -max-host-error int        max error count per host before skipping remaining path/s (default 30)
-   -ec, -exclude-cdn                  skip full port scans for CDN/WAF (only checks for 80,443)
-   -retries int                       number of retries
-   -timeout int                       timeout in seconds (default 10)
-   -delay value                       duration between each http request (eg: 200ms, 1s) (default -1ns)
-   -rsts, -response-size-to-save int  max response size to save in bytes (default 2147483647)
-   -rstr, -response-size-to-read int  max response size to read in bytes (default 2147483647)
+   -nf, -no-fallback             显示两种探测协议 (HTTPS 和 HTTP)
+   -nfs, -no-fallback-scheme     使用输入中指定的协议方案进行探测
+   -maxhr, -max-host-error int   跳过剩余路径前每个主机的最大错误计数 (默认 30)
+   -ec, -exclude-cdn             跳过 CDN/WAF 的完整端口扫描 (仅检查 80,443)
+   -retries int                  重试次数
+   -timeout int                  超时秒数 (默认 10)
+   -delay value                  每个 HTTP 请求之间的持续时间 (例如: 200ms, 1s) (默认 -1ns)
+   -rsts, -response-size-to-save int 保存的最大响应大小，以字节为单位 (默认 2147483647)
+   -rstr, -response-size-to-read int 读取的最大响应大小，以字节为单位 (默认 2147483647)
    ```
 
-## Notes on usage
+## 使用说明
 
-- As default an `httpx` probe with an HTTPS scheme will fall-back to HTTP only if HTTPS is not reachable.
-- The `-no-fallback` flag can be used to probe and display both HTTP and HTTPS result.
-- Custom scheme for ports can be defined, for example `-ports http:443,http:80,https:8443`
-- Custom resolver supports multiple protocol (doh|tcp|udp) in form of protocol:resolver:port (for example `udp:127.0.0.1:53`)
-- The following flags should be used for specific use cases instead of running them as default with other probes:
+- 默认情况下，使用 HTTPS 方案的 `httpx` 探测在 HTTPS 不可达时会回退到 HTTP。
+- `-no-fallback` 标志可用于探测并同时显示 HTTP 和 HTTPS 结果。
+- 可以为端口定义自定义方案，例如 `-ports http:443,http:80,https:8443`
+- 自定义解析器支持多种协议 (doh|tcp|udp)，格式为 protocol:resolver:port (例如 `udp:127.0.0.1:53`)
+- 以下标志应该用于特定用例，而不是与其他探测一起默认运行：
   - `- ports`
   -  `- path`
   - `- vhost`

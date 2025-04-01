@@ -1,8 +1,8 @@
-# Class: Buffer
+# 类: Buffer
 
 [bytes](/templates/protocols/javascript/modules/bytes).Buffer
 
-Buffer is a bytes/Uint8Array type in javascript
+Buffer 是 JavaScript 中的byte/Uint8Array 类型
 
 **`Example`**
 
@@ -15,17 +15,17 @@ const bytes = new bytes.Buffer();
 
 ```javascript
 const bytes = require('nuclei/bytes');
-// optionally it can accept existing byte/Uint8Array as input
+// 可选地，它可以接受现有的byte/Uint8Array 作为输入
 const bytes = new bytes.Buffer([1, 2, 3]);
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/bytes.Buffer#constructor)
 
-### Methods
+### 方法
 
 - [Bytes](/templates/protocols/javascript/modules/bytes.Buffer#bytes)
 - [Hex](/templates/protocols/javascript/modules/bytes.Buffer#hex)
@@ -36,29 +36,29 @@ const bytes = new bytes.Buffer([1, 2, 3]);
 - [Write](/templates/protocols/javascript/modules/bytes.Buffer#write)
 - [WriteString](/templates/protocols/javascript/modules/bytes.Buffer#writestring)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new Buffer**(): [`Buffer`](/templates/protocols/javascript/modules/bytes.Buffer)
 
-#### Returns
+#### 返回
 
 [`Buffer`](/templates/protocols/javascript/modules/bytes.Buffer)
 
-#### Defined in
+#### 定义于
 
 bytes.ts:21
 
-## Methods
+## 方法
 
 ### Bytes
 
 ▸ **Bytes**(): `Uint8Array`
 
-Bytes returns the byte representation of the buffer.
+Bytes 返回缓冲区的字节表示。
 
-#### Returns
+#### 返回
 
 `Uint8Array`
 
@@ -71,7 +71,7 @@ buffer.WriteString('hello');
 log(buffer.Bytes());
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:60
 
@@ -81,9 +81,9 @@ ___
 
 ▸ **Hex**(): `string`
 
-Hex returns the hex representation of the buffer.
+Hex 返回缓冲区的十六进制表示。
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -96,7 +96,7 @@ buffer.WriteString('hello');
 log(buffer.Hex());
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:105
 
@@ -106,9 +106,9 @@ ___
 
 ▸ **Hexdump**(): `string`
 
-Hexdump returns the hexdump representation of the buffer.
+Hexdump 返回缓冲区的十六进制转储表示。
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -121,7 +121,7 @@ buffer.WriteString('hello');
 log(buffer.Hexdump());
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:120
 
@@ -131,9 +131,9 @@ ___
 
 ▸ **Len**(): `number`
 
-Len returns the length of the buffer.
+Len 返回缓冲区的长度。
 
-#### Returns
+#### 返回
 
 `number`
 
@@ -146,7 +146,7 @@ buffer.WriteString('hello');
 log(buffer.Len());
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:90
 
@@ -156,17 +156,17 @@ ___
 
 ▸ **Pack**(`formatStr`, `msg`): `void`
 
-Pack uses structs.Pack and packs given data and appends it to the buffer.
-it packs the data according to the given format.
+Pack 使用 structs.Pack 并打包给定的数据，然后将其附加到缓冲区。
+它根据给定的格式打包数据。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `formatStr` | `string` |
 | `msg` | `any` |
 
-#### Returns
+#### 返回
 
 `void`
 
@@ -178,7 +178,7 @@ const buffer = new bytes.Buffer();
 buffer.Pack('I', 123);
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:135
 
@@ -188,9 +188,9 @@ ___
 
 ▸ **String**(): `string`
 
-String returns the string representation of the buffer.
+String 返回缓冲区的字符串表示。
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -203,7 +203,7 @@ buffer.WriteString('hello');
 log(buffer.String());
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:75
 
@@ -213,15 +213,15 @@ ___
 
 ▸ **Write**(`data`): [`Buffer`](/templates/protocols/javascript/modules/bytes.Buffer)
 
-Write appends the given data to the buffer.
+Write 将给定的数据附加到缓冲区。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `data` | `Uint8Array` |
 
-#### Returns
+#### 返回
 
 [`Buffer`](/templates/protocols/javascript/modules/bytes.Buffer)
 
@@ -233,7 +233,7 @@ const buffer = new bytes.Buffer();
 buffer.Write([1, 2, 3]);
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:31
 
@@ -243,15 +243,15 @@ ___
 
 ▸ **WriteString**(`data`): [`Buffer`](/templates/protocols/javascript/modules/bytes.Buffer)
 
-WriteString appends the given string data to the buffer.
+WriteString 将给定的字符串数据附加到缓冲区。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `data` | `string` |
 
-#### Returns
+#### 返回
 
 [`Buffer`](/templates/protocols/javascript/modules/bytes.Buffer)
 
@@ -263,6 +263,6 @@ const buffer = new bytes.Buffer();
 buffer.WriteString('hello');
 ```
 
-#### Defined in
+#### 定义于
 
 bytes.ts:45

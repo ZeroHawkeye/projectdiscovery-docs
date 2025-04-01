@@ -1,20 +1,20 @@
 ---
-title: "JavaScript Protocol"
-description: "Review examples of JavaScript with Nuclei v3"
-sidebarTitle: "Protocol"
+title: "JavaScript 协议"
+description: "查看 Nuclei v3 中的 JavaScript 示例"
+sidebarTitle: "协议"
 ---
 
-The JavaScript protocol was added to Nuclei v3 to allow you to write checks and detections for exploits in JavaScript and to bridge the gap between network protocols. 
+JavaScript 协议被添加到 Nuclei v3 中，允许你用 JavaScript 编写检查和检测漏洞，并弥合网络协议之间的差距。
 
-- Internally any content written using the JavaScript protocol is executed in Golang.
-- The JavaScript protocol is **not** intended to fit into or be imported with any existing JavaScript libraries or frameworks outside of the Nuclei ecosystem.
-- Nuclei provides a set of functions, libraries that are tailor-made for writing exploits and checks and only adds required/necessary functionality to complement existing YAML-based DSL.
-- The JavaScript protocol is **not** intended to be used as a general purpose JavaScript runtime and does not replace matchers, extractors, or any existing functionality of Nuclei.
-- Nuclei v3.0.0 ships with **15+ libraries (ssh, ftp, RDP, Kerberos, and Redis)** tailored for writing exploits and checks in JavaScript and will be continuously expanded in the future.
+- 内部使用 JavaScript 协议编写的任何内容都在 Golang 中执行。
+- JavaScript 协议**不**旨在适配或导入 Nuclei 生态系统之外的任何现有 JavaScript 库或框架。
+- Nuclei 提供了一套专为编写漏洞利用和检查而量身定制的函数、库，只添加必要的功能来补充现有的基于 YAML 的 DSL。
+- JavaScript 协议**不**旨在用作通用 JavaScript 运行时，也不会替代 Nuclei 的 matchers、extractors 或任何现有功能。
+- Nuclei v3.0.0 附带了**15+ 库（ssh、ftp、RDP、Kerberos 和 Redis）**，专为在 JavaScript 中编写漏洞利用和检查而定制，未来将不断扩展。
 
-## Simple Example 
+## 简单示例
 
-Here is a basic example of a JavaScript protocol template:
+以下是 JavaScript 协议模板的基本示例：
 
 ```yaml
 id: ssh-server-fingerprint
@@ -41,25 +41,25 @@ javascript:
           - '.ServerID.Raw'
 ```
 
-In the Nuclei template example above, we are fingerprinting SSH server software by connecting in non-auth mode and extracting the server banner.  Let's break down the template.
+在上面的 Nuclei 模板示例中，我们通过以非认证模式连接并提取服务器横幅来识别 SSH 服务器软件。让我们分解一下这个模板。
 
-### Code Section
-The `code:` contains actual JavaScript code that is executed by Nuclei at runtime. In the above template, we are:
+### 代码部分
+`code:` 包含在运行时由 Nuclei 执行的实际 JavaScript 代码。在上面的模板中，我们：
 
-- Importing `nuclei/ssh` module/library
-- Creating a new instance of `SSHClient` object
-- Connecting to SSH server in `Info` mode
-- Converting response to json
+- 导入 `nuclei/ssh` 模块/库
+- 创建 `SSHClient` 对象的新实例
+- 以 `Info` 模式连接到 SSH 服务器
+- 将响应转换为 json
 
-### Args Section
-The `args:` section can be simply understood as variables in JavaScript that are passed at runtime and support DSL usage.
+### 参数部分
+`args:` 部分可以简单理解为在运行时传递的 JavaScript 变量，支持 DSL 使用。
 
-### Output Section
-The value of the last expression is returned as the output of JavaScript protocol template and can be used in matchers and extractors. If the server returns an error instead, then the `error` variable is exposed in the matcher or extractor with an error message.
+### 输出部分
+最后一个表达式的值作为 JavaScript 协议模板的输出返回，可以在 matchers 和 extractors 中使用。如果服务器返回错误，则在 matcher 或 extractor 中会暴露带有错误消息的 `error` 变量。
 
-## SSH Bruteforce Example
+## SSH 暴力破解示例
 
-**SSH Password Bruteforce Template**
+**SSH 密码暴力破解模板**
 
 ```yaml
 id: ssh-brute
@@ -75,7 +75,7 @@ javascript:
       var m = require("nuclei/ssh");
       var c = m.SSHClient();
       var response = c.ConnectSSHInfoMode(Host, Port);
-      // only bruteforce if ssh server allows password based authentication
+      // 只有当 ssh 服务器允许基于密码的认证时才进行暴力破解
       response["UserAuth"].includes("password")
 
     code: |
@@ -104,55 +104,55 @@ javascript:
         condition: and
 ```
 
-In the example template above, we are bruteforcing ssh server with a list of usernames and passwords. We can tell that this might not have been possible to achieve with the network template. Let's break down the template.
+在上面的示例模板中，我们使用用户名和密码列表对 ssh 服务器进行暴力破解。我们可以看出，这可能无法通过网络模板实现。让我们分解一下这个模板。
 
-### Pre-Condition
+### 前置条件
 
-`pre-condition` is an optional section of JavaScript code that is executed before running “code” and acts as a pre-condition to exploit. In the above template, before attempting brute force, we check if:
+`pre-condition` 是在运行 "code" 之前执行的可选 JavaScript 代码部分，它作为漏洞利用的前提条件。在上面的模板中，在尝试暴力破解之前，我们检查：
  
-- The address is actually an SSH server.
-- The ssh server is configured to allow password-based authentication.
+- 该地址确实是 SSH 服务器。
+- ssh 服务器配置为允许基于密码的认证。
 
-**Further explanation** 
-- If pre-condition returns `true` only then `code` is executed; otherwise, it is skipped.
-- In the code section, we import `nuclei/ssh` module and create a new instance of `SSHClient` object.
-- Then we attempt to connect to the ssh server with a username and password.
-This template uses [payloads](https://docs.projectdiscovery.io/templates/protocols/http/http-payloads) to launch a clusterbomb attack with 10 threads and exits on the first match.
+**进一步解释** 
+- 如果 pre-condition 返回 `true`，则只执行 `code`；否则，跳过。
+- 在代码部分，我们导入 `nuclei/ssh` 模块并创建 `SSHClient` 对象的新实例。
+- 然后我们尝试使用用户名和密码连接到 ssh 服务器。
+该模板使用 [payloads](https://docs.projectdiscovery.io/templates/protocols/http/http-payloads) 启动具有 10 个线程的 clusterbomb 攻击，并在首次匹配时退出。
 
-Looking at this template now, we can tell that JavaScript templates are powerful for writing multistep and protocol/vendor-specific exploits, which is a primary goal of the JavaScript protocol.
+现在看这个模板，我们可以看出 JavaScript 模板在编写多步骤和协议/供应商特定的漏洞利用方面非常强大，这是 JavaScript 协议的主要目标。
 
 
-## Init
+## 初始化
 
-`init` is an optional JavaScript section that can be used to initialize the template, and it is executed just after compiling the template and before running it on any target. Although it is rarely needed, it can be used to load and preprocess data before running a template on any target.
+`init` 是一个可选的 JavaScript 部分，可用于初始化模板，它在编译模板后、在任何目标上运行之前执行。虽然很少需要，但它可以用于在针对任何目标运行模板之前加载和预处理数据。
 
-For example, in the below code block, we are loading all ssh private keys from `nuclei-templates/helpers` directory and storing them as a variable in payloads with the name `keys`. If we were loading private keys from the "pre-condition" code block, then it would have been loaded for every target, which is not ideal.
+例如，在下面的代码块中，我们从 `nuclei-templates/helpers` 目录加载所有 ssh 私钥，并将它们作为名为 `keys` 的变量存储在 payloads 中。如果我们从 "pre-condition" 代码块加载私钥，那么它将为每个目标加载，这不是理想的。
 
 ```
 variables:
-  keysDir: "helpers/"  # load all private keys from this directory
+  keysDir: "helpers/"  # 从此目录加载所有私钥
 
 javascript:
-    # init field can be used to make any preperations before the actual exploit
-    # here we are reading all private keys from helpers folder and storing them in a list
+    # init 字段可用于在实际漏洞利用之前进行任何准备工作
+    # 这里我们从 helpers 文件夹读取所有私钥并将它们存储在列表中
   - init: |
       let m = require('nuclei/fs');
       let privatekeys = m.ReadFilesFromDir(keysDir)
       updatePayload('keys',privatekeys)
 
     payloads:
-      # 'keys' will be updated by actual private keys after init is executed
+      # 'keys' 将在 init 执行后由实际私钥更新
       keys: 
         - key1
         - key2
 ```
 
-Two special functions that are available in the `init` block are
+`init` 块中有两个特殊功能
 
 
-| Function                   | Description                              |
-| -------------------------- | ---------------------------------------- |
-| `updatePayload(key,value)` | updates payload with given key and value |
-| `set(key,value)`           | sets a variable with given key and value |
+| 函数                       | 描述                                 |
+| -------------------------- | ------------------------------------ |
+| `updatePayload(key,value)` | 使用给定的键和值更新 payload        |
+| `set(key,value)`           | 使用给定的键和值设置变量            |
 
-A collection of JavaScript protocol templates can be found [here](https://github.com/projectdiscovery/nuclei-templates/pull/8530).
+可以在[这里](https://github.com/projectdiscovery/nuclei-templates/pull/8530)找到 JavaScript 协议模板的集合。

@@ -1,10 +1,10 @@
-# Class: SMTPMessage
+# 类: SMTPMessage
 
 [smtp](/templates/protocols/javascript/modules/smtp).SMTPMessage
 
-SMTPMessage is a message to be sent over SMTP
+SMTPMessage 是通过 SMTP 发送的消息
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -12,13 +12,13 @@ const message = new smtp.SMTPMessage();
 message.From('xyz@projectdiscovery.io');
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/smtp.SMTPMessage#constructor)
 
-### Methods
+### 方法
 
 - [Auth](/templates/protocols/javascript/modules/smtp.SMTPMessage#auth)
 - [Body](/templates/protocols/javascript/modules/smtp.SMTPMessage#body)
@@ -27,39 +27,39 @@ message.From('xyz@projectdiscovery.io');
 - [Subject](/templates/protocols/javascript/modules/smtp.SMTPMessage#subject)
 - [To](/templates/protocols/javascript/modules/smtp.SMTPMessage#to)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new SMTPMessage**(): [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-#### Returns
+#### 返回
 
 [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-#### Defined in
+#### 定义于
 
 smtp.ts:89
 
-## Methods
+## 方法
 
 ### Auth
 
 ▸ **Auth**(`username`): [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-Auth when called authenticates using username and password before sending the message
+Auth 调用时在发送消息前使用用户名和密码进行认证
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -67,7 +67,7 @@ const message = new smtp.SMTPMessage();
 message.Auth('username', 'password');
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:155
 
@@ -77,19 +77,19 @@ ___
 
 ▸ **Body**(`msg`): [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-Body adds the message body to the message
+Body 添加消息正文到消息中
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `msg` | `Uint8Array` |
 
-#### Returns
+#### 返回
 
 [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -97,7 +97,7 @@ const message = new smtp.SMTPMessage();
 message.Body('hello');
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:141
 
@@ -107,19 +107,19 @@ ___
 
 ▸ **From**(`email`): [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-From adds the from field to the message
+From 添加发件人字段到消息中
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `email` | `string` |
 
-#### Returns
+#### 返回
 
 [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -127,7 +127,7 @@ const message = new smtp.SMTPMessage();
 message.From('xyz@projectdiscovery.io');
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:99
 
@@ -137,13 +137,13 @@ ___
 
 ▸ **String**(): `string`
 
-String returns the string representation of the message
+String 返回消息的字符串表示形式
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -155,7 +155,7 @@ message.Body('hello');
 log(message.String());
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:173
 
@@ -165,19 +165,19 @@ ___
 
 ▸ **Subject**(`sub`): [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-Subject adds the subject field to the message
+Subject 添加主题字段到消息中
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `sub` | `string` |
 
-#### Returns
+#### 返回
 
 [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -185,7 +185,7 @@ const message = new smtp.SMTPMessage();
 message.Subject('hello');
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:127
 
@@ -195,19 +195,19 @@ ___
 
 ▸ **To**(`email`): [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-To adds the to field to the message
+To 添加收件人字段到消息中
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `email` | `string` |
 
-#### Returns
+#### 返回
 
 [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -215,6 +215,6 @@ const message = new smtp.SMTPMessage();
 message.To('xyz@projectdiscovery.io');
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:113

@@ -1,18 +1,18 @@
 ---
-title: Running uncover
-description: "Learn about running uncover including examples"
-sidebarTitle: Running
+title: 运行 uncover
+description: "学习运行 uncover 的方法及示例"
+sidebarTitle: 运行
 ---
 
-## Basic Usage
+## 基本用法
 
-For all of the flags and options available for **uncover** be sure to check out the [Usage](/tools/uncover/usage) page. 
+有关 **uncover** 可用的所有标志和选项，请务必查看[使用方法](/tools/uncover/usage)页面。
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
+<Note> 如果您有疑问，请通过[帮助](/help)联系我们。</Note>
 
-### Default run:
+### 默认运行：
 
-**uncover** supports multiple ways to make the query including **stdin** or `q` flag, as default `shodan` engine is used for search if no engine is specified.
+**uncover** 支持多种查询方式，包括 **stdin** 或 `q` 标志，如果未指定搜索引擎，默认使用 `shodan` 引擎进行搜索。
 
 ```console
 echo 'ssl:"Uber Technologies, Inc."' | uncover 
@@ -25,9 +25,9 @@ echo 'ssl:"Uber Technologies, Inc."' | uncover
 
 		projectdiscovery.io
 
-[WRN] Use with caution. You are responsible for your actions
-[WRN] Developers assume no liability and are not responsible for any misuse or damage.
-[WRN] By using uncover, you also agree to the terms of the APIs used.
+[WRN] 谨慎使用。您需要对自己的行为负责
+[WRN] 开发者不承担任何责任，也不对任何滥用或损害负责。
+[WRN] 使用 uncover，即表示您同意所使用 API 的条款。
 
 107.180.12.116:993
 107.180.26.155:443
@@ -42,7 +42,7 @@ echo 'ssl:"Uber Technologies, Inc."' | uncover
 104.16.251.50:443
 ```
 
-Running **uncover**  with **file** input containing multiple search queries per line.
+使用**文件**输入运行 **uncover**，文件中每行包含多个搜索查询。
 
 ```console
 cat dorks.txt
@@ -62,9 +62,9 @@ uncover -q dorks.txt
 
     projectdiscovery.io
 
-[WRN] Use with caution. You are responsible for your actions
-[WRN] Developers assume no liability and are not responsible for any misuse or damage.
-[WRN] By using uncover, you also agree to the terms of the APIs used.
+[WRN] 谨慎使用。您需要对自己的行为负责
+[WRN] 开发者不承担任何责任，也不对任何滥用或损害负责。
+[WRN] 使用 uncover，即表示您同意所使用 API 的条款。
 
 107.180.12.116:993
 107.180.26.155:443
@@ -79,10 +79,10 @@ uncover -q dorks.txt
 138.197.147.213:8086
 ```
 
-### Single query against multiple search engines
+### 对多个搜索引擎的单一查询
 
 
-**uncover** supports multiple search engine, as default **shodan** is used, `-e` flag can be used to run same query against any or all search engines.
+**uncover** 支持多个搜索引擎，默认使用 **shodan**，可以使用 `-e` 标志在任何或所有搜索引擎上运行相同的查询。
 
 ```console
 echo jira | uncover -e shodan,censys,fofa,quake,hunter,zoomeye,netlas,criminalip
@@ -95,9 +95,9 @@ echo jira | uncover -e shodan,censys,fofa,quake,hunter,zoomeye,netlas,criminalip
 
     projectdiscovery.io
 
-[WRN] Use with caution. You are responsible for your actions
-[WRN] Developers assume no liability and are not responsible for any misuse or damage.
-[WRN] By using uncover, you also agree to the terms of the APIs used.
+[WRN] 谨慎使用。您需要对自己的行为负责
+[WRN] 开发者不承担任何责任，也不对任何滥用或损害负责。
+[WRN] 使用 uncover，即表示您同意所使用 API 的条款。
 
 176.31.249.189:5001
 13.211.116.80:443
@@ -113,7 +113,7 @@ echo jira | uncover -e shodan,censys,fofa,quake,hunter,zoomeye,netlas,criminalip
 42.194.226.30:2626
 ```
 
-### Multiple queries against multiple search engines
+### 对多个搜索引擎的多个查询
 
 
 ```console
@@ -127,9 +127,9 @@ uncover -shodan 'http.component:"Atlassian Jira"' -censys 'services.software.pro
 
     projectdiscovery.io
 
-[WRN] Use with caution. You are responsible for your actions
-[WRN] Developers assume no liability and are not responsible for any misuse or damage.
-[WRN] By using uncover, you also agree to the terms of the APIs used.
+[WRN] 谨慎使用。您需要对自己的行为负责
+[WRN] 开发者不承担任何责任，也不对任何滥用或损害负责。
+[WRN] 使用 uncover，即表示您同意所使用 API 的条款。
 
 104.68.37.129:443
 162.222.160.42:443
@@ -152,9 +152,9 @@ uncover -shodan 'http.component:"Atlassian Jira"' -censys 'services.software.pro
 
 ### Shodan-InternetDB API
 
-**uncover** supports [shodan-internetdb](https://internetdb.shodan.io) API to pull available ports for given IP/CIDR input.
+**uncover** 支持 [shodan-internetdb](https://internetdb.shodan.io) API，用于获取给定 IP/CIDR 输入的可用端口。
 
-`shodan-idb` used as **default** engine when **IP/CIDR** is provided as input, otherwise `shodan` search engine is used.
+当提供 **IP/CIDR** 作为输入时，`shodan-idb` 被用作**默认**引擎，否则使用 `shodan` 搜索引擎。
 
 ```console
 echo 51.83.59.99/24 | uncover
@@ -167,9 +167,9 @@ echo 51.83.59.99/24 | uncover
 
     projectdiscovery.io
 
-[WRN] Use with caution. You are responsible for your actions
-[WRN] Developers assume no liability and are not responsible for any misuse or damage.
-[WRN] By using uncover, you also agree to the terms of the APIs used.
+[WRN] 谨慎使用。您需要对自己的行为负责
+[WRN] 开发者不承担任何责任，也不对任何滥用或损害负责。
+[WRN] 使用 uncover，即表示您同意所使用 API 的条款。
 
 51.83.59.1:53
 51.83.59.1:10000
@@ -184,9 +184,9 @@ echo 51.83.59.99/24 | uncover
 ```
 
 
-### [Awesome Search Queries Integration](https://github.com/projectdiscovery/awesome-search-queries)
+### [优秀搜索查询集成](https://github.com/projectdiscovery/awesome-search-queries)
 
-The `-asq, -awesome-search-queries` flag allows you to use predefined awesome search queries to discover exposed assets on the internet. This feature leverages a curated list of queries that are known to yield interesting results. To use this feature, simply specify the `-asq` flag followed by the desired query. For example, to search for exposed Jira instances, you can use:
+`-asq, -awesome-search-queries` 标志允许您使用预定义的优秀搜索查询来发现互联网上的暴露资产。此功能利用了一个已知能产生有趣结果的精选查询列表。要使用此功能，只需指定 `-asq` 标志，后跟所需的查询。例如，要搜索暴露的 Jira 实例，您可以使用：
 
 ```console
 uncover -asq jira -silent
@@ -195,9 +195,9 @@ uncover -asq jira -silent
 ```
 
 
-### Field Format
+### 字段格式
 
-`-f, -field` flag can be used to indicate which fields to return, currently, `ip`, `port`, and `host` are supported and can be used to return desired fields.
+`-f, -field` 标志可用于指示要返回的字段，目前支持 `ip`、`port` 和 `host`，可用于返回所需的字段。
 
 ```console
 uncover -q jira -f host -silent
@@ -213,9 +213,9 @@ ec2-54-187-161-180.us-west-2.compute.amazonaws.com
 ec2-34-241-80-255.eu-west-1.compute.amazonaws.com
 ```
 
-### Field Formatting
+### 字段格式化
 
-**uncover** has a `-f, -field` flag that can be used to customize the output format. For example, in the case of `uncover -f https://ip:port/version`, ip:port will be replaced with results in the output while keeping the format defined, It can also be used to specify a known scheme/path/file in order to prepare the output so that it can be immediately passed as input to other tools in the pipeline.
+**uncover** 有一个 `-f, -field` 标志，可用于自定义输出格式。例如，在 `uncover -f https://ip:port/version` 的情况下，ip:port 将在输出中被结果替换，同时保持定义的格式。它还可以用于指定已知的协议/路径/文件，以便准备输出，使其可以立即作为输入传递给管道中的其他工具。
 
 
 ```console
@@ -229,12 +229,12 @@ https://130.211.54.173:443/version
 https://54.184.250.232:443/version
 ```
 
-Output of **uncover** can be further piped to other projects in workflow accepting **stdin** as input, for example:
+**uncover** 的输出可以进一步通过管道传递给工作流中接受 **stdin** 作为输入的其他项目，例如：
 
 
-- `uncover -q example -f ip | naabu` - Runs [naabu](https://github.com/projectdiscovery/naabu) for port scanning on the found host.
-- `uncover -q title:GitLab | httpx` - Runs [httpx](https://github.com/projectdiscovery/httpx) for web server probing the found result.
-- `uncover -q 51.83.59.99/24 | httpx` - Runs [httpx](https://github.com/projectdiscovery/naabu) on host/ports obtained from shodan-internetdb.
+- `uncover -q example -f ip | naabu` - 在发现的主机上运行 [naabu](https://github.com/projectdiscovery/naabu) 进行端口扫描。
+- `uncover -q title:GitLab | httpx` - 运行 [httpx](https://github.com/projectdiscovery/httpx) 对发现的结果进行 Web 服务器探测。
+- `uncover -q 51.83.59.99/24 | httpx` - 在从 shodan-internetdb 获取的主机/端口上运行 [httpx](https://github.com/projectdiscovery/naabu)。
 
 
 ```console
@@ -249,7 +249,7 @@ http://15.236.10.197
 https://129.206.117.248
 ```
 
-- `uncover -q 'org:"Example  Inc."' | httpx | nuclei` - Runs [httpx](https://github.com/projectdiscovery/httpx) / [nuclei](https://github.com/projectdiscovery/nuclei) for vulnerability assessment.
+- `uncover -q 'org:"Example  Inc."' | httpx | nuclei` - 运行 [httpx](https://github.com/projectdiscovery/httpx) / [nuclei](https://github.com/projectdiscovery/nuclei) 进行漏洞评估。
 
 
 ![image](https://user-images.githubusercontent.com/8293321/156753063-86ea4c5d-92ad-4c24-a7af-871c12aa278c.png)

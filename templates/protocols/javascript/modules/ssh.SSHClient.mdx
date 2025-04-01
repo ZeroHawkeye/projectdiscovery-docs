@@ -1,24 +1,24 @@
-# Class: SSHClient
+# 类: SSHClient
 
 [ssh](/templates/protocols/javascript/modules/ssh).SSHClient
 
-SSHClient is a client for SSH servers.
-Internally client uses github.com/zmap/zgrab2/lib/ssh driver.
+SSHClient 是用于 SSH 服务器的客户端。
+内部客户端使用 github.com/zmap/zgrab2/lib/ssh 驱动程序。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
 const client = new ssh.SSHClient();
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/ssh.SSHClient#constructor)
 
-### Methods
+### 方法
 
 - [Close](/templates/protocols/javascript/modules/ssh.SSHClient#close)
 - [Connect](/templates/protocols/javascript/modules/ssh.SSHClient#connect)
@@ -27,35 +27,35 @@ const client = new ssh.SSHClient();
 - [Run](/templates/protocols/javascript/modules/ssh.SSHClient#run)
 - [SetTimeout](/templates/protocols/javascript/modules/ssh.SSHClient#settimeout)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new SSHClient**(): [`SSHClient`](/templates/protocols/javascript/modules/ssh.SSHClient)
 
-#### Returns
+#### 返回
 
 [`SSHClient`](/templates/protocols/javascript/modules/ssh.SSHClient)
 
-#### Defined in
+#### 定义于
 
 ssh.ts:16
 
-## Methods
+## 方法
 
 ### Close
 
 ▸ **Close**(): `boolean`
 
-Close closes the SSH connection and destroys the client
-Returns the success state and error. If error is not nil,
-state will be false
+Close 关闭 SSH 连接并销毁客户端
+返回成功状态和错误。如果错误不为 nil，
+状态将为 false
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
@@ -64,7 +64,7 @@ client.Connect('acme.com', 22, 'username', 'password');
 const closed = client.Close();
 ```
 
-#### Defined in
+#### 定义于
 
 ssh.ts:118
 
@@ -74,24 +74,23 @@ ___
 
 ▸ **Connect**(`host`, `port`, `username`): `boolean`
 
-Connect tries to connect to provided host and port
-with provided username and password with ssh.
-Returns state of connection and error. If error is not nil,
-state will be false
+Connect 尝试使用提供的用户名和密码通过 ssh 连接到提供的主机和端口。
+返回连接状态和错误。如果错误不为 nil，
+状态将为 false
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
@@ -99,7 +98,7 @@ const client = new ssh.SSHClient();
 const connected = client.Connect('acme.com', 22, 'username', 'password');
 ```
 
-#### Defined in
+#### 定义于
 
 ssh.ts:43
 
@@ -109,25 +108,23 @@ ___
 
 ▸ **ConnectSSHInfoMode**(`host`, `port`): [`HandshakeLog`](/templates/protocols/javascript/modules/ssh.HandshakeLog)
 
-ConnectSSHInfoMode tries to connect to provided host and port
-with provided host and port
-Returns HandshakeLog and error. If error is not nil,
-state will be false
-HandshakeLog is a struct that contains information about the
-ssh connection
+ConnectSSHInfoMode 尝试连接到提供的主机和端口
+返回 HandshakeLog 和错误。如果错误不为 nil，
+状态将为 false
+HandshakeLog 是一个包含有关 SSH 连接信息的结构体
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`HandshakeLog`](/templates/protocols/javascript/modules/ssh.HandshakeLog)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
@@ -136,7 +133,7 @@ const info = client.ConnectSSHInfoMode('acme.com', 22);
 log(to_json(info));
 ```
 
-#### Defined in
+#### 定义于
 
 ssh.ts:81
 
@@ -146,24 +143,23 @@ ___
 
 ▸ **ConnectWithKey**(`host`, `port`, `username`): `boolean`
 
-ConnectWithKey tries to connect to provided host and port
-with provided username and private_key.
-Returns state of connection and error. If error is not nil,
-state will be false
+ConnectWithKey 尝试使用提供的用户名和私钥连接到提供的主机和端口。
+返回连接状态和错误。如果错误不为 nil，
+状态将为 false
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
@@ -172,7 +168,7 @@ const privateKey = `-----BEGIN RSA PRIVATE KEY----- ...`;
 const connected = client.ConnectWithKey('acme.com', 22, 'username', privateKey);
 ```
 
-#### Defined in
+#### 定义于
 
 ssh.ts:61
 
@@ -182,23 +178,22 @@ ___
 
 ▸ **Run**(`cmd`): `string`
 
-Run tries to open a new SSH session, then tries to execute
-the provided command in said session
-Returns string and error. If error is not nil,
-state will be false
-The string contains the command output
+Run 尝试打开一个新的 SSH 会话，然后尝试在该会话中执行提供的命令
+返回字符串和错误。如果错误不为 nil，
+状态将为 false
+字符串包含命令输出
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `cmd` | `string` |
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
@@ -208,7 +203,7 @@ const output = client.Run('id');
 log(output);
 ```
 
-#### Defined in
+#### 定义于
 
 ssh.ts:101
 
@@ -218,19 +213,19 @@ ___
 
 ▸ **SetTimeout**(`sec`): `void`
 
-SetTimeout sets the timeout for the SSH connection in seconds
+SetTimeout 设置 SSH 连接的超时时间（以秒为单位）
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `sec` | `number` |
 
-#### Returns
+#### 返回
 
 `void`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ssh = require('nuclei/ssh');
@@ -238,6 +233,6 @@ const client = new ssh.SSHClient();
 client.SetTimeout(10);
 ```
 
-#### Defined in
+#### 定义于
 
 ssh.ts:26

@@ -1,9 +1,9 @@
-# Class: NetConn
+# 类: NetConn
 
 [net](/templates/protocols/javascript/modules/net).NetConn
 
-NetConn is a connection to a remote host.
-this is returned/create by Open and OpenTLS functions.
+NetConn 是与远程主机的连接。
+这是由 Open 和 OpenTLS 函数返回/创建的。
 
 **`Example`**
 
@@ -12,13 +12,13 @@ const net = require('nuclei/net');
 const conn = net.Open('tcp', 'acme.com:80');
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/net.NetConn#constructor)
 
-### Methods
+### 方法
 
 - [Close](/templates/protocols/javascript/modules/net.NetConn#close)
 - [Recv](/templates/protocols/javascript/modules/net.NetConn#recv)
@@ -32,29 +32,29 @@ const conn = net.Open('tcp', 'acme.com:80');
 - [SendHex](/templates/protocols/javascript/modules/net.NetConn#sendhex)
 - [SetTimeout](/templates/protocols/javascript/modules/net.NetConn#settimeout)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new NetConn**(): [`NetConn`](/templates/protocols/javascript/modules/net.NetConn)
 
-#### Returns
+#### 返回
 
 [`NetConn`](/templates/protocols/javascript/modules/net.NetConn)
 
-#### Defined in
+#### 定义于
 
 net.ts:46
 
-## Methods
+## 方法
 
 ### Close
 
 ▸ **Close**(): `void`
 
-Close closes the connection.
+Close 关闭连接。
 
-#### Returns
+#### 返回
 
 `void`
 
@@ -66,7 +66,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 conn.Close();
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:56
 
@@ -76,18 +76,18 @@ ___
 
 ▸ **Recv**(`N`): `Uint8Array`
 
-Recv is similar to RecvFull but does not guarantee full read instead
-it creates a buffer of N bytes and returns whatever is returned by the connection
-for reading headers or initial bytes from the server this is usually used.
-for reading a fixed number of already known bytes (ex: body based on content-length) use RecvFull.
+Recv 类似于 RecvFull，但不保证完整读取，而是
+创建一个 N byte 的缓冲区，并返回连接返回的任何内容。
+通常用于读取服务器的头信息或初始字节。
+对于读取已知固定数量的字节（例如：基于 content-length 的正文），请使用 RecvFull。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `N` | `number` |
 
-#### Returns
+#### 返回
 
 `Uint8Array`
 
@@ -100,7 +100,7 @@ const data = conn.Recv(1024);
 log(`Received ${data.length} bytes from the server`)
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:146
 
@@ -110,17 +110,17 @@ ___
 
 ▸ **RecvFull**(`N`): `Uint8Array`
 
-RecvFull receives data from the connection with a timeout.
-If N is 0, it will read all data sent by the server with 8MB limit.
-it tries to read until N bytes or timeout is reached.
+RecvFull 通过设置超时从连接接收数据。
+如果 N 为 0，它将读取服务器发送的所有数据，上限为 8MB。
+它会尝试读取，直到达到 N byte 或超时。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `N` | `number` |
 
-#### Returns
+#### 返回
 
 `Uint8Array`
 
@@ -132,7 +132,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 const data = conn.RecvFull(1024);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:128
 
@@ -142,18 +142,17 @@ ___
 
 ▸ **RecvFullHex**(`N`): `string`
 
-RecvFullHex receives data from the connection with a timeout
-in hex format.
-If N is 0,it will read all data sent by the server with 8MB limit.
-until N bytes or timeout is reached.
+RecvFullHex 通过设置超时从连接接收以十六进制格式的数据。
+如果 N 为 0，它将读取服务器发送的所有数据，上限为 8MB。
+直到达到 N byte 或超时。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `N` | `number` |
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -165,7 +164,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 const data = conn.RecvFullHex(1024);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:196
 
@@ -175,17 +174,17 @@ ___
 
 ▸ **RecvFullString**(`N`): `string`
 
-RecvFullString receives data from the connection with a timeout
-output is returned as a string.
-If N is 0, it will read all data sent by the server with 8MB limit.
+RecvFullString 通过设置超时从连接接收数据，
+输出以字符串形式返回。
+如果 N 为 0，它将读取服务器发送的所有数据，上限为 8MB。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `N` | `number` |
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -197,7 +196,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 const data = conn.RecvFullString(1024);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:162
 
@@ -207,18 +206,18 @@ ___
 
 ▸ **RecvHex**(`N`): `string`
 
-RecvHex is similar to RecvFullHex but does not guarantee full read instead
-it creates a buffer of N bytes and returns whatever is returned by the connection
-for reading headers or initial bytes from the server this is usually used.
-for reading a fixed number of already known bytes (ex: body based on content-length) use RecvFull.
+RecvHex 类似于 RecvFullHex，但不保证完整读取，而是
+创建一个 N byte 的缓冲区，并返回连接返回的任何内容。
+通常用于读取服务器的头信息或初始字节。
+对于读取已知固定数量的字节（例如：基于 content-length 的正文），请使用 RecvFull。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `N` | `number` |
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -230,7 +229,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 const data = conn.RecvHex(1024);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:213
 
@@ -240,18 +239,18 @@ ___
 
 ▸ **RecvString**(`N`): `string`
 
-RecvString is similar to RecvFullString but does not guarantee full read, instead
-it creates a buffer of N bytes and returns whatever is returned by the connection
-for reading headers or initial bytes from the server this is usually used.
-for reading a fixed number of already known bytes (ex: body based on content-length) use RecvFullString.
+RecvString 类似于 RecvFullString，但不保证完整读取，而是
+创建一个 N byte 的缓冲区，并返回连接返回的任何内容。
+通常用于读取服务器的头信息或初始字节。
+对于读取已知固定数量的字节（例如：基于 content-length 的正文），请使用 RecvFullString。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `N` | `number` |
 
-#### Returns
+#### 返回
 
 `string`
 
@@ -263,7 +262,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 const data = conn.RecvString(1024);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:179
 
@@ -273,15 +272,15 @@ ___
 
 ▸ **Send**(`data`): `void`
 
-Send sends data to the connection with a timeout.
+Send 通过设置超时向连接发送数据。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `data` | `string` |
 
-#### Returns
+#### 返回
 
 `void`
 
@@ -293,7 +292,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 conn.Send('hello');
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:112
 
@@ -303,15 +302,15 @@ ___
 
 ▸ **SendArray**(`data`): `void`
 
-SendArray sends array data to connection
+SendArray 向连接发送数组数据
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `data` | `any` |
 
-#### Returns
+#### 返回
 
 `void`
 
@@ -323,7 +322,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 conn.SendArray(['hello', 'world']);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:84
 
@@ -333,15 +332,15 @@ ___
 
 ▸ **SendHex**(`data`): `void`
 
-SendHex sends hex data to connection
+SendHex 向连接发送十六进制数据
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `data` | `string` |
 
-#### Returns
+#### 返回
 
 `void`
 
@@ -353,7 +352,7 @@ const conn = net.Open('tcp', 'acme.com:80');
 conn.SendHex('68656c6c6f');
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:98
 
@@ -363,15 +362,15 @@ ___
 
 ▸ **SetTimeout**(`value`): `void`
 
-SetTimeout sets read/write timeout for the connection (in seconds).
+SetTimeout 为连接设置读/写超时（以秒为单位）。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `value` | `number` |
 
-#### Returns
+#### 返回
 
 `void`
 
@@ -383,6 +382,6 @@ const conn = net.Open('tcp', 'acme.com:80');
 conn.SetTimeout(10);
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:70

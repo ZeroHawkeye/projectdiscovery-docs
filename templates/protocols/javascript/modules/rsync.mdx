@@ -1,35 +1,35 @@
-# Namespace: rsync
+# 命名空间: rsync
 
-## Table of contents
+## 目录
 
-### Interfaces
+### 接口
 
 - [IsRsyncResponse](/templates/protocols/javascript/modules/rsync.IsRsyncResponse)
 
-### Functions
+### 函数
 
 - [IsRsync](/templates/protocols/javascript/modules/rsync#isrsync)
 
-## Functions
+## 函数
 
 ### IsRsync
 
 ▸ **IsRsync**(`host`, `port`): [`IsRsyncResponse`](/templates/protocols/javascript/modules/rsync.IsRsyncResponse) \| ``null``
 
-IsRsync checks if a host is running a Rsync server.
+IsRsync 检查主机是否运行 Rsync 服务器。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 [`IsRsyncResponse`](/templates/protocols/javascript/modules/rsync.IsRsyncResponse) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const rsync = require('nuclei/rsync');
@@ -37,6 +37,6 @@ const isRsync = rsync.IsRsync('acme.com', 873);
 log(toJSON(isRsync));
 ```
 
-#### Defined in
+#### 定义于
 
 rsync.ts:12

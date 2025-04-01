@@ -1,67 +1,67 @@
-# Class: MSSQLClient
+# 类: MSSQLClient
 
 [mssql](/templates/protocols/javascript/modules/mssql).MSSQLClient
 
-Client is a client for MS SQL database.
-Internally client uses microsoft/go-mssqldb driver.
+Client 是 MS SQL 数据库的客户端。
+内部客户端使用 microsoft/go-mssqldb 驱动。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const mssql = require('nuclei/mssql');
 const client = new mssql.MSSQLClient;
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/mssql.MSSQLClient#constructor)
 
-### Methods
+### 方法
 
 - [Connect](/templates/protocols/javascript/modules/mssql.MSSQLClient#connect)
 - [ConnectWithDB](/templates/protocols/javascript/modules/mssql.MSSQLClient#connectwithdb)
 - [IsMssql](/templates/protocols/javascript/modules/mssql.MSSQLClient#ismssql)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new MSSQLClient**(): [`MSSQLClient`](/templates/protocols/javascript/modules/mssql.MSSQLClient)
 
-#### Returns
+#### 返回
 
 [`MSSQLClient`](/templates/protocols/javascript/modules/mssql.MSSQLClient)
 
-#### Defined in
+#### 定义于
 
 mssql.ts:16
 
-## Methods
+## 方法
 
 ### Connect
 
 ▸ **Connect**(`host`, `port`, `username`): `boolean`
 
-Connect connects to MS SQL database using given credentials.
-If connection is successful, it returns true.
-If connection is unsuccessful, it returns false and error.
-The connection is closed after the function returns.
+Connect 使用给定的凭据连接到 MS SQL 数据库。
+如果连接成功，它返回 true。
+如果连接失败，它返回 false 和错误。
+函数返回后连接将关闭。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const mssql = require('nuclei/mssql');
@@ -69,7 +69,7 @@ const client = new mssql.MSSQLClient;
 const connected = client.Connect('acme.com', 1433, 'username', 'password');
 ```
 
-#### Defined in
+#### 定义于
 
 mssql.ts:29
 
@@ -79,24 +79,24 @@ ___
 
 ▸ **ConnectWithDB**(`host`, `port`, `username`): `boolean`
 
-ConnectWithDB connects to MS SQL database using given credentials and database name.
-If connection is successful, it returns true.
-If connection is unsuccessful, it returns false and error.
-The connection is closed after the function returns.
+ConnectWithDB 使用给定的凭据和数据库名称连接到 MS SQL 数据库。
+如果连接成功，它返回 true。
+如果连接失败，它返回 false 和错误。
+函数返回后连接将关闭。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const mssql = require('nuclei/mssql');
@@ -104,7 +104,7 @@ const client = new mssql.MSSQLClient;
 const connected = client.ConnectWithDB('acme.com', 1433, 'username', 'password', 'master');
 ```
 
-#### Defined in
+#### 定义于
 
 mssql.ts:46
 
@@ -114,28 +114,28 @@ ___
 
 ▸ **IsMssql**(`host`, `port`): `boolean`
 
-IsMssql checks if the given host is running MS SQL database.
-If the host is running MS SQL database, it returns true.
-If the host is not running MS SQL database, it returns false.
+IsMssql 检查给定的主机是否运行 MS SQL 数据库。
+如果主机运行 MS SQL 数据库，它返回 true。
+如果主机未运行 MS SQL 数据库，它返回 false。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const mssql = require('nuclei/mssql');
 const isMssql = mssql.IsMssql('acme.com', 1433);
 ```
 
-#### Defined in
+#### 定义于
 
 mssql.ts:61

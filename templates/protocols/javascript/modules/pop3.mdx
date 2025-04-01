@@ -1,31 +1,31 @@
-# Namespace: pop3
+# 命名空间: pop3
 
-## Table of contents
+## 目录
 
-### Interfaces
+### 接口
 
 - [IsPOP3Response](/templates/protocols/javascript/modules/pop3.IsPOP3Response)
 
-### Functions
+### 函数
 
 - [IsPOP3](/templates/protocols/javascript/modules/pop3#ispop3)
 
-## Functions
+## 函数
 
 ### IsPOP3
 
 ▸ **IsPOP3**(`host`, `port`): [`IsPOP3Response`](/templates/protocols/javascript/modules/pop3.IsPOP3Response) \| ``null``
 
-IsPOP3 checks if a host is running a POP3 server.
+IsPOP3 检查主机是否运行 POP3 服务器。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 [`IsPOP3Response`](/templates/protocols/javascript/modules/pop3.IsPOP3Response) \| ``null``
 
@@ -37,6 +37,6 @@ const isPOP3 = pop3.IsPOP3('acme.com', 110);
 log(toJSON(isPOP3));
 ```
 
-#### Defined in
+#### 定义于
 
 pop3.ts:12

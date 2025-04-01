@@ -1,31 +1,31 @@
 ---
-title: Notify Usage
-description: "Learn Notify usage including flags and filters"
-sidebarTitle: Usage
+title: Notify 使用方法
+description: "了解Notify的使用方法，包括标志和过滤器"
+sidebarTitle: 使用方法
 ---
 
-## Access help
+## 获取帮助
 
-Use `notify -h` to display all of the help options.
+使用 `notify -h` 显示所有帮助选项。
 
-## Notify options
+## Notify 选项
 
-| Flag                    | Description                                        | Example                               |
-|-------------------------|----------------------------------------------------|---------------------------------------|
-| `-bulk`                 | enable bulk processing                             | `notify -bulk`                        |
-| `-char-limit`           | max character limit per message (default 4000)     | `notify -cl 2000`                     |
-| `-config`               | notify configuration file                          | `notify -config config.yaml`          |
-| `-data`                 | input file to send for notify                      | `notify -i test.txt`                  |
-| `-delay`                | delay in seconds between each notification         | `notify -d 2`                         |
-| `-id`                   | id to send the notification to (optional)          | `notify -id recon,scans`              |
-| `-msg-format`           | add custom formatting to message                   | `notify -mf Hey {{data}}`             |
-| `-no-color`             | disable colors in output                           | `notify -nc`                          |
-| `-provider-config`      | provider config path                               | `notify -pc provider.yaml`            |
-| `-provider`             | provider to send the notification to (optional)    | `notify -p slack,telegram`            |
-| `-proxy`                | http proxy to use with notify                      | `notify -proxy http://127.0.0.1:8080` |
-| `-rate-limit`           | maximum number of HTTP requests to send per second | `notify -rl 1`                        |
-| `-silent`               | enable silent mode                                 | `notify -silent`                      |
-| `-verbose`              | enable verbose mode                                | `notify -verbose`                     |
-| `-version`              | display version                                    | `notify -version`                     |
-| `-update`               | updates to latest version                          | `notify -update`                      |
-| `-disable-update-check` | disables automatic update check                    | `notify -duc`                         |
+| 标志                    | 描述                                       | 示例                                   |
+|-------------------------|--------------------------------------------|----------------------------------------|
+| `-bulk`                 | 启用批量处理                               | `notify -bulk`                        |
+| `-char-limit`           | 每条消息的最大字符限制（默认4000）         | `notify -cl 2000`                     |
+| `-config`               | notify配置文件                             | `notify -config config.yaml`          |
+| `-data`                 | 要发送的notify输入文件                     | `notify -i test.txt`                  |
+| `-delay`                | 每个通知之间的延迟（秒）                   | `notify -d 2`                         |
+| `-id`                   | 发送通知的ID（可选）                       | `notify -id recon,scans`              |
+| `-msg-format`           | 添加自定义消息格式                         | `notify -mf Hey {{data}}`             |
+| `-no-color`             | 禁用输出中的颜色                           | `notify -nc`                          |
+| `-provider-config`      | 提供者配置路径                             | `notify -pc provider.yaml`            |
+| `-provider`             | 发送通知的提供者（可选）                   | `notify -p slack,telegram`            |
+| `-proxy`                | 与notify一起使用的http代理                 | `notify -proxy http://127.0.0.1:8080` |
+| `-rate-limit`           | 每秒发送的HTTP请求最大数量                 | `notify -rl 1`                        |
+| `-silent`               | 启用静默模式                               | `notify -silent`                      |
+| `-verbose`              | 启用详细模式                               | `notify -verbose`                     |
+| `-version`              | 显示版本                                   | `notify -version`                     |
+| `-update`               | 更新到最新版本                             | `notify -update`                      |
+| `-disable-update-check` | 禁用自动更新检查                           | `notify -duc`                         |

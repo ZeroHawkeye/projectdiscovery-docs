@@ -1,16 +1,15 @@
 ---
-title: 'Running dnsx'
-description: "Learn about running dnsx with examples including commands and output"
-sidebarTitle: 'Running'
+title: '运行 dnsx'
+description: "了解如何运行 dnsx，包括命令示例和输出结果"
+sidebarTitle: '运行'
 ---
-For all of the flags and options available for `dnsx` be sure to check out the [Usage](/tools/dnsx/usage) page. On this page we share examples running 'dnsx' with specific flags and goals
-and the output you can expect from each. 
+要了解 `dnsx` 可用的所有标志和选项，请查看 [使用方法](/tools/dnsx/usage) 页面。在本页中，我们分享运行 'dnsx' 的示例，包括特定标志和目标，以及每个示例的预期输出。
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
-## Basic Examples
-### DNS Resolving
+<Note> 如果您有疑问，请通过 [帮助](/help) 联系我们。</Note>
+## 基本示例
+### DNS 解析
 
-Filter active hostnames from the list of passive subdomains, obtained from various sources:
+从各种来源获得的被动子域名列表中筛选活跃的主机名：
 
 ```console
 subfinder -silent -d hackerone.com | dnsx -silent
@@ -28,7 +27,7 @@ events.hackerone.com
 support.hackerone.com
 ```
 
-Print **A** records for the given list of subdomains:
+打印给定子域名列表的 **A** 记录：
 
 ```console
 subfinder -silent -d hackerone.com | dnsx -silent -a -resp
@@ -69,7 +68,7 @@ mta-sts.managed.hackerone.com [185.199.110.153]
 mta-sts.managed.hackerone.com [185.199.111.153]
 ```
 
-Extract **A** records for the given list of subdomains:
+提取给定子域名列表的 **A** 记录：
 
 ```console
 subfinder -silent -d hackerone.com | dnsx -silent -a -resp-only
@@ -93,7 +92,7 @@ subfinder -silent -d hackerone.com | dnsx -silent -a -resp-only
 185.199.111.153
 ```
 
-Extract **CNAME** records for the given list of subdomains:
+提取给定子域名列表的 **CNAME** 记录：
 
 ```console
 subfinder -silent -d hackerone.com | dnsx -silent -cname -resp
@@ -104,7 +103,7 @@ mta-sts.hackerone.com [hacker0x01.github.io]
 mta-sts.forwarding.hackerone.com [hacker0x01.github.io]
 events.hackerone.com [whitelabel.bigmarker.com]
 ```
-Extract **ASN** records for the given list of subdomains:
+提取给定子域名列表的 **ASN** 记录：
 ```console
 subfinder -silent -d hackerone.com | dnsx -silent  -asn
 
@@ -116,7 +115,7 @@ api.hackerone.com [AS13335, CLOUDFLARENET, US]
 support.hackerone.com [AS13335, CLOUDFLARENET, US]
 ```
 
-Probe using [dns status code](https://github.com/projectdiscovery/dnsx/wiki/RCODE-ID-VALUE-Mapping) on given list of (sub)domains:
+使用 [dns 状态码](https://github.com/projectdiscovery/dnsx/wiki/RCODE-ID-VALUE-Mapping) 探测给定的(子)域名列表：
 
 ```console
 subfinder -silent -d hackerone.com | dnsx -silent -rcode noerror,servfail,refused
@@ -132,7 +131,7 @@ mta-sts.forwarding.hackerone.com [NOERROR]
 docs.hackerone.com [NOERROR]
 ```
 
-Extract subdomains from given network range using `PTR` query:
+使用 `PTR` 查询从给定网络范围提取子域名：
 
 ```console
 echo 173.0.84.0/24 | dnsx -silent -resp-only -ptr
@@ -150,7 +149,7 @@ slc-a-origin-pointofsale.paypal.com
 fpdbs.paypal.com
 ```
 
-Extract subdomains from given ASN using `PTR` query:
+使用 `PTR` 查询从给定 ASN 提取子域名：
 ```console
 echo AS17012 | dnsx -silent -resp-only -ptr 
 
@@ -167,9 +166,9 @@ minicart.paypal-labs.com
 ```
 ---------
 
-### DNS Bruteforce
+### DNS 暴力破解
 
-Bruteforce subdomains for given domain or list of domains using `d` and `w` flag:
+使用 `d` 和 `w` 标志对给定域名或域名列表进行子域名暴力破解：
 
 ```console
 dnsx -silent -d facebook.com -w dns_worldlist.txt
@@ -190,7 +189,7 @@ careers.facebook.com
 code.facebook.com
 ```
 
-Bruteforce targeted subdomain using single or multiple keyword input, as `d` or `w` flag supports file or comma separated keyword inputs:
+使用单个或多个关键词输入进行目标子域名暴力破解，因为 `d` 或 `w` 标志支持文件或逗号分隔的关键词输入：
 
 ```console
 dnsx -silent -d domains.txt -w jira,grafana,jenkins
@@ -212,7 +211,7 @@ jira.atlassian.net
 jira.atlassian.com
 ```
 
-Values are accepted from **stdin** for all the input types (`-list`, `-domain`, `-wordlist`). The `-list` flag defaults to `stdin`, but the same can be achieved for other input types by adding a `-` (dash) as parameter:
+所有输入类型（`-list`、`-domain`、`-wordlist`）都接受来自 **stdin** 的值。`-list` 标志默认为 `stdin`，但通过添加 `-`（破折号）作为参数，其他输入类型也可以实现相同的效果：
 
 ```console
 cat domains.txt | dnsx -silent -w jira,grafana,jenkins -d -
@@ -234,7 +233,7 @@ jira.atlassian.net
 jira.atlassian.com
 ```
 
-#### DNS Bruteforce with Placeholder based wordlist
+#### 使用基于占位符的词表进行 DNS 暴力破解
 
 ```bash
 $ cat tld.txt
@@ -272,9 +271,9 @@ google.cg [142.250.183.131]
 google.dj [142.250.192.3] 
 ```
 
-### Wildcard filtering
+### 通配符过滤
 
-A special feature of `dnsx` is its ability to handle **multi-level DNS based wildcards**, and do it so with a very reduced number of DNS requests. Sometimes all the subdomains will resolve, which leads to lots of garbage in the output. The way `dnsx` handles this is by keeping track of how many subdomains point to an IP and if the count of the subdomains increase beyond a certain threshold, it will check for wildcards on all the levels of the hosts for that IP iteratively.
+`dnsx` 的一个特殊功能是其处理**多级基于 DNS 的通配符**的能力，而且只需很少的 DNS 请求。有时所有子域名都会解析，这会导致输出中出现大量无用信息。`dnsx` 处理这个问题的方式是通过跟踪指向某个 IP 的子域名数量，如果子域名数量超过某个阈值，它将对该 IP 的主机的所有级别上的通配符进行迭代检查。
 
 ```console
 dnsx -l subdomain_list.txt -wd airbnb.com -o output.txt
@@ -282,9 +281,9 @@ dnsx -l subdomain_list.txt -wd airbnb.com -o output.txt
 
 ---------
 
-### Dnsx as a library
+### 将 Dnsx 作为库使用
 
-It's possible to use the library directly in your golang programs. The following code snippets is an example of use in golang programs. Please refer to [here](https://pkg.go.dev/github.com/projectdiscovery/dnsx@v1.1.0/libs/dnsx) for detailed package configuration and usage.
+可以在 golang 程序中直接使用该库。以下代码片段是在 golang 程序中使用的示例。有关详细的包配置和使用方法，请参考[这里](https://pkg.go.dev/github.com/projectdiscovery/dnsx@v1.1.0/libs/dnsx)。
 
 ```go
 package main
@@ -296,14 +295,14 @@ import (
 )
 
 func main() {
-	// Create DNS Resolver with default options
+	// 使用默认选项创建 DNS 解析器
 	dnsClient, err := dnsx.New(dnsx.DefaultOptions)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
 	}
 
-	// DNS A question and returns corresponding IPs
+	// DNS A 查询并返回相应 IP
 	result, err := dnsClient.Lookup("hackerone.com")
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
@@ -313,7 +312,7 @@ func main() {
 		fmt.Printf("%d: %s\n", idx+1, msg)
 	}
 
-	// Query
+	// 查询
 	rawResp, err := dnsClient.QueryOne("hackerone.com")
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

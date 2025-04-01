@@ -1,17 +1,17 @@
 ---
-title: "Connection Tampering"
-description: "Learn more about using HTTP pipelining and connection pooling with Nuclei"
+title: "连接篡改"
+description: "了解更多关于在Nuclei中使用HTTP管道和连接池"
 ---
 
-### Pipelining
+### 管道化
 
-HTTP Pipelining support has been added which allows multiple HTTP requests to be sent on the same connection inspired from [http-desync-attacks-request-smuggling-reborn](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn).
+HTTP Pipelining支持已被添加，允许在同一连接上发送多个HTTP请求，灵感来自[http-desync-attacks-request-smuggling-reborn](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn)。
 
-Before running HTTP pipelining based templates, make sure the running target supports HTTP Pipeline connection, otherwise nuclei engine fallbacks to standard HTTP request engine. 
+在运行基于HTTP pipelining的模板之前，请确保运行目标支持HTTP Pipeline连接，否则nuclei引擎会回退到标准HTTP请求引擎。
 
-If you want to confirm the given domain or list of subdomains supports HTTP Pipelining, [httpx](https://github.com/projectdiscovery/) has a flag `-pipeline` to do so.
+如果你想确认给定域名或子域名列表是否支持HTTP Pipelining，[httpx](https://github.com/projectdiscovery/)有一个标志`-pipeline`可以做到这一点。
 
-An example configuring showing pipelining attributes of nuclei.
+一个展示nuclei管道化属性的配置示例：
 
 ```yaml
     unsafe: true
@@ -20,7 +20,7 @@ An example configuring showing pipelining attributes of nuclei.
     pipeline-requests-per-connection: 25000
 ```
 
-An example template demonstrating pipelining capabilities of nuclei has been provided below-
+下面提供了一个展示nuclei管道化功能的示例模板：
 
 ```yaml
 id: pipeline-testing
@@ -52,15 +52,15 @@ http:
           - 200
 ```
 
-### Connection pooling
+### 连接池
 
-While the earlier versions of nuclei did not do connection pooling, users can now configure templates to either use HTTP connection pooling or not. This allows for faster scanning based on requirement.
+虽然早期版本的nuclei不进行连接池处理，但用户现在可以配置模板以使用或不使用HTTP连接池。这允许根据需求进行更快的扫描。
 
-To enable connection pooling in the template, `threads` attribute can be defined with respective number of threads you wanted to use in the payloads sections.
+要在模板中启用连接池，可以在payloads部分中定义`threads`属性，指定你想要使用的线程数量。
 
-`Connection: Close` header can not be used in HTTP connection pooling template, otherwise engine will fail and fallback to standard HTTP requests with pooling.
+在HTTP连接池模板中不能使用`Connection: Close`头，否则引擎将失败并回退到带池的标准HTTP请求。
 
-An example template using HTTP connection pooling-
+使用HTTP连接池的示例模板：
 
 ```yaml
 id: fuzzing-example

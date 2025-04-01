@@ -1,7 +1,7 @@
 ---
-title: "Installing Subfinder"
-description: "Learn about how to install and get started with Subfinder"
-sidebarTitle: "Install"
+title: "安装 Subfinder"
+description: "了解如何安装和开始使用 Subfinder"
+sidebarTitle: "安装"
 ---
 
 <Tabs>
@@ -10,7 +10,7 @@ sidebarTitle: "Install"
     go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
     ```
 
-    <Note>Subfinder requires the latest **GO** version to install successfully.</Note>
+    <Note>Subfinder 需要最新版本的 **GO** 才能成功安装。</Note>
 
   </Tab>
   <Tab title="Brew">
@@ -18,7 +18,7 @@ sidebarTitle: "Install"
     brew install subfinder
     ```
 
-    <Note>Supported in **macOS** (or Linux)</Note>
+    <Note>支持 **macOS**（或 Linux）</Note>
 
   </Tab>
   <Tab title="Docker">
@@ -26,7 +26,7 @@ sidebarTitle: "Install"
     docker pull projectdiscovery/subfinder:latest
     ```
 
-    {/* Docker-specific usage instructions can be found [here](./running#running-with-docker). */}
+    {/* Docker 特定的使用说明可以在[这里](./running#running-with-docker)找到。 */}
 
   </Tab>
   <Tab title="GitHub">
@@ -38,7 +38,7 @@ sidebarTitle: "Install"
     subfinder -version;
     ```
 
-    <Note> Subfinder require the latest **GO** version to install successfully.</Note>
+    <Note>Subfinder 需要最新版本的 **GO** 才能成功安装。</Note>
 
   </Tab>
   <Tab title="Binary">
@@ -47,27 +47,27 @@ sidebarTitle: "Install"
     ```
 
     <Tip>
-    - Download the latest binary for your OS.
-    - Unzip the ready to run binary.
+    - 下载适用于您操作系统的最新二进制文件。
+    - 解压可直接运行的二进制文件。
     </Tip>
 
   </Tab>
 </Tabs>
 
-## Installation notes
+## 安装注意事项
 
- - Subfinder requires the latest version of [**Go**](https://go.dev/doc/install)
- -  Add the Go bin path to the system paths. On OSX or Linux, in your terminal use
+ - Subfinder 需要安装最新版本的 [**Go**](https://go.dev/doc/install)
+ - 将 Go bin 路径添加到系统路径中。在 OSX 或 Linux 中，在终端使用
  ```
  echo export PATH=$PATH:$HOME/go/bin >> $home/.bashrc
  source $home/.bashrc
  ```
- - To add the path in Windows, [click this link for instructions.](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
- - The binary will be located in `$home/go/bin/subfinder`  
+ - 要在 Windows 中添加路径，[点击此链接获取说明。](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+ - 二进制文件将位于 `$home/go/bin/subfinder`  
 
-## Post install configuration
+## 安装后配置
 
-Subfinder is available immediately after installation, however the following services require the configuration of API keys to work:
+安装后可立即使用 Subfinder，但以下服务需要配置 API 密钥才能工作：
 
 [BeVigil](https://bevigil.com/osint-api), [BinaryEdge](https://binaryedge.io), [BufferOver](https://tls.bufferover.run), [C99](https://api.c99.nl/), [Censys](https://censys.io), [CertSpotter](https://sslmate.com/certspotter/api/), [Chaos](https://chaos.projectdiscovery.io), 
 [Chinaz](http://my.chinaz.com/ChinazAPI/DataCenter/MyDataApi), [DNSDB](https://api.dnsdb.info), [Fofa](https://fofa.info/static_pages/api_help), [FullHunt](https://fullhunt.io), [GitHub](https://github.com), [Intelx](https://intelx.io), 
@@ -75,15 +75,15 @@ Subfinder is available immediately after installation, however the following ser
 [VirusTotal](https://www.virustotal.com), [WhoisXML API](https://whoisxmlapi.com/), ZoomEye API [china](https://api.zoomeye.org) - [worldwide](https://api.zoomeye.hk), 
 [dnsrepo](https://dnsrepo.noc.org), [Hunter](https://hunter.qianxin.com/), [Facebook](https://developers.facebook.com), [BuiltWith](https://api.builtwith.com/domain-api)
 
-You can also use the `subfinder -ls` command to display all the available sources.
+您还可以使用 `subfinder -ls` 命令显示所有可用的源。
 
-These values are stored in the `$HOME/.config/subfinder/provider-config.yaml` file which will be created when you run the tool for the first time. 
-The configuration file uses the YAML format. Multiple API keys can be specified for each of these services from which one of them will be used for enumeration.
+这些值存储在 `$HOME/.config/subfinder/provider-config.yaml` 文件中，该文件将在您首次运行工具时创建。
+配置文件使用 YAML 格式。可以为每个服务指定多个 API 密钥，其中一个将用于枚举。
 
-Composite keys for sources like, Censys, PassiveTotal, Fofa, Intellix and 360quake, need to be separated with a colon (:).
+对于 Censys、PassiveTotal、Fofa、Intellix 和 360quake 等源的复合密钥，需要用冒号（:）分隔。
 
-## Example provider config
-An example provider config file: 
+## 提供者配置示例
+一个提供者配置文件示例：
 
 ```
 binaryedge:
@@ -114,12 +114,12 @@ intelx:
   - 2.intelx.io:s4324-b98b-41b2-220e8-3320f6a1284d
   ```
 
-## RedHunt Lab Attack Surface Recon API
-RedHunt Labs's [Attack Surface Recon API](https://devportal.redhuntlabs.com/) has different API endpoints depending on the user's subscription. Make sure to add the appropriate endpoint before running any scans.
+## RedHunt Lab 攻击面侦察 API
+RedHunt Labs 的[攻击面侦察 API](https://devportal.redhuntlabs.com/)根据用户的订阅有不同的 API 端点。在运行任何扫描之前，请确保添加适当的端点。
 
 ## ZoomEye API
 
-Before conducting any scans, please ensure you are using the correct host to comply with geographical access restrictions of the ZoomEye API:
+在进行任何扫描之前，请确保您使用正确的主机以遵守 ZoomEye API 的地理访问限制：
 
-- **zoomeye.org** is exclusively for users within China.
-- **zoomeye.hk** is for users outside China.
+- **zoomeye.org** 专门供中国境内用户使用。
+- **zoomeye.hk** 供中国境外用户使用。

@@ -1,13 +1,13 @@
 ---
-title: "PDTM Usage"
-description: "Learn PDTM usage including flags and options"
-sidebarTitle: "Usage"
+title: "PDTM 使用方法"
+description: "学习 PDTM 使用方法，包括标志和选项"
+sidebarTitle: "使用方法"
 ---
-## Access help 
+## 获取帮助
 
-Use `pdtm - h` to display all help options. 
+使用 `pdtm -h` 显示所有帮助选项。
 
-## PDTM options
+## PDTM 选项
 
 
 ```console
@@ -17,29 +17,28 @@ Usage:
 
 Flags:
 CONFIG:
-   -config string            cli flag configuration file (default "$HOME/.config/pdtm/config.yaml")
-   -bp, -binary-path string  custom location to download project binary (default "$HOME/.pdtm/go/bin")
+   -config string            命令行标志配置文件 (默认 "$HOME/.config/pdtm/config.yaml")
+   -bp, -binary-path string  自定义下载项目二进制文件的位置 (默认 "$HOME/.pdtm/go/bin")
 
 INSTALL:
-   -i, -install string[]  install single or multiple project by name (comma separated)
-   -ia, -install-all      install all the projects
-   -ip, -install-path     append path to PATH environment variables
+   -i, -install string[]  安装单个或多个项目（用逗号分隔）
+   -ia, -install-all      安装所有项目
+   -ip, -install-path     将路径添加到 PATH 环境变量
 
 UPDATE:
-   -u, -update string[]         update single or multiple project by name (comma separated)
-   -ua, -update-all             update all the projects
-   -up, -self-update            update pdtm to latest version
-   -duc, -disable-update-check  disable automatic pdtm update check
+   -u, -update string[]         更新单个或多个项目（用逗号分隔）
+   -ua, -update-all             更新所有项目
+   -up, -self-update            更新 pdtm 到最新版本
+   -duc, -disable-update-check  禁用自动检查 pdtm 更新
 
 REMOVE:
-   -r, -remove string[]  remove single or multiple project by name (comma separated)
-   -ra, -remove-all      remove all the projects
-   -rp, -remove-path     remove path from PATH environment variables
+   -r, -remove string[]  移除单个或多个项目（用逗号分隔）
+   -ra, -remove-all      移除所有项目
+   -rp, -remove-path     从 PATH 环境变量中移除路径
 
 DEBUG:
-   -sp, -show-path          show the current binary path then exit
-   -version                 show version of the project
-   -v, -verbose             show verbose output
-   -nc, -no-color           disable output content coloring (ANSI escape codes)
-   -disable-changelog, -dc  disable release changelog in output
-```
+   -sp, -show-path          显示当前二进制路径然后退出
+   -version                 显示项目版本
+   -v, -verbose             显示详细输出
+   -nc, -no-color           禁用输出内容着色 (ANSI escape codes)
+   -disable-changelog, -dc  禁用在输出中显示发布更新日志

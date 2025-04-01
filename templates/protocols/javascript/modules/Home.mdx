@@ -1,7 +1,7 @@
-# ProjectDiscovery Documentation
+# ProjectDiscovery 文档
 
 <h4 align="center">
-    This is the source code for the ProjectDiscovery documentation located at https://docs.projectdiscovery.io
+    这是 ProjectDiscovery 文档的源代码，位于 https://docs.projectdiscovery.io
 </h4>
 
 <p align="center">
@@ -11,33 +11,33 @@
 </p>
 
 <p align="center">
-  <a href="#development">Development</a> •
-  <a href="#deploying">Deploying</a> •
-  <a href="https://discord.gg/projectdiscovery">Join Discord</a>
+  <a href="#development">开发</a> •
+  <a href="#deploying">部署</a> •
+  <a href="https://discord.gg/projectdiscovery">加入 Discord</a>
 </p>
 
 ---
 
-## Development
+## 开发
 
-1. Checkout this repository
-1. Install mintlify with `npm i -g mintlify@latest`
-1. Run `mintlify dev`
+1. 检出此仓库
+1. 安装 mintlify，使用 `npm i -g mintlify@latest`
+1. 运行 `mintlify dev`
 
-## Deploying 
+## 部署 
 
-To build the final product, we have a couple of additional steps:
+为了构建最终产品，我们有几个额外的步骤：
 
-1. Build the JS Protocol Docs
+1. 构建 JS 协议文档
 
 - `npm install -g jsdoc-to-markdown`
 - `./bin/jsdocs.sh`
 
-2. Build the PDCP API reference documentation
+2. 构建 PDCP API 参考文档
 
-- Either download the latest `openapi.yaml` manually or run `./bin/download-api.sh`
-- Run `./bin/generate-api.sh` to generate any new API files
+- 要么手动下载最新的 `openapi.yaml`，要么运行 `./bin/download-api.sh`
+- 运行 `./bin/generate-api.sh` 生成任何新的 API 文件
 
-3. Deployment
+3. 部署
 
-After those, Mintlify handles the deployment automatically.
+在这些之后，Mintlify 会自动处理部署。

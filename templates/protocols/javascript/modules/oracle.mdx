@@ -1,35 +1,35 @@
-# Namespace: oracle
+# 命名空间: oracle
 
-## Table of contents
+## 目录
 
-### Interfaces
+### 接口
 
 - [IsOracleResponse](/templates/protocols/javascript/modules/oracle.IsOracleResponse)
 
-### Functions
+### 函数
 
 - [IsOracle](/templates/protocols/javascript/modules/oracle#isoracle)
 
-## Functions
+## 函数
 
 ### IsOracle
 
 ▸ **IsOracle**(`host`, `port`): [`IsOracleResponse`](/templates/protocols/javascript/modules/oracle.IsOracleResponse) \| ``null``
 
-IsOracle checks if a host is running an Oracle server
+IsOracle 检查主机是否运行 Oracle 服务器
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 [`IsOracleResponse`](/templates/protocols/javascript/modules/oracle.IsOracleResponse) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const oracle = require('nuclei/oracle');
@@ -37,6 +37,6 @@ const isOracle = oracle.IsOracle('acme.com', 1521);
 log(toJSON(isOracle));
 ```
 
-#### Defined in
+#### 定义于
 
 oracle.ts:12

@@ -1,10 +1,10 @@
-# Interface: SearchResult
+# 接口: SearchResult
 
 [ldap](/templates/protocols/javascript/modules/ldap).SearchResult
 
-SearchResult contains search result of any / all ldap search request
+SearchResult 包含任何/所有 ldap 搜索请求的搜索结果
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -12,23 +12,23 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 const results = client.Search('(objectinterface=*)', 'cn', 'mail');
 ```
 
-## Table of contents
+## 目录
 
-### Properties
+### 属性
 
 - [Controls](/templates/protocols/javascript/modules/ldap.SearchResult#controls)
 - [Entries](/templates/protocols/javascript/modules/ldap.SearchResult#entries)
 - [Referrals](/templates/protocols/javascript/modules/ldap.SearchResult#referrals)
 
-## Properties
+## 属性
 
 ### Controls
 
-• `Optional` **Controls**: `string`[]
+• `可选` **Controls**: `string`[]
 
-Controls contains list of controls
+Controls 包含控制列表
 
-#### Defined in
+#### 定义于
 
 ldap.ts:739
 
@@ -36,11 +36,11 @@ ___
 
 ### Entries
 
-• `Optional` **Entries**: [`LdapEntry`](/templates/protocols/javascript/modules/ldap.LdapEntry)[]
+• `可选` **Entries**: [`LdapEntry`](/templates/protocols/javascript/modules/ldap.LdapEntry)[]
 
-Entries contains list of entries
+Entries 包含条目列表
 
-#### Defined in
+#### 定义于
 
 ldap.ts:745
 
@@ -48,10 +48,10 @@ ___
 
 ### Referrals
 
-• `Optional` **Referrals**: `string`[]
+• `可选` **Referrals**: `string`[]
 
-Referrals contains list of referrals
+Referrals 包含引用列表
 
-#### Defined in
+#### 定义于
 
 ldap.ts:733

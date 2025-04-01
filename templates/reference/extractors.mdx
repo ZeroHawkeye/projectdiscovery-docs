@@ -1,132 +1,132 @@
 ---
-title: "Extractors"
-description: "Review details on extractors for Nuclei"
+title: "提取器"
+description: "查看 Nuclei 提取器的详细信息"
 icon: "arrow-down-to-line"
 iconType: "duotone"
 ---
 
-Extractors can be used to extract and display in results a match from the response returned by a module.
+提取器可用于从模块返回的响应中提取匹配项并在结果中显示。
 
 
-### Types
+### 类型
 
-Multiple extractors can be specified in a request. As of now we support five type of extractors.
+一个请求中可以指定多个提取器。目前我们支持五种类型的提取器。
 
-1. **regex** - Extract data from response based on a Regular Expression.
-2. **kval** - Extract `key: value`/`key=value` formatted data from Response Header/Cookie
-3. **json** - Extract data from JSON based response in JQ like syntax.
-4. **xpath** - Extract xpath based data from HTML Response
-5. **dsl** - Extract data from the response based on a DSL expressions.
+1. **regex** - 基于正则表达式从响应中提取数据。
+2. **kval** - 从响应头/Cookie中提取`key: value`/`key=value`格式的数据
+3. **json** - 使用类似JQ语法从基于JSON的响应中提取数据。
+4. **xpath** - 从HTML响应中提取基于xpath的数据
+5. **dsl** - 基于DSL表达式从响应中提取数据。
 
-### Regex Extractor
+### Regex 提取器
 
-Example extractor for HTTP Response body using **regex** - 
+使用**regex**提取HTTP响应体的示例 - 
 
 ```yaml
 extractors:
-  - type: regex # type of the extractor
-    part: body  # part of the response (header,body,all)
+  - type: regex # 提取器类型
+    part: body  # 响应的部分(header,body,all)
     regex:
-      - "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"  # regex to use for extraction.
+      - "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"  # 用于提取的正则表达式
 ```
 
-### Kval Extractor
+### Kval 提取器
 
-A **kval** extractor example to extract `content-type` header from HTTP Response.
+从HTTP响应中提取`content-type`头的**kval**提取器示例。
 
 ```yaml
 extractors:
-  - type: kval # type of the extractor
+  - type: kval # 提取器类型
     kval:
-      - content_type # header/cookie value to extract from response
+      - content_type # 从响应中提取的header/cookie值
 ```
 
-Note that `content-type` has been replaced with `content_type` because **kval** extractor does not accept dash (`-`) as input and must be substituted with underscore (`_`).
+注意`content-type`已被替换为`content_type`，因为**kval**提取器不接受破折号(`-`)作为输入，必须用下划线(`_`)替代。
 
-### JSON Extractor
+### JSON 提取器
 
-A **json** extractor example to extract value of `id` object from JSON block.
+从JSON块中提取`id`对象值的**json**提取器示例。
 
 ```yaml
-      - type: json # type of the extractor
+      - type: json # 提取器类型
         part: body
         name: user
         json:
-          - '.[] | .id'  # JQ like syntax for extraction
+          - '.[] | .id'  # 类似JQ的提取语法
 ```
 
-For more details about JQ - https://github.com/stedolan/jq
+有关JQ的更多详情 - https://github.com/stedolan/jq
 
-### Xpath Extractor
+### Xpath 提取器
 
-A **xpath** extractor example to extract value of `href` attribute from HTML response. 
+从HTML响应中提取`href`属性值的**xpath**提取器示例。
 
 ```yaml
 extractors:
-  - type: xpath # type of the extractor
-    attribute: href # attribute value to extract (optional)
+  - type: xpath # 提取器类型
+    attribute: href # 要提取的属性值(可选)
     xpath:
-      - '/html/body/div/p[2]/a' # xpath value for extraction
+      - '/html/body/div/p[2]/a' # 用于提取的xpath值
 ```
 
-With a simple [copy paste in browser](https://www.scientecheasy.com/2020/07/find-xpath-chrome.html/), we can get the **xpath** value form any web page content.
+通过在浏览器中简单的[复制粘贴](https://www.scientecheasy.com/2020/07/find-xpath-chrome.html/)，我们可以从任何网页内容中获取**xpath**值。
 
-### DSL Extractor
+### DSL 提取器
 
-A **dsl** extractor example to extract the effective `body` length through the `len` helper function from HTTP Response.
+通过`len`辅助函数从HTTP响应中提取有效`body`长度的**dsl**提取器示例。
 
 ```yaml
 extractors:
-  - type: dsl  # type of the extractor
+  - type: dsl  # 提取器类型
     dsl:
-      - len(body) # dsl expression value to extract from response
+      - len(body) # 从响应中提取的dsl表达式值
 ```
 
-### Dynamic Extractor
+### 动态提取器
 
-Extractors can be used to capture Dynamic Values on runtime while writing Multi-Request templates. CSRF Tokens, Session Headers, etc. can be extracted and used in requests. This feature is only available in RAW request format.
+在编写多请求模板时，提取器可用于在运行时捕获动态值。CSRF令牌、会话头等可以被提取并在请求中使用。此功能仅在RAW请求格式中可用。
 
-Example of defining a dynamic extractor with name `api` which will capture a regex based pattern from the request.
+定义名为`api`的动态提取器的示例，该提取器将从请求中捕获基于正则表达式的模式。
 
 ```yaml
     extractors:
       - type: regex
         name: api
         part: body
-        internal: true # Required for using dynamic variables
+        internal: true # 使用动态变量需要
         regex:
           - "(?m)[0-9]{3,10}\\.[0-9]+"
 ```
 
-The extracted value is stored in the variable **api**, which can be utilised in any section of the subsequent requests.
+提取的值存储在变量**api**中，可以在后续请求的任何部分中使用。
 
-If you want to use extractor as a dynamic variable, you must use `internal: true` to avoid printing extracted values in the terminal.
+如果您想将提取器用作动态变量，必须使用`internal: true`来避免在终端中打印提取的值。
 
-An optional regex **match-group** can also be specified for the regex for more complex matches.
+对于更复杂的匹配，还可以为正则表达式指定可选的**match-group**。
 
 ```yaml
 extractors:
-  - type: regex  # type of extractor
-    name: csrf_token # defining the variable name
-    part: body # part of response to look for
-    # group defines the matching group being used. 
-    # In GO the "match" is the full array of all matches and submatches 
-    # match[0] is the full match
-    # match[n] is the submatches. Most often we'd want match[1] as depicted below
+  - type: regex  # 提取器类型
+    name: csrf_token # 定义变量名
+    part: body # 要查找的响应部分
+    # group定义使用的匹配组
+    # 在GO中，"match"是所有匹配和子匹配的完整数组
+    # match[0]是完整匹配
+    # match[n]是子匹配。通常我们需要match[1]，如下所示
     group: 1
     regex:
       - '<input\sname="csrf_token"\stype="hidden"\svalue="([[:alnum:]]{16})"\s/>'
 ```
 
-The above extractor with name `csrf_token` will hold the value extracted by `([[:alnum:]]{16})` as `abcdefgh12345678`. 
+上面名为`csrf_token`的提取器将保存由`([[:alnum:]]{16})`提取的值，如`abcdefgh12345678`。
 
-If no group option is provided with this regex, the above extractor with name `csrf_token` will hold the full match (by `<input name="csrf_token"\stype="hidden"\svalue="([[:alnum:]]{16})" />`) as `<input name="csrf_token" type="hidden" value="abcdefgh12345678" />`.
+如果没有提供此正则表达式的group选项，上面名为`csrf_token`的提取器将保存完整匹配(通过`<input name="csrf_token"\stype="hidden"\svalue="([[:alnum:]]{16})" />`)，如`<input name="csrf_token" type="hidden" value="abcdefgh12345678" />`。
 
-### Reusable Dynamic Extractors
+### 可重用动态提取器
 
-With Nuclei v3.1.4 you can now reuse dynamic extracted value (ex: csrf_token in above example) immediately in next extractors and is by default available in subsequent requests
+从Nuclei v3.1.4开始，您现在可以在下一个提取器中立即重用动态提取的值(例如上例中的csrf_token)，默认情况下这些值在后续请求中可用。
 
-Example:
+示例：
 ```
 id: basic-raw-example
 

@@ -1,13 +1,13 @@
-# Namespace: kerberos
+# 命名空间: kerberos
 
-## Table of contents
+## 目录
 
-### Classes
+### 类
 
 - [Client](/templates/protocols/javascript/modules/kerberos.Client)
 - [Config](/templates/protocols/javascript/modules/kerberos.Config)
 
-### Interfaces
+### 接口
 
 - [AuthorizationDataEntry](/templates/protocols/javascript/modules/kerberos.AuthorizationDataEntry)
 - [BitString](/templates/protocols/javascript/modules/kerberos.BitString)
@@ -23,7 +23,7 @@
 - [Ticket](/templates/protocols/javascript/modules/kerberos.Ticket)
 - [TransitedEncoding](/templates/protocols/javascript/modules/kerberos.TransitedEncoding)
 
-### Functions
+### 函数
 
 - [ASRepToHashcat](/templates/protocols/javascript/modules/kerberos#asreptohashcat)
 - [CheckKrbError](/templates/protocols/javascript/modules/kerberos#checkkrberror)
@@ -31,25 +31,25 @@
 - [SendToKDC](/templates/protocols/javascript/modules/kerberos#sendtokdc)
 - [TGStoHashcat](/templates/protocols/javascript/modules/kerberos#tgstohashcat)
 
-## Functions
+## 函数
 
 ### ASRepToHashcat
 
 ▸ **ASRepToHashcat**(`asrep`): `string` \| ``null``
 
-ASRepToHashcat converts an AS-REP message to a hashcat format
+ASRepToHashcat 将 AS-REP 消息转换为 hashcat 格式
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `asrep` | `any` |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:6
 
@@ -59,19 +59,19 @@ ___
 
 ▸ **CheckKrbError**(`b`): `Uint8Array` \| ``null``
 
-CheckKrbError checks if the response bytes from the KDC are a KRBError.
+CheckKrbError 检查来自 KDC 的响应字节是否为 KRBError。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `b` | `Uint8Array` |
 
-#### Returns
+#### 返回值
 
 `Uint8Array` \| ``null``
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:15
 
@@ -81,20 +81,20 @@ ___
 
 ▸ **NewKerberosClientFromString**(`cfg`): [`Client`](/templates/protocols/javascript/modules/kerberos.Client) \| ``null``
 
-NewKerberosClientFromString creates a new kerberos client from a string
-by parsing krb5.conf
+NewKerberosClientFromString 通过解析 krb5.conf 
+从字符串创建新的 kerberos 客户端
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `cfg` | `string` |
 
-#### Returns
+#### 返回值
 
 [`Client`](/templates/protocols/javascript/modules/kerberos.Client) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -105,7 +105,7 @@ dns_lookup_kdc = true
 `);
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:34
 
@@ -115,22 +115,22 @@ ___
 
 ▸ **SendToKDC**(`kclient`, `msg`): `string` \| ``null``
 
-sendtokdc.go deals with actual sending and receiving responses from KDC
-SendToKDC sends a message to the KDC and returns the response.
-It first tries to send the message over TCP, and if that fails, it falls back to UDP.(and vice versa)
+sendtokdc.go 处理与 KDC 的实际发送和接收响应
+SendToKDC 向 KDC 发送消息并返回响应。
+它首先尝试通过 TCP 发送消息，如果失败，则回退到 UDP。(反之亦然)
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `kclient` | [`Client`](/templates/protocols/javascript/modules/kerberos.Client) |
 | `msg` | `string` |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -138,7 +138,7 @@ const client = new kerberos.Client('acme.com');
 const response = kerberos.SendToKDC(client, 'message');
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:51
 
@@ -148,19 +148,19 @@ ___
 
 ▸ **TGStoHashcat**(`tgs`, `username`): `string` \| ``null``
 
-TGStoHashcat converts a TGS to a hashcat format.
+TGStoHashcat 将 TGS 转换为 hashcat 格式。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `tgs` | `any` |
 | `username` | `string` |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:60

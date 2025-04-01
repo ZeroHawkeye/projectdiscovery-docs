@@ -1,16 +1,16 @@
 ---
-title: Running Chaos
-description: "Learn about running Chaos with details and an example"
-sidebarTitle: Running
+title: 运行 Chaos
+description: "了解运行 Chaos 的详细信息和示例"
+sidebarTitle: 运行
 ---
 
-For all of the flags and options available for **Chaos** be sure to check out the [Usage](/tools/chaos/usage) page. 
+有关 **Chaos** 的所有标志和选项，请查看[使用方法](/tools/chaos/usage)页面。
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
+<Note> 如果您有问题，请通过[帮助](/help)联系我们。</Note>
 
-## Basic Usage
+## 基本用法
 
-In order to get subdomains for a domain, use the following command.
+要获取域名的子域名，请使用以下命令。
 
 ```bash
 chaos -d uber.com -silent
@@ -34,18 +34,18 @@ guest.uber.com
 kiosk-home-staging.uber.com
 ```
 
-## API Key 
+## API 密钥
 
-You can get your API key by either signing up or logging in at [cloud.projectdiscovery.io](https://cloud.projectdiscovery.io?ref=api_key).
+您可以通过在 [cloud.projectdiscovery.io](https://cloud.projectdiscovery.io?ref=api_key) 注册或登录来获取您的 API 密钥。
 
-## API Key Environment variable
-You can also set the API key as an environment variable in your bash profile. 
+## API 密钥环境变量
+您还可以在 bash 配置文件中将 API 密钥设置为环境变量。
 
 ```bash
 export CHAOS_KEY=CHAOS_API_KEY
 ```
-## Notes
+## 注意事项
 
-- The API is rate-limited to 60 request / min / ip
-- Chaos API **only** supports domain name to query.
+- API 的速率限制为每分钟每 IP 60 个请求
+- Chaos API **仅**支持域名查询。
 

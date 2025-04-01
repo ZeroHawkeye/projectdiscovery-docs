@@ -1,35 +1,35 @@
-# Class: Client
+# 类: Client
 
 [ldap](/templates/protocols/javascript/modules/ldap).Client
 
-Client is a client for ldap protocol in nuclei
+Client 是 nuclei 中用于 ldap 协议的客户端
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
-// here ldap.example.com is the ldap server and acme.com is the realm
+// 这里 ldap.example.com 是 ldap 服务器，acme.com 是域
 const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 ```
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
 const cfg = new ldap.Config();
 cfg.Timeout = 10;
 cfg.ServerName = 'ldap.internal.acme.com';
-// optional config can be passed as third argument
+// 可选配置可以作为第三个参数传递
 const client = new ldap.Client('ldap://ldap.example.com', 'acme.com', cfg);
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/ldap.Client#constructor)
 
-### Properties
+### 属性
 
 - [BaseDN](/templates/protocols/javascript/modules/ldap.Client#basedn)
 - [Host](/templates/protocols/javascript/modules/ldap.Client#host)
@@ -39,7 +39,7 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com', cfg);
 - [ldapUrl](/templates/protocols/javascript/modules/ldap.Client#ldapurl)
 - [realm](/templates/protocols/javascript/modules/ldap.Client#realm-1)
 
-### Methods
+### 方法
 
 - [AdvancedSearch](/templates/protocols/javascript/modules/ldap.Client#advancedsearch)
 - [Authenticate](/templates/protocols/javascript/modules/ldap.Client#authenticate)
@@ -60,35 +60,35 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com', cfg);
 - [GetADUsers](/templates/protocols/javascript/modules/ldap.Client#getadusers)
 - [Search](/templates/protocols/javascript/modules/ldap.Client#search)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new Client**(`ldapUrl`, `realm`, `config?`): [`Client`](/templates/protocols/javascript/modules/ldap.Client)
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `ldapUrl` | `string` |
 | `realm` | `string` |
 | `config?` | [`Config`](/templates/protocols/javascript/modules/ldap.Config) |
 
-#### Returns
+#### 返回
 
 [`Client`](/templates/protocols/javascript/modules/ldap.Client)
 
-#### Defined in
+#### 定义于
 
 ldap.ts:198
 
-## Properties
+## 属性
 
 ### BaseDN
 
 • `Optional` **BaseDN**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:194
 
@@ -98,7 +98,7 @@ ___
 
 • `Optional` **Host**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:182
 
@@ -108,7 +108,7 @@ ___
 
 • `Optional` **Port**: `number`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:186
 
@@ -118,7 +118,7 @@ ___
 
 • `Optional` **Realm**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:190
 
@@ -128,7 +128,7 @@ ___
 
 • `Optional` **config**: [`Config`](/templates/protocols/javascript/modules/ldap.Config)
 
-#### Defined in
+#### 定义于
 
 ldap.ts:198
 
@@ -138,7 +138,7 @@ ___
 
 • **ldapUrl**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:198
 
@@ -148,22 +148,22 @@ ___
 
 • **realm**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:198
 
-## Methods
+## 方法
 
 ### AdvancedSearch
 
 ▸ **AdvancedSearch**(`Scope`, `TypesOnly`, `Filter`, `Attributes`, `Controls`): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-AdvancedSearch accepts all values of search request type and return Ldap Entry
-its up to user to handle the response
+AdvancedSearch 接受搜索请求类型的所有值并返回 Ldap Entry
+由用户处理响应
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `Scope` | `number` |
 | `TypesOnly` | `boolean` |
@@ -171,11 +171,11 @@ its up to user to handle the response
 | `Attributes` | `string`[] |
 | `Controls` | `any` |
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -183,7 +183,7 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 const results = client.AdvancedSearch(ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false, '(objectClass=*)', ['cn', 'mail'], []);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:446
 
@@ -193,20 +193,20 @@ ___
 
 ▸ **Authenticate**(`username`): `boolean`
 
-Authenticate authenticates with the ldap server using the given username and password
-performs NTLMBind first and then Bind/UnauthenticatedBind if NTLMBind fails
+Authenticate 使用给定的用户名和密码向 ldap 服务器进行身份验证
+首先执行 NTLMBind，如果 NTLMBind 失败，则执行 Bind/UnauthenticatedBind
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -214,7 +214,7 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 client.Authenticate('user', 'password');
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:402
 
@@ -224,19 +224,19 @@ ___
 
 ▸ **AuthenticateWithNTLMHash**(`username`): `boolean`
 
-AuthenticateWithNTLMHash authenticates with the ldap server using the given username and NTLM hash
+AuthenticateWithNTLMHash 使用给定的用户名和 NTLM 哈希向 ldap 服务器进行身份验证
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `username` | `string` |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -244,7 +244,7 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 client.AuthenticateWithNTLMHash('pdtm', 'hash');
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:416
 
@@ -254,13 +254,13 @@ ___
 
 ▸ **Close**(): `void`
 
-close the ldap connection
+关闭 ldap 连接
 
-#### Returns
+#### 返回
 
 `void`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -268,7 +268,7 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 client.Close();
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:475
 
@@ -278,13 +278,13 @@ ___
 
 ▸ **CollectMetadata**(): [`Metadata`](/templates/protocols/javascript/modules/ldap.Metadata)
 
-CollectLdapMetadata collects metadata from ldap server.
+CollectLdapMetadata 从 ldap 服务器收集元数据。
 
-#### Returns
+#### 返回
 
 [`Metadata`](/templates/protocols/javascript/modules/ldap.Metadata)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -293,7 +293,7 @@ const metadata = client.CollectMetadata();
 log(to_json(metadata));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:461
 
@@ -303,20 +303,20 @@ ___
 
 ▸ **FindADObjects**(`filter`): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-FindADObjects finds AD objects based on a filter
-and returns them as a list of ADObject
+FindADObjects 根据过滤器查找 AD 对象
+并将它们作为 ADObject 列表返回
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `filter` | `string` |
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -325,7 +325,7 @@ const users = client.FindADObjects(ldap.FilterIsPerson);
 log(to_json(users));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:212
 
@@ -335,14 +335,14 @@ ___
 
 ▸ **GetADActiveUsers**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADActiveUsers returns all AD users
-using FilterIsPerson and FilterAccountEnabled filter query
+GetADActiveUsers 返回所有 AD 用户
+使用 FilterIsPerson 和 FilterAccountEnabled 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -351,7 +351,7 @@ const users = client.GetADActiveUsers();
 log(to_json(users));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:244
 
@@ -361,14 +361,14 @@ ___
 
 ▸ **GetADAdmins**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADAdmins returns all AD admins
-using FilterIsPerson, FilterAccountEnabled and FilterIsAdmin filter query
+GetADAdmins 返回所有 AD 管理员
+使用 FilterIsPerson、FilterAccountEnabled 和 FilterIsAdmin 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -377,7 +377,7 @@ const admins = client.GetADAdmins();
 log(to_json(admins));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:340
 
@@ -387,14 +387,14 @@ ___
 
 ▸ **GetADDCList**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADDCList returns all AD domain controllers
-using FilterIsComputer, FilterAccountEnabled and FilterServerTrustAccount filter query
+GetADDCList 返回所有 AD 域控制器
+使用 FilterIsComputer、FilterAccountEnabled 和 FilterServerTrustAccount 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -403,7 +403,7 @@ const dcs = client.GetADDCList();
 log(to_json(dcs));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:324
 
@@ -413,13 +413,13 @@ ___
 
 ▸ **GetADDomainSID**(): `string`
 
-GetADDomainSID returns the SID of the AD domain
+GetADDomainSID 返回 AD 域的 SID
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -428,7 +428,7 @@ const domainSID = client.GetADDomainSID();
 log(domainSID);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:387
 
@@ -438,14 +438,14 @@ ___
 
 ▸ **GetADGroups**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADGroups returns all AD groups
-using FilterIsGroup filter query
+GetADGroups 返回所有 AD 组
+使用 FilterIsGroup 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -454,7 +454,7 @@ const groups = client.GetADGroups();
 log(to_json(groups));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:308
 
@@ -464,14 +464,14 @@ ___
 
 ▸ **GetADUserAsRepRoastable**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADUserAsRepRoastable returns all AD users that are AsRepRoastable
-using FilterIsPerson, and FilterDontRequirePreauth filter query
+GetADUserAsRepRoastable 返回所有可 AsRepRoastable 的 AD 用户
+使用 FilterIsPerson 和 FilterDontRequirePreauth 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -480,7 +480,7 @@ const AsRepRoastable = client.GetADUserAsRepRoastable();
 log(to_json(AsRepRoastable));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:372
 
@@ -490,14 +490,14 @@ ___
 
 ▸ **GetADUserKerberoastable**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADUserKerberoastable returns all AD users that are kerberoastable
-using FilterIsPerson, FilterAccountEnabled and FilterHasServicePrincipalName filter query
+GetADUserKerberoastable 返回所有可 kerberoastable 的 AD 用户
+使用 FilterIsPerson、FilterAccountEnabled 和 FilterHasServicePrincipalName 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -506,7 +506,7 @@ const kerberoastable = client.GetADUserKerberoastable();
 log(to_json(kerberoastable));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:356
 
@@ -516,14 +516,14 @@ ___
 
 ▸ **GetADUserTrustedForDelegation**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADUserTrustedForDelegation returns all AD users that are trusted for delegation
-using FilterIsPerson and FilterTrustedForDelegation filter query
+GetADUserTrustedForDelegation 返回所有受信任可委派的 AD 用户
+使用 FilterIsPerson 和 FilterTrustedForDelegation 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -532,7 +532,7 @@ const users = client.GetADUserTrustedForDelegation();
 log(to_json(users));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:276
 
@@ -542,14 +542,14 @@ ___
 
 ▸ **GetADUserWithNeverExpiringPasswords**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetAdUserWithNeverExpiringPasswords returns all AD users
-using FilterIsPerson and FilterDontExpirePassword filter query
+GetAdUserWithNeverExpiringPasswords 返回所有 AD 用户
+使用 FilterIsPerson 和 FilterDontExpirePassword 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -558,7 +558,7 @@ const users = client.GetADUserWithNeverExpiringPasswords();
 log(to_json(users));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:260
 
@@ -568,14 +568,14 @@ ___
 
 ▸ **GetADUserWithPasswordNotRequired**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADUserWithPasswordNotRequired returns all AD users that do not require a password
-using FilterIsPerson and FilterPasswordNotRequired filter query
+GetADUserWithPasswordNotRequired 返回所有不需要密码的 AD 用户
+使用 FilterIsPerson 和 FilterPasswordNotRequired 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -584,7 +584,7 @@ const users = client.GetADUserWithPasswordNotRequired();
 log(to_json(users));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:292
 
@@ -594,14 +594,14 @@ ___
 
 ▸ **GetADUsers**(): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-GetADUsers returns all AD users
-using FilterIsPerson filter query
+GetADUsers 返回所有 AD 用户
+使用 FilterIsPerson 过滤查询
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -610,7 +610,7 @@ const users = client.GetADUsers();
 log(to_json(users));
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:228
 
@@ -620,21 +620,21 @@ ___
 
 ▸ **Search**(`filter`, `attributes`): [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-Search accepts whatever filter and returns a list of maps having provided attributes
-as keys and associated values mirroring the ones returned by ldap
+Search 接受任何过滤器并返回一个映射列表，其中提供的属性
+作为键，关联的值反映 ldap 返回的值
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `filter` | `string` |
 | `attributes` | `any` |
 
-#### Returns
+#### 返回
 
 [`SearchResult`](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -642,6 +642,6 @@ const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
 const results = client.Search('(objectClass=*)', 'cn', 'mail');
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:431

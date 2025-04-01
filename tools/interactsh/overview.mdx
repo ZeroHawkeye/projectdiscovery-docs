@@ -1,45 +1,44 @@
 ---
-title: Interactsh Overview
-description: "A tool for detecting out-of-band vulnerabilities"
-sidebarTitle: Overview
+title: Interactsh 概述
+description: "一个用于检测带外漏洞的工具"
+sidebarTitle: 概述
 ---
-**Interactsh** is an open-source tool developed by ProjectDiscovery for detecting [out-of-band (OOB) vulnerabilities](https://portswigger.net/burp/application-security-testing/oast). These are vulnerabilities that may not be identified using conventional tools or methods. Interactsh operates by generating dynamic URLs. When these URLs are requested by a target, they trigger a callback. This callback can then be monitored and analyzed to identify potential vulnerabilities in the target. 
+**Interactsh** 是由 ProjectDiscovery 开发的开源工具，用于检测 [带外 (OOB) 漏洞](https://portswigger.net/burp/application-security-testing/oast)。这些漏洞可能无法使用常规工具或方法识别。Interactsh 通过生成动态 URL 来运作。当目标请求这些 URL 时，会触发回调。然后可以监控和分析这个回调，以识别目标中的潜在漏洞。
 
-Check out [our blog introducing Interactsh](https://blog.projectdiscovery.io/interactsh-release/) and [view the repo here](https://github.com/projectdiscovery/interactsh).
+查看[我们介绍 Interactsh 的博客](https://blog.projectdiscovery.io/interactsh-release/)和[在这里查看代码库](https://github.com/projectdiscovery/interactsh)。
 
-# Features
+# 功能
 
-- DNS/HTTP(S)/SMTP(S)/LDAP Interaction
-- CLI / Web / Burp / ZAP / Docker client
-- AES encryption with zero logging
-- Automatic ACME based Wildcard TLS w/ Auto Renewal
-- DNS Entries for Cloud Metadata service
-- Dynamic HTTP Response control
-- Self-Hosted Interactsh Server
-- Multiple domain support **(self-hosted)**
-- NTLM/SMB/FTP/RESPONDER Listener **(self-hosted)**
-- Wildcard / Protected Interactions **(self-hosted)**
-- Customizable Index / File hosting **(self-hosted)**
-- Customizable Payload Length **(self-hosted)**
-- Custom SSL Certificate **(self-hosted)**
+- DNS/HTTP(S)/SMTP(S)/LDAP 交互
+- CLI / Web / Burp / ZAP / Docker 客户端
+- AES 加密，零日志记录
+- 基于 ACME 的通配符 TLS 自动续期
+- 云元数据服务的 DNS 条目
+- 动态 HTTP 响应控制
+- 自托管 Interactsh 服务器
+- 多域名支持 **(自托管)**
+- NTLM/SMB/FTP/RESPONDER 监听器 **(自托管)**
+- 通配符 / 受保护交互 **(自托管)**
+- 可自定义索引 / 文件托管 **(自托管)**
+- 可自定义 Payload 长度 **(自托管)**
+- 自定义 SSL 证书 **(自托管)**
 
-## Client & Server
-The Interactsh tool comprises two main components: [`interachsh-client`](/tools/interactsh/running) and [`interachsh-server`](/tools/interactsh/server). Each plays a critical role in the process of detecting out-of-band vulnerabilities, but they operate in distinct manners and serve different purposes.
+## 客户端 & 服务器
+Interactsh 工具由两个主要组件组成：[`interachsh-client`](/tools/interactsh/running) 和 [`interachsh-server`](/tools/interactsh/server)。在检测带外漏洞的过程中，它们各自发挥着关键作用，但它们以不同的方式运行并服务于不同的目的。
 
-### Interactsh Server
-* Function: Captures and records callbacks from interaction URLs.
-* Deployment: Hosted publicly to receive requests from tested systems.
-* Use Case: Ideal for those hosting their instance for privacy or control.
+### Interactsh 服务器
+* 功能：捕获并记录来自交互 URL 的回调。
+* 部署：公开托管以接收来自测试系统的请求。
+* 用例：适合那些为了隐私或控制而托管自己实例的用户。
 
-ProjectDiscovery maintains a number of [publically accessable interactsh servers](/tools/interactsh/running#projectdiscovery-interachsh-servers) that you can use in order to only run the client for your specific use case. Alternatively, you can [self host your own interactsh server](/tools/interactsh/running#self-hosted-interactsh-server) if you want it to run on your custom domain or you need more control over the server side interactions.
+ProjectDiscovery 维护了许多[可公开访问的 interactsh 服务器](/tools/interactsh/running#projectdiscovery-interachsh-servers)，您可以只运行客户端来满足特定用例。或者，如果您希望在自定义域名上运行或需要对服务器端交互有更多控制，可以[自托管您自己的 interactsh 服务器](/tools/interactsh/running#self-hosted-interactsh-server)。
 
-### Interactsh Client
-* Function: Generates URLs for testing, retrieves interaction logs from the server.
-* Deployment: Runs locally for managing URLs and analyzing captured data.
-* Use Case: Used by testers to create and analyze tests for out-of-band vulnerabilities.
+### Interactsh 客户端
+* 功能：生成用于测试的 URL，从服务器检索交互日志。
+* 部署：在本地运行，用于管理 URL 和分析捕获的数据。
+* 用例：测试人员用于创建和分析带外漏洞测试。
 
+## 支持
+关于使用 Interactsh 的问题？安装方面的问题？想分享的有趣故事或用例？联系我们！
 
-## Support 
-Questions about using Interactsh? Issues working through installation? Cool story or use case you want to share? Get in touch! 
-
-Check out the [Help](/help) section of the docs or reach out to us on [Discord](https://discord.com/invite/projectdiscovery). 
+查看文档的 [帮助](/help) 部分或通过 [Discord](https://discord.com/invite/projectdiscovery) 联系我们。 

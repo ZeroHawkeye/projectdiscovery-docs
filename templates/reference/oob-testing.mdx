@@ -1,17 +1,17 @@
 ---
-title: "OOB Testing"
-description: "Understanding OOB testing with Nuclei Templates"
+title: "OOB 测试"
+description: "了解使用 Nuclei 模板进行 OOB 测试"
 icon: "flask-vial"
 iconType: "solid"
 ---
 
-Since release of [Nuclei v2.3.6](https://github.com/projectdiscovery/nuclei/releases/tag/v2.3.6), Nuclei supports using the [interactsh](https://github.com/projectdiscovery/interactsh) API to achieve OOB based vulnerability scanning with automatic Request correlation built in. It's as easy as writing `{{interactsh-url}}`  anywhere in the request, and adding a matcher for `interact_protocol`. Nuclei will handle correlation of the interaction to the template & the request it was generated from allowing effortless OOB scanning.
+自 [Nuclei v2.3.6](https://github.com/projectdiscovery/nuclei/releases/tag/v2.3.6) 版本发布以来，Nuclei 支持使用 [interactsh](https://github.com/projectdiscovery/interactsh) API 来实现基于 OOB 的漏洞扫描，并内置了自动请求关联功能。使用非常简单，只需在请求中的任何位置编写 `{{interactsh-url}}`，并为 `interact_protocol` 添加匹配器。Nuclei 会自动处理交互与模板及其生成请求之间的关联，从而实现轻松的 OOB 扫描。
 
-## Interactsh Placeholder
+## Interactsh 占位符
 
-`{{interactsh-url}}` placeholder is supported in **http** and **network** requests.
+`{{interactsh-url}}` 占位符支持在 **http** 和 **network** 请求中使用。
 
-An example of nuclei request with `{{interactsh-url}}` placeholders is provided below. These are replaced on runtime with unique interactsh URLs.
+下面提供了一个带有 `{{interactsh-url}}` 占位符的 nuclei 请求示例。这些占位符在运行时会被替换为唯一的 interactsh URL。
 
 ```yaml
   - raw:
@@ -20,11 +20,11 @@ An example of nuclei request with `{{interactsh-url}}` placeholders is provided 
         Host: {{Hostname}}
 ```
 
-## Interactsh Matchers
+## Interactsh 匹配器
 
-Interactsh interactions can be used with `word`, `regex` or `dsl` matcher/extractor using following parts.
+Interactsh 交互可以与 `word`、`regex` 或 `dsl` 匹配器/提取器一起使用，使用以下部分。
 
-| part                |
+| 部分                |
 |---------------------|
 | interactsh_protocol |
 | interactsh_request  |
@@ -33,43 +33,43 @@ Interactsh interactions can be used with `word`, `regex` or `dsl` matcher/extrac
 <Note>
 **interactsh_protocol**
 
-Value can be dns, http or smtp. This is the standard matcher for every interactsh based template with DNS often as the common value as it is very non-intrusive in nature.
+值可以是 dns、http 或 smtp。这是每个基于 interactsh 的模板的标准匹配器，其中 DNS 通常是最常见的值，因为它本质上是非侵入性的。
 </Note>
 
 <Note>
 **interactsh_request**
 
-The request that the interactsh server received.
+interactsh 服务器接收到的请求。
 </Note>
 
 <Note>
 **interactsh_response**
 
-The response that the interactsh server sent to the client.
+interactsh 服务器发送给客户端的响应。
 </Note>
 
-Example of Interactsh DNS Interaction matcher:
+Interactsh DNS 交互匹配器示例：
 
 ```yaml
     matchers:
       - type: word
-        part: interactsh_protocol # Confirms the DNS Interaction
+        part: interactsh_protocol # 确认 DNS 交互
         words:
           - "dns"
 ```
 
-Example of HTTP Interaction matcher + word matcher on Interaction content
+HTTP 交互匹配器 + 交互内容的词语匹配器示例：
 
 ```yaml
 matchers-condition: and
 matchers:
     - type: word
-      part: interactsh_protocol # Confirms the HTTP Interaction
+      part: interactsh_protocol # 确认 HTTP 交互
       words:
         - "http"
 
     - type: regex
-      part: interactsh_request # Confirms the retrieval of /etc/passwd file
+      part: interactsh_request # 确认 /etc/passwd 文件的获取
       regex:
         - 'root:.*:0:0:'
 ```

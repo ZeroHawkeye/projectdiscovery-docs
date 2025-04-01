@@ -1,14 +1,13 @@
 ---
-title: "HTTP Race Condition Examples"
-description: "Review some race conditions examples with Nuclei"
+title: "HTTP 竞态条件示例"
+description: "使用 Nuclei 查看一些竞态条件示例"
 ---
 
-## Race condition testing with single POST request.
+## 使用单个 POST 请求进行竞态条件测试
 
-This template makes a defined POST request in RAW format to `/coupons` endpoint, as the `race_count`is defined as `10`, this will make 10 requests at same time by holding last bytes for all the requests which sent together for all requests synchronizing the send event.
+此模板以 RAW 格式向 `/coupons` 端点发送定义的 POST 请求，由于 `race_count` 被定义为 `10`，这将通过为所有请求保持最后的字节同时发送 10 个请求，为所有请求同步发送事件。
 
-You can also define the matcher as any other template for the expected output which helps to identify if the race condition exploit worked or not.
-
+您还可以像其他模板一样定义匹配器，用于预期的输出，这有助于识别竞态条件利用是否成功。
 
 ```yaml
 id: race-condition-testing
@@ -40,9 +39,9 @@ http:
           - 200
 ```
 
-## Race condition testing with multiple requests.
+## 使用多个请求进行竞态条件测试
 
-This template makes the defined and multiple POST requests in RAW format with `threads` sets to `5`, `threads` can be utilized in race condition templates when multiple requests needs to be sent to exploit the race condition, `threads` number should be same as the number of you are making with template and not needed if you're only making single request.
+此模板以 RAW 格式发送多个定义的 POST 请求，`threads` 设置为 `5`，当需要发送多个请求来利用竞态条件时，可以在竞态条件模板中使用 `threads`，`threads` 数量应与您使用模板发送的请求数量相同，如果您只发送单个请求，则不需要设置。
 
 ```yaml
 id: race-condition-testing

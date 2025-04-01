@@ -1,60 +1,60 @@
-# Class: OracleClient
+# 类：OracleClient
 
 [oracle](/templates/protocols/javascript/modules/oracle).OracleClient
 
-OracleClient is a minimal Oracle client for nuclei scripts.
+OracleClient 是一个用于 nuclei 脚本的简易 Oracle 客户端。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const oracle = require('nuclei/oracle');
 const client = new oracle.Client();
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/oracle.OracleClient#constructor)
 
-### Methods
+### 方法
 
 - [IsOracle](/templates/protocols/javascript/modules/oracle.OracleClient#isoracle)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new OracleClient**(): [`OracleClient`](/templates/protocols/javascript/modules/oracle.OracleClient)
 
-#### Returns
+#### 返回
 
 [`OracleClient`](/templates/protocols/javascript/modules/oracle.OracleClient)
 
-#### Defined in
+#### 定义于
 
 oracle.ts:15
 
-## Methods
+## 方法
 
 ### IsOracle
 
 ▸ **IsOracle**(`host`, `port`): [`IsOracleResponse`](/templates/protocols/javascript/modules/oracle.IsOracleResponse)
 
-IsOracle checks if a host is running an Oracle server
+IsOracle 检查主机是否运行着 Oracle 服务器
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsOracleResponse`](/templates/protocols/javascript/modules/oracle.IsOracleResponse)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const oracle = require('nuclei/oracle');
@@ -62,6 +62,6 @@ const isOracle = oracle.IsOracle('acme.com', 1521);
 log(toJSON(isOracle));
 ```
 
-#### Defined in
+#### 定义于
 
 oracle.ts:25

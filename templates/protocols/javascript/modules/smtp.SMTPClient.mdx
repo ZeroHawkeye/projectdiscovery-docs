@@ -1,63 +1,63 @@
-# Class: SMTPClient
+# 类: SMTPClient
 
 [smtp](/templates/protocols/javascript/modules/smtp).SMTPClient
 
-SMTPClient is a minimal SMTP client for nuclei scripts.
+SMTPClient 是用于 nuclei 脚本的简易 SMTP 客户端。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
 const client = new smtp.Client();
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/smtp.SMTPClient#constructor)
 
-### Methods
+### 方法
 
 - [IsOpenRelay](/templates/protocols/javascript/modules/smtp.SMTPClient#isopenrelay)
 - [IsSMTP](/templates/protocols/javascript/modules/smtp.SMTPClient#issmtp)
 - [SendMail](/templates/protocols/javascript/modules/smtp.SMTPClient#sendmail)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new SMTPClient**(): [`SMTPClient`](/templates/protocols/javascript/modules/smtp.SMTPClient)
 
-#### Returns
+#### 返回
 
 [`SMTPClient`](/templates/protocols/javascript/modules/smtp.SMTPClient)
 
-#### Defined in
+#### 定义于
 
 smtp.ts:15
 
-## Methods
+## 方法
 
 ### IsOpenRelay
 
 ▸ **IsOpenRelay**(`host`, `port`, `msg`): `boolean`
 
-IsOpenRelay checks if a host is an open relay.
+IsOpenRelay 检查主机是否为开放中继。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `msg` | [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage) |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -69,7 +69,7 @@ message.Body('hello');
 const isRelay = smtp.IsOpenRelay('acme.com', 25, message);
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:43
 
@@ -79,20 +79,20 @@ ___
 
 ▸ **IsSMTP**(`host`, `port`): [`IsSMTPResponse`](/templates/protocols/javascript/modules/smtp.IsSMTPResponse)
 
-IsSMTP checks if a host is running a SMTP server.
+IsSMTP 检查主机是否运行着 SMTP 服务器。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsSMTPResponse`](/templates/protocols/javascript/modules/smtp.IsSMTPResponse)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -100,7 +100,7 @@ const isSMTP = smtp.IsSMTP('acme.com', 25);
 log(toJSON(isSMTP));
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:25
 
@@ -110,21 +110,21 @@ ___
 
 ▸ **SendMail**(`host`, `port`, `msg`): `boolean`
 
-SendMail sends an email using the SMTP protocol.
+SendMail 使用 SMTP 协议发送电子邮件。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `string` |
 | `msg` | [`SMTPMessage`](/templates/protocols/javascript/modules/smtp.SMTPMessage) |
 
-#### Returns
+#### 返回
 
 `boolean`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const smtp = require('nuclei/smtp');
@@ -136,6 +136,6 @@ message.Body('hello');
 const isSent = smtp.SendMail('acme.com', 25, message);
 ```
 
-#### Defined in
+#### 定义于
 
 smtp.ts:61

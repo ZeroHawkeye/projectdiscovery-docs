@@ -1,14 +1,14 @@
 ---
-title: uncover Usage
-description: "Learn uncover usage including flags and filters"
-sidebarTitle: Usage
+title: uncover 使用方法
+description: "学习 uncover 的使用方法，包括标志和过滤器"
+sidebarTitle: 使用方法
 ---
 
-## Access help
+## 获取帮助
 
-Use `uncover -h` to display all of the help options.
+使用 `uncover -h` 显示所有帮助选项。
 
-## uncover options
+## uncover 选项
 
 ```console
 Usage:
@@ -16,49 +16,49 @@ Usage:
 
 Flags:
 INPUT:
-   -q, -query string[]   search query, supports: stdin,file,config input (example: -q 'example query', -q 'query.txt')
-   -e, -engine string[]  search engine to query (shodan,shodan-idb,fofa,censys,quake,hunter,zoomeye,netlas,criminalip,publicwww,hunterhow) (default shodan)
-   -asq, -awesome-search-queries string[] use awesome search queries to discover exposed assets on the internet (example: -asq 'jira')
+   -q, -query string[]   搜索查询，支持：stdin,file,config 输入 (示例: -q 'example query', -q 'query.txt')
+   -e, -engine string[]  要查询的搜索引擎 (shodan,shodan-idb,fofa,censys,quake,hunter,zoomeye,netlas,criminalip,publicwww,hunterhow) (默认 shodan)
+   -asq, -awesome-search-queries string[] 使用优秀的搜索查询在互联网上发现暴露的资产 (示例: -asq 'jira')
 
 SEARCH-ENGINE:
-   -s, -shodan string[]       search query for shodan (example: -shodan 'query.txt')
-   -sd, -shodan-idb string[]  search query for shodan-idb (example: -shodan-idb 'query.txt')
-   -ff, -fofa string[]        search query for fofa (example: -fofa 'query.txt')
-   -cs, -censys string[]      search query for censys (example: -censys 'query.txt')
-   -qk, -quake string[]       search query for quake (example: -quake 'query.txt')
-   -ht, -hunter string[]      search query for hunter (example: -hunter 'query.txt')
-   -ze, -zoomeye string[]     search query for zoomeye (example: -zoomeye 'query.txt')
-   -ne, -netlas string[]      search query for netlas (example: -netlas 'query.txt')
-   -cl, -criminalip string[]  search query for criminalip (example: -criminalip 'query.txt')
-   -pw, -publicwww string[]   search query for publicwww (example: -publicwww 'query.txt')
-   -hh, -hunterhow string[]   search query for hunterhow (example: -hunterhow 'query.txt')
+   -s, -shodan string[]       shodan 的搜索查询 (示例: -shodan 'query.txt')
+   -sd, -shodan-idb string[]  shodan-idb 的搜索查询 (示例: -shodan-idb 'query.txt')
+   -ff, -fofa string[]        fofa 的搜索查询 (示例: -fofa 'query.txt')
+   -cs, -censys string[]      censys 的搜索查询 (示例: -censys 'query.txt')
+   -qk, -quake string[]       quake 的搜索查询 (示例: -quake 'query.txt')
+   -ht, -hunter string[]      hunter 的搜索查询 (示例: -hunter 'query.txt')
+   -ze, -zoomeye string[]     zoomeye 的搜索查询 (示例: -zoomeye 'query.txt')
+   -ne, -netlas string[]      netlas 的搜索查询 (示例: -netlas 'query.txt')
+   -cl, -criminalip string[]  criminalip 的搜索查询 (示例: -criminalip 'query.txt')
+   -pw, -publicwww string[]   publicwww 的搜索查询 (示例: -publicwww 'query.txt')
+   -hh, -hunterhow string[]   hunterhow 的搜索查询 (示例: -hunterhow 'query.txt')
 
 CONFIG:
-   -pc, -provider string         provider configuration file (default "$CONFIG/uncover/provider-config.yaml")
-   -config string                flag configuration file (default "$CONFIG/uncover/config.yaml")
-   -timeout int                  timeout in seconds (default 30)
-   -rl, -rate-limit int          maximum number of http requests to send per second
-   -rlm, -rate-limit-minute int  maximum number of requests to send per minute
-   -retry int                    number of times to retry a failed request (default 2)
+   -pc, -provider string         提供商配置文件 (默认 "$CONFIG/uncover/provider-config.yaml")
+   -config string                标志配置文件 (默认 "$CONFIG/uncover/config.yaml")
+   -timeout int                  超时时间（秒）(默认 30)
+   -rl, -rate-limit int          每秒最大 http 请求数
+   -rlm, -rate-limit-minute int  每分钟最大请求数
+   -retry int                    失败请求重试次数 (默认 2)
 
 OUTPUT:
-   -o, -output string  output file to write found results
-   -f, -field string   field to display in output (ip,port,host) (default "ip:port")
-   -j, -json           write output in JSONL(ines) format
-   -r, -raw            write raw output as received by the remote api
-   -l, -limit int      limit the number of results to return (default 100)
-   -nc, -no-color      disable colors in output
+   -o, -output string  写入结果的输出文件
+   -f, -field string   在输出中显示的字段 (ip,port,host) (默认 "ip:port")
+   -j, -json           以 JSONL(ines) 格式写入输出
+   -r, -raw            按远程 API 接收到的原始格式写入输出
+   -l, -limit int      限制返回结果的数量 (默认 100)
+   -nc, -no-color      禁用输出中的颜色
 
 DEBUG:
-   -silent   show only results in output
-   -version  show version of the project
-   -v        show verbose output
+   -silent   仅在输出中显示结果
+   -version  显示项目版本
+   -v        显示详细输出
 ```
 
-## Notes:
+## 注意事项：
 
--  **keys/ credentials** are required to configure before running or using this project.
-- `query` flag supports **all and only filters supported by search engine.**
-- results are limited to `100` as default and can be increased with `limit` flag.
-- `shodan-idb` API doesn't requires an API key and works out of the box.
-- `shodan-idb` API is used as **default** engine when **IP/CIDR** is provided as input.
+- 在运行或使用此项目之前需要配置 **keys/credentials**。
+- `query` 标志仅支持**搜索引擎支持的所有过滤器**。
+- 结果默认限制为 `100`，可以通过 `limit` 标志增加。
+- `shodan-idb` API 不需要 API 密钥，可以直接使用。
+- 当提供 **IP/CIDR** 作为输入时，会默认使用 `shodan-idb` API。

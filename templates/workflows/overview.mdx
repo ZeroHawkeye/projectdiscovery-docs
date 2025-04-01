@@ -1,36 +1,36 @@
 ---
-title: "Template Workflows Overview"
-description: "Learn about template workflows in Nuclei"
-sidebarTitle: "Template Workflows"
+title: "模板工作流概述"
+description: "了解Nuclei中的模板工作流"
+sidebarTitle: "模板工作流"
 icon: "list-tree"
 iconType: "regular"
 ---
 
-Workflows enable users to orchestrate a series of actions by setting a defined execution order for various templates. These templates are activated upon predetermined conditions, establishing a streamlined method to leverage the capabilities of nuclei tailored to the user's specific requirements. Consequently, you can craft workflows that are contingent on particular technologies or targets—such as those exclusive to WordPress or Jira—triggering these sequences only when the relevant technology is identified.
+工作流使用户能够通过为各种模板设置定义的执行顺序来编排一系列操作。这些模板在预定条件下被激活，建立了一种流线型方法来利用nuclei的功能，根据用户的特定需求进行定制。因此，您可以创建依赖于特定技术或目标的工作流—例如那些专属于WordPress或Jira的工作流—仅在识别到相关技术时触发这些序列。
 
-Within a workflow, all templates share a unified execution environment, which means that any named extractor from one template can be seamlessly accessed in another by simply referencing its designated name.
+在工作流中，所有模板共享统一的执行环境，这意味着一个模板中的任何命名提取器都可以在另一个模板中通过简单引用其指定名称来无缝访问。
 
 <Tip>
-For those with prior knowledge of the technology stack in use, we advise constructing personalized workflows for your scans. This strategic approach not only substantially reduces the duration of scans but also enhances the quality and precision of the outcomes.
+对于那些事先了解所使用技术栈的人，我们建议为您的扫描构建个性化工作流。这种策略方法不仅能大幅减少扫描持续时间，还能提高结果的质量和精确度。
 </Tip>
 
-Workflows can be defined with `workflows` attribute, following the `template` / `subtemplates` and `tags` to execute.
+工作流可以使用`workflows`属性定义，后跟要执行的`template` / `subtemplates`和`tags`。
 
 ```yaml
 workflows:
   - template: http/technologies/template-to-execute.yaml
 ```
 
-**Type of workflows**
+**工作流类型**
 
-1. [Generic workflows](#generic-workflows)
-2. [Conditional workflows](#conditional-workflows)
+1. [通用工作流](#generic-workflows)
+2. [条件工作流](#conditional-workflows)
 
-## Generic Workflows
+## 通用工作流
 
-In generic workflow one can define single or multiple template to be executed from a single workflow file. It supports both files and directories as input.
+在通用工作流中，可以从单个工作流文件定义单个或多个要执行的模板。它支持文件和目录作为输入。
 
-A workflow that runs all config related templates on the list of give URLs.
+一个在给定URL列表上运行所有配置相关模板的工作流。
 
 ```yaml
 workflows:
@@ -41,7 +41,7 @@ workflows:
   - tags: xss,ssrf,cve,lfi
 ```
 
-A workflow that runs specific list of checks defined for your project.
+一个运行为您的项目定义的特定检查列表的工作流。
 
 ```yaml
 workflows:
@@ -49,13 +49,13 @@ workflows:
   - template: http/exposures/
   - tags: exposures
 ```
-## Conditional Workflows
+## 条件工作流
 
-You can also create conditional templates which execute after matching the condition from a previous template. This is mostly useful for vulnerability detection and exploitation as well as tech based detection and exploitation. Use-cases for this kind of workflows are vast and varied.
+您还可以创建条件模板，这些模板在匹配先前模板的条件后执行。这对于漏洞检测和利用以及基于技术的检测和利用特别有用。这类工作流的用例广泛且多样。
 
-**Templates based condition check**
+**基于模板的条件检查**
 
-A workflow that executes subtemplates when base template gets matched.
+当基础模板匹配时执行子模板的工作流。
 
 ```yaml
 workflows:
@@ -65,9 +65,9 @@ workflows:
       - template: exploits/jira/
 ```
 
-**Matcher Name based condition check**
+**基于匹配器名称的条件检查**
 
-A workflow that executes subtemplates when a matcher of base template is found in result.
+当在结果中找到基础模板的匹配器时执行子模板的工作流。
 
 ```yaml
 workflows:
@@ -83,12 +83,11 @@ workflows:
           - template: exploits/jboss-exp2.yaml
 ```
 
-In similar manner, one can create as many and as nested checks for workflows as needed.
+以类似方式，可以根据需要为工作流创建任意多和任意嵌套的检查。
 
-**Subtemplate and matcher name based multi level conditional check**
+**基于子模板和匹配器名称的多级条件检查**
 
-A workflow showcasing chain of template executions that run only if the previous templates get matched.
-
+展示模板执行链的工作流，这些模板仅在先前模板匹配时运行。
 
 ```yaml
 workflows:
@@ -103,11 +102,11 @@ workflows:
                   - template: http/cves/2020/xx-xx-xx.yaml
 ```
 
-Conditional workflows are great examples of performing checks and vulnerability detection in most efficient manner instead of spraying all the templates on all the targets and generally come with good ROI on your time and is gentle for the targets as well.
+条件工作流是执行检查和漏洞检测的最有效方式的绝佳示例，而不是将所有模板应用于所有目标，通常会为您的时间带来良好的投资回报，并且对目标也更为温和。
 
-## Shared Execution Context
+## 共享执行上下文
 
-Nuclei engine supports transparent workflow cookiejar and key-value sharing across templates parts of a same workflow. Here follow an example of a workflow that extract a value from the first template and use it in the second conditional one:
+Nuclei引擎支持在同一工作流的模板部分之间透明共享工作流cookiejar和键值。以下是一个工作流的示例，它从第一个模板中提取值并在第二个条件模板中使用它：
 
 ```yaml
 id: key-value-sharing-example
@@ -122,7 +121,7 @@ workflows:
       - template: template-using-named-extractor.yaml
 ```
 
-For example, the following templates extract `href` links from a target web page body and make the value available under the `extracted` key:
+例如，以下模板从目标网页正文中提取`href`链接，并使该值在`extracted`键下可用：
 
 ```yaml
 # template-with-named-extractor.yaml
@@ -146,7 +145,7 @@ http:
         group: 1
 ```
 
-Finally the second template in the workflow will use the obtained value by referencing the extractor name (`extracted`):
+最后，工作流中的第二个模板将通过引用提取器名称（`extracted`）来使用获得的值：
 
 ```yaml
 # template-using-named-extractor.yaml

@@ -1,40 +1,40 @@
-# Namespace: rdp
+# 命名空间: rdp
 
-## Table of contents
+## 目录
 
-### Interfaces
+### 接口
 
 - [CheckRDPAuthResponse](/templates/protocols/javascript/modules/rdp.CheckRDPAuthResponse)
 - [IsRDPResponse](/templates/protocols/javascript/modules/rdp.IsRDPResponse)
 - [ServiceRDP](/templates/protocols/javascript/modules/rdp.ServiceRDP)
 
-### Functions
+### 函数
 
 - [CheckRDPAuth](/templates/protocols/javascript/modules/rdp#checkrdpauth)
 - [IsRDP](/templates/protocols/javascript/modules/rdp#isrdp)
 
-## Functions
+## 函数
 
 ### CheckRDPAuth
 
 ▸ **CheckRDPAuth**(`host`, `port`): [`CheckRDPAuthResponse`](/templates/protocols/javascript/modules/rdp.CheckRDPAuthResponse) \| ``null``
 
-CheckRDPAuth checks if the given host and port are running rdp server
-with authentication and returns their metadata.
-If connection is successful, it returns true.
+CheckRDPAuth 检查给定的主机和端口是否运行带有身份验证的RDP服务器，
+并返回其元数据。
+如果连接成功，返回true。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 [`CheckRDPAuthResponse`](/templates/protocols/javascript/modules/rdp.CheckRDPAuthResponse) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const rdp = require('nuclei/rdp');
@@ -42,7 +42,7 @@ const checkRDPAuth = rdp.CheckRDPAuth('acme.com', 3389);
 log(toJSON(checkRDPAuth));
 ```
 
-#### Defined in
+#### 定义于
 
 rdp.ts:14
 
@@ -52,23 +52,23 @@ ___
 
 ▸ **IsRDP**(`host`, `port`): [`IsRDPResponse`](/templates/protocols/javascript/modules/rdp.IsRDPResponse) \| ``null``
 
-IsRDP checks if the given host and port are running rdp server.
-If connection is successful, it returns true.
-If connection is unsuccessful, it returns false and error.
-The Name of the OS is also returned if the connection is successful.
+IsRDP 检查给定的主机和端口是否运行RDP服务器。
+如果连接成功，返回true。
+如果连接不成功，返回false和错误信息。
+如果连接成功，还会返回操作系统的名称。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 [`IsRDPResponse`](/templates/protocols/javascript/modules/rdp.IsRDPResponse) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const rdp = require('nuclei/rdp');
@@ -76,6 +76,6 @@ const isRDP = rdp.IsRDP('acme.com', 3389);
 log(toJSON(isRDP));
 ```
 
-#### Defined in
+#### 定义于
 
 rdp.ts:32

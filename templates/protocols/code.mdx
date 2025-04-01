@@ -1,24 +1,24 @@
 ---
-title: "Code Protocol"
+title: "Code 协议"
 icon: "code"
-description: "Learn about using external code with Nuclei"
+description: "了解如何在 Nuclei 中使用外部代码"
 iconType: "solid"
 sidebarTitle: "Code"
 ---
 
-Nuclei enables the execution of external code on the host operating system. This feature allows security researchers, pentesters, and developers to extend the capabilities of Nuclei and perform complex actions beyond the scope of regular supported protocol-based testing.
+Nuclei 支持在主机操作系统上执行外部代码。此功能允许安全研究人员、渗透测试人员和开发人员扩展 Nuclei 的功能，执行超出常规协议测试范围的复杂操作。
 
-By leveraging this capability, Nuclei can interact with the underlying operating system and execute custom scripts or commands, opening up a wide range of possibilities. It enables users to perform tasks such as system-level configurations, file operations, network interactions, and more. This level of control and flexibility empowers users to tailor their security testing workflows according to their specific requirements.
+通过利用此功能，Nuclei 可以与底层操作系统交互并执行自定义脚本或命令，从而开启了广泛的可能性。它使用户能够执行系统级配置、文件操作、网络交互等任务。这种控制和灵活性使用户能够根据自己的特定需求定制安全测试工作流程。
 
-To write code template, a code block is used to indicate the start of the requests for the template. This block marks the beginning of the code-related instructions.
+要编写代码模板，需要使用代码块来指示模板请求的开始。此块标记代码相关指令的开始。
 
 ```yaml
-# Start the requests for the template right here
+# 从这里开始模板的请求
 code:
 ```
-## Engine
+## 引擎
 
-To execute the code, a list of language interpreters, which are installed or available on the system environment, is specified. These interpreters can be and not limited to `bash` `sh` `py` `python3`, `go`, `ps`, among others, and they are searched sequentially until a suitable one is found. The identifiers for these interpreters should correspond to their respective names or identifiers recognized by the system environment.
+要执行代码，需要指定系统环境中已安装或可用的语言解释器列表。这些解释器可以是（但不限于）`bash`、`sh`、`py`、`python3`、`go`、`ps`等，系统会按顺序搜索直到找到合适的解释器。这些解释器的标识符应与系统环境中识别的相应名称或标识符一致。
 
 ```yaml
 - engine:
@@ -26,33 +26,33 @@ To execute the code, a list of language interpreters, which are installed or ava
     - python3
 ```
 
-The code to be executed can be provided either as an external file or as a code snippet directly within the template.
+要执行的代码可以作为外部文件提供，也可以直接在模板中作为代码片段提供。
 
-For an external file:
+外部文件示例：
 
 ```yaml
 source: helpers/code/pyfile.py
 ```
 
-For a code snippet:
+代码片段示例：
 ```yaml
 source: |
       import sys
       print("hello from " + sys.stdin.read())
 ```
 
-The target is passed to the template via stdin, and the output of the executed code is available for further processing in matchers and extractors. In the case of the Code protocol, the response part represents all data printed to stdout during the execution of the code.
+目标通过stdin传递给模板，执行的代码输出可供后续处理器和提取器使用。在Code协议中，response部分表示代码执行期间打印到stdout的所有数据。
 
-## Parts
+## 部件
 
-Valid `part` values supported by **Code** protocol for Matchers / Extractor are - 
+**Code**协议支持的有效`part`值用于匹配器/提取器：
     
-| Value    | Description                                          |
-| -------- | ---------------------------------------------------- |
-| response | execution output (trailing whitespaces are filtered) |
-| stderr   | Raw Stderr Output(if any)                            |
+| 值       | 描述                            |
+| -------- | ------------------------------- |
+| response | 执行输出（过滤尾随空格）        |
+| stderr   | 原始标准错误输出（如果有）      |
 
-The provided example demonstrates the execution of a bash and python code snippet within the template. The specified engines are searched in the given order, and the code snippet is executed accordingly. Additionally, dynamic template variables are used in the code snippet, which are replaced with their respective values during the execution of the template which shows the flexibility and customization that can be achieved using this protocol.
+提供的示例演示了在模板中执行bash和python代码片段。按照给定顺序搜索指定的引擎，并相应地执行代码片段。此外，代码片段中使用了动态模板变量，在模板执行过程中会替换为相应的值，这显示了使用此协议可以实现的灵活性和自定义性。
 
 ```yaml
 id: code-template
@@ -95,11 +95,11 @@ http:
 # digest: 4a0a0047304502202ce8fe9f5992782da6ba59da4e8ebfde9f19a12e247adc507040e9f1f1124b4e022100cf0bc7a44a557a6655f79a2b4789e103f5099f0f81a8d1bc4ad8aabe7829b1c5:8eeeebe39b11b16384b45bc7e9163000
 ```
 
-Apart from required fields mentioned above, Code protocol also supports following optional fields to further customize the execution of code.
+除了上述必需字段外，Code协议还支持以下可选字段，以进一步自定义代码的执行。
 
-## Args
+## 参数
 
-Args are arguments that are sent to engine while executing the code. For example if we want to bypass execution policy in powershell for specific template this can be done by adding following args to the template.
+Args 是执行代码时发送给引擎的参数。例如，如果我们想为特定模板绕过PowerShell中的执行策略，可以通过向模板添加以下参数来实现。
 
 ```yaml
   - engine:
@@ -111,19 +111,19 @@ Args are arguments that are sent to engine while executing the code. For example
       - -File
 ```
 
-## Pattern
+## 模式
 
-Pattern field can be used to customize name / extension of temporary file while executing a code snippet in a template
+Pattern字段可用于在模板中执行代码片段时自定义临时文件的名称/扩展名
 
 ```yaml
     pattern: "*.ps1"
 ```
 
-adding `pattern: "*.ps1"` will make sure that name of temporary file given pattern.
+添加`pattern: "*.ps1"`将确保临时文件的名称符合给定模式。
 
-## Examples
+## 示例
 
-This code example shows a basic response based on DSL.
+这个代码示例展示了基于DSL的基本响应。
 
 ```yaml
 id: code-template
@@ -151,7 +151,7 @@ code:
 
 ```
 
-Below is a example code template where we are executing a powershell script while customizing behaviour of execution policy and setting pattern to `*.ps1`
+下面是一个示例代码模板，我们在执行PowerShell脚本的同时自定义执行策略行为并将模式设置为`*.ps1`
 
 ```yaml
 id: ps1-code-snippet
@@ -185,24 +185,24 @@ code:
 # digest: 4a0a00473045022100eb01da6b97893e7868c584f330a0cd52df9bddac005860bb8595ba5b8aed58c9022050043feac68d69045cf320cba9298a2eb2e792ea4720d045d01e803de1943e7d:4a3eb6b4988d95847d4203be25ed1d46
 ```
 
-## Running Code Templates
+## 运行代码模板
 
-By default Nuclei will not execute code templates. To enable code protocol execution, `-code` flag needs to be explicitly passed to nuclei.
+默认情况下，Nuclei不会执行代码模板。要启用代码协议执行，需要向nuclei显式传递`-code`标志。
 
 ```bash
 nuclei -t code-template.yaml -code
 ```
 
-## Learn More 
+## 了解更多 
 
 <Info>
-For more examples, please refer to example [code-templates](https://github.com/projectdiscovery/nuclei/tree/main/integration_tests/protocols/code) in integration tests.
+有关更多示例，请参阅集成测试中的示例[代码模板](https://github.com/projectdiscovery/nuclei/tree/main/integration_tests/protocols/code)。
 </Info>
 
 <Warning>
-It's important to exercise caution while utilizing this feature, as executing external code on the host operating system carries inherent risks. It is crucial to ensure that the executed code is secure, thoroughly tested, and does not pose any unintended consequences or security risks to the target system.
+使用此功能时要谨慎，因为在主机操作系统上执行外部代码存在固有风险。确保执行的代码是安全的、经过充分测试的，不会对目标系统造成任何意外后果或安全风险至关重要。
 </Warning>
 
 <Tip>
-To ensure the integrity of the code in your templates, be sure to sign your templates using the [Template Signing](/templates/reference/template-signing) methods.
+为确保模板中代码的完整性，请务必使用[模板签名](/templates/reference/template-signing)方法对模板进行签名。
 </Tip>

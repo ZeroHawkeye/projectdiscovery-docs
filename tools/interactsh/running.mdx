@@ -1,16 +1,16 @@
 ---
-title: 'Running Interactsh interactsh-client'
-description: "Learn about running Interactsh with examples and detailed output"
-sidebarTitle: 'Running interactsh-client'
+title: '运行 Interactsh interactsh-client'
+description: "了解如何运行 Interactsh，包含示例和详细输出"
+sidebarTitle: '运行 interactsh-client'
 ---
 
-For all of the flags and options available for **Interactsh** be sure to check out the [Usage](/tools/interactsh/usage) page. 
+有关 **Interactsh** 的所有标志和选项，请查看[使用方法](/tools/interactsh/usage)页面。
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
+<Note> 如果您有问题，请通过[帮助](/help)联系我们。</Note>
 
-## Basic Usage
+## 基本用法
 
-The command `interact-client` generates a unique payload that can be used for Out-Of-Band (OOB) testing with minimal interactin in the output.
+命令 `interact-client` 生成一个唯一的 payload，可用于 Out-Of-Band (OOB) 测试，输出中的交互信息最小化。
 
 ```console
 interactsh-client
@@ -34,9 +34,9 @@ interactsh-client
 [c23b2la0kl1krjcrdj10cndmnioyyyyyn] Received SMTP interaction from 32.85.166.50 at 2021-26-26 12:26
 ```
 
-## Session File
+## 会话文件
 
-`interactsh-client` with `-sf, -session-file` flag can be used to store/read the current session information from user defined file. This functionality is useful to resume the same session to poll the interactions even after the client gets stopped or closed. 
+`interactsh-client` 使用 `-sf, -session-file` 标志可以从用户定义的文件中存储/读取当前会话信息。此功能对于恢复同一会话以轮询交互非常有用，即使在客户端停止或关闭后也能继续使用。
 
 ```console
 interactsh-client -sf interact.session
@@ -60,9 +60,9 @@ interactsh-client -sf interact.session
 [c23b2la0kl1krjcrdj10cndmnioyyyyyn] Received SMTP interaction from 32.85.166.50 at 2021-26-26 12:26
 ```
 
-## Verbose Mode
+## 详细模式
 
-Running the `interactsh-client` in **verbose mode** (v) allows you to to see the whole request and response, along with an output file to analyze afterwards.
+在**详细模式** (v) 下运行 `interactsh-client` 可以让您查看完整的请求和响应，并输出到文件以便后续分析。
 
 ```console
 interactsh-client -v -o interactsh-logs.txt
@@ -101,14 +101,14 @@ Server: oast.pro
 <html><head></head><body>nyyyyyy9pmefcguvhvpvod800ehudb85c</body></html>
 ```
 
-## Choosing a Server
-When running `interactsh-client`, it is required that it can connect to a running `interactsh-server`. The Interactsh server captures and logs out-of-band interactions, while the client generates testing URLs and analyzes these interactions for vulnerabilities.
+## 选择服务器
+运行 `interactsh-client` 时，需要连接到一个正在运行的 `interactsh-server`。Interactsh 服务器捕获并记录带外交互，而客户端生成测试 URL 并分析这些交互以检测漏洞。
 
-You can either use one of ProjectDiscovery's default interactsh servers or choose you run a self-hosted sever.
+您可以使用 ProjectDiscovery 的默认 interactsh 服务器，或选择运行自托管服务器。
 
-### ProjectDiscovery interachsh servers
+### ProjectDiscovery interactsh 服务器
 
-We maintain a list of default Interactsh servers to use with `interactsh-client`:
+我们维护了一个默认 Interactsh 服务器列表，可与 `interactsh-client` 一起使用：
 
 - oast.pro
 - oast.live
@@ -117,27 +117,27 @@ We maintain a list of default Interactsh servers to use with `interactsh-client`
 - oast.fun
 - oast.me
 
-Default servers are subject to change/rotate/down at any time, thus we recommend using a self-hosted interactsh server if you are experiencing issues with the default server.
+默认服务器可能随时更改/轮换/下线，因此如果您遇到默认服务器问题，我们建议使用自托管 interactsh 服务器。
 
-### Self-Hosted interactsh Server
+### 自托管 interactsh 服务器
 
-Using the `server` flag, `interactsh-client` can be configured to connect with a self-hosted Interactsh server, this flag accepts single or multiple server separated by comma.
+使用 `server` 标志，`interactsh-client` 可以配置为连接到自托管的 Interactsh 服务器，此标志接受单个或多个以逗号分隔的服务器。
 
 ```sh
 interactsh-client -server hackwithautomation.com
 ```
 
-**Using a Protected Self-Hosted Server**
+**使用受保护的自托管服务器**
 
-Using the `token` flag, `interactsh-client` can connect to a self-hosted Interactsh server that is protected with authentication.
+使用 `token` 标志，`interactsh-client` 可以连接到受身份验证保护的自托管 Interactsh 服务器。
 
 ```sh
 interactsh-client -server hackwithautomation.com -token XXX
 ```
 
-## Using with Notify
+## 与 Notify 一起使用
 
-If you are away from your terminal, you may use [notify](https://github.com/projectdiscovery/notify) to send a real-time interaction notification to any supported platform.
+如果您离开终端，可以使用 [notify](https://github.com/projectdiscovery/notify) 向任何支持的平台发送实时交互通知。
 
 ```sh
 interactsh-client | notify
@@ -145,17 +145,17 @@ interactsh-client | notify
 
 ![image](https://user-images.githubusercontent.com/8293321/116283535-9bcac180-a7a9-11eb-94d5-0313d4812fef.png)
 
-## Interactsh Web Client
+## Interactsh Web 客户端
 
-[Interactsh-web](https://github.com/projectdiscovery/interactsh-web) is a free and open-source web client that displays Interactsh interactions in a well-managed dashboard in your browser. It uses the browser's local storage to store and display all incoming interactions. By default, the web client is configured to use **interact.sh** as default interactsh server, and supports other self-hosted public/authencaited interactsh servers as well.
+[Interactsh-web](https://github.com/projectdiscovery/interactsh-web) 是一个免费开源的 Web 客户端，可在浏览器中以管理良好的仪表板显示 Interactsh 交互。它使用浏览器的本地存储来存储和显示所有传入的交互。默认情况下，Web 客户端配置为使用 **interact.sh** 作为默认 interactsh 服务器，也支持其他自托管的公共/认证 interactsh 服务器。
 
-A hosted instance of **interactsh-web** client is available at https://app.interactsh.com
+**interactsh-web** 客户端的托管实例可在 https://app.interactsh.com 获取
 
 ![image](https://user-images.githubusercontent.com/8293321/136621531-d72c9ece-0076-4db1-98c9-21dcba4ba09c.png)
 
-## Interactsh Docker Client
+## Interactsh Docker 客户端
 
-A [Docker image](https://hub.docker.com/r/projectdiscovery/interactsh-client) is also provided with interactsh client that is ready to run and can be used in the following way:
+我们还提供了一个包含 interactsh 客户端的 [Docker 镜像](https://hub.docker.com/r/projectdiscovery/interactsh-client)，可以按以下方式使用：
 
 ```sh
 docker run projectdiscovery/interactsh-client:latest
@@ -176,34 +176,34 @@ docker run projectdiscovery/interactsh-client:latest
 [INF] c59e3crp82ke7bcnedq0cfjqdpeyyyyyn.oast.pro
 ```
 
-## Integrations
+## 集成
 
-### Burp Suite Extension
-See [integrations](/tools/interactsh/integrations) for more details on the [interactsh-collaborator](https://github.com/wdahlenburg/interactsh-collaborator).
+### Burp Suite 扩展
+有关 [interactsh-collaborator](https://github.com/wdahlenburg/interactsh-collaborator) 的更多详细信息，请参阅[集成](/tools/interactsh/integrations)。
 
-### ZAP Add-On
-See [integrations](/tools/interactsh/integrations) for more details on using interactsh with ZAP.
+### ZAP 附加组件
+有关将 interactsh 与 ZAP 一起使用的更多详细信息，请参阅[集成](/tools/interactsh/integrations)。
 
-### Use as library
+### 作为库使用
 
-The [examples](https://github.com/projectdiscovery/interactsh/tree/main/examples) show using the interactsh client library to get external interactions for a generated URL by making a http request to the URL.
+[示例](https://github.com/projectdiscovery/interactsh/tree/main/examples)展示了如何使用 interactsh 客户端库，通过向生成的 URL 发送 http 请求来获取外部交互。
 
 ### Nuclei - OAST
 
-[Nuclei](https://github.com/projectdiscovery/nuclei) vulnerability scanner utilize **Interactsh** for automated payload generation and detection of out of band based security vulnerabilities.
+[Nuclei](https://github.com/projectdiscovery/nuclei) 漏洞扫描器利用 **Interactsh** 进行自动 payload 生成和带外安全漏洞检测。
 
-See [Nuclei + Interactsh](https://blog.projectdiscovery.io/nuclei-interactsh-integration/) Integration blog and [guide document](https://docs.projectdiscovery.io/templates/reference/oob-testing) for more information.
+有关更多信息，请参阅 [Nuclei + Interactsh](https://blog.projectdiscovery.io/nuclei-interactsh-integration/) 集成博客和[指南文档](https://docs.projectdiscovery.io/templates/reference/oob-testing)。
 
-## Cloud Metadata
+## 云元数据
 
-Interactsh server supports DNS records for cloud metadata services, which is useful for testing SSRF-related vulnerabilities.
+Interactsh 服务器支持云元数据服务的 DNS 记录，这对测试 SSRF 相关漏洞非常有用。
 
-Currently supported metadata services:
+当前支持的元数据服务：
 
 - [AWS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
 - [Alibaba](https://www.alibabacloud.com/blog/alibaba-cloud-ecs-metadata-user-data-and-dynamic-data_594351)
 
-Example:
+示例：
 
-* **aws.interact.sh** points to 169.254.169.254
-* **alibaba.interact.sh** points to 100.100.100.200
+* **aws.interact.sh** 指向 169.254.169.254
+* **alibaba.interact.sh** 指向 100.100.100.200

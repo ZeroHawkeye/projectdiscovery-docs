@@ -1,44 +1,44 @@
 ---
-title: AlterX Usage
-description: "Learn AlterX usage including flags and filters"
-sidebarTitle: Usage
+title: AlterX 使用方法
+description: "了解 AlterX 的使用方法，包括标志和过滤器"
+sidebarTitle: 使用方法
 ---
 
-## Access help
+## 获取帮助
 
-Use `alterx -h` to display all of the help options.
+使用 `alterx -h` 显示所有帮助选项。
 
-## AlterX options
+## AlterX 选项
 
-You can use the following command to see the available flags and options:
+你可以使用以下命令查看可用的标志和选项：
 
 ```console
-Fast and customizable subdomain wordlist generator using DSL.
+快速且可自定义的子域名词表生成器，使用 DSL。
 
-Usage:
+用法:
   ./alterx [flags]
 
-Flags:
-INPUT:
-   -l, -list string[]     subdomains to use when creating permutations (stdin, comma-separated, file)
-   -p, -pattern string[]  custom permutation patterns input to generate (comma-seperated, file)
-   -pp, -payload value    custom payload pattern input to replace/use in key=value format (-pp 'word=words.txt')
+标志:
+输入:
+   -l, -list string[]     用于创建排列的子域名（标准输入、逗号分隔、文件）
+   -p, -pattern string[]  生成的自定义排列模式输入（逗号分隔、文件）
+   -pp, -payload value    以键值格式替换/使用的自定义负载模式输入 (-pp 'word=words.txt')
 
-OUTPUT:
-   -es, -estimate      estimate permutation count without generating payloads
-   -o, -output string  output file to write altered subdomain list
-   -ms, -max-size int  Max export data size (kb, mb, gb, tb) (default mb)
-   -v, -verbose        display verbose output
-   -silent             display results only
-   -version            display alterx version
+输出:
+   -es, -estimate      估计排列数量而不生成负载
+   -o, -output string  写入修改后的子域名列表的输出文件
+   -ms, -max-size int  最大导出数据大小 (kb, mb, gb, tb) (默认 mb)
+   -v, -verbose        显示详细输出
+   -silent             仅显示结果
+   -version            显示 alterx 版本
 
-CONFIG:
-   -config string  alterx cli config file (default '$HOME/.config/alterx/config.yaml')
-   -en, -enrich    enrich wordlist by extracting words from input
-   -ac string      alterx permutation config file (default '$HOME/.config/alterx/permutation_v0.0.1.yaml')
-   -limit int      limit the number of results to return (default 0)
+配置:
+   -config string  alterx 命令行配置文件 (默认 '$HOME/.config/alterx/config.yaml')
+   -en, -enrich    通过从输入中提取单词来丰富词表
+   -ac string      alterx 排列配置文件 (默认 '$HOME/.config/alterx/permutation_v0.0.1.yaml')
+   -limit int      限制返回结果的数量 (默认 0)
 
-UPDATE:
-   -up, -update                 update alterx to latest version
-   -duc, -disable-update-check  disable automatic alterx update check
+更新:
+   -up, -update                 更新 alterx 到最新版本
+   -duc, -disable-update-check  禁用自动 alterx 更新检查
 ```

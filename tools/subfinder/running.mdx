@@ -1,15 +1,14 @@
 ---
-title: 'Running'
-description: "Learn about running Subfinder with examples including commands and output"
-sidebarTitle: 'Running'
+title: '运行'
+description: "了解如何运行Subfinder，包括命令示例和输出结果"
+sidebarTitle: '运行'
 ---
 
-For all of the flags and options available for `Subfinder` be sure to check out the [Usage](/tools/subfinder/usage) page. On this page we'll share examples running Subfinder with specific flags and goals
-and the output you can expect from each. *If you have questions, reach out to us through [Help](/help).*
+有关`Subfinder`所有可用的标志和选项，请务必查看[使用说明](/tools/subfinder/usage)页面。在本页中，我们将分享使用特定标志和目标运行Subfinder的示例，以及每个示例预期的输出结果。*如果您有疑问，请通过[帮助](/help)联系我们。*
 
-## Basic Usage
+## 基本用法
 
-To run Subfinder on a specific target use the `-d` flag to specify the domain.
+要在特定目标上运行Subfinder，使用`-d`标志指定域名。
 
 ```
 subfinder -d hackerone.com
@@ -22,11 +21,11 @@ subfinder -d hackerone.com
 
 		projectdiscovery.io
 
-Use with caution. You are responsible for your actions
-Developers assume no liability and are not responsible for any misuse or damage.
-By using subfinder, you also agree to the terms of the APIs used.
+谨慎使用。您需要对自己的行为负责
+开发者不承担任何责任，也不对任何滥用或损害负责。
+使用subfinder，即表示您同意所使用API的条款。
 
-[INF] Enumerating subdomains for hackerone.com
+[INF] 为hackerone.com枚举子域名
 
 www.hackerone.com
 support.hackerone.com
@@ -47,12 +46,12 @@ info.hackerone.com
 mta-sts.managed.hackerone.com
 events.hackerone.com
 
-[INF] Found 18 subdomains for hackerone.com in 3 seconds 672 milliseconds
+[INF] 在3秒672毫秒内为hackerone.com发现了18个子域名
 ```
 
-## Pipe Results to Other Tools
+## 将结果传递给其他工具
 
-The subdomains discovered can be piped to other tools. For example, you can pipe the discovered subdomains to httpx which will then find running HTTP servers on the host.
+发现的子域名可以通过管道传递给其他工具。例如，您可以将发现的子域名通过管道传递给httpx，它将在主机上查找运行中的HTTP服务器。
 
 ```
 echo hackerone.com | subfinder -silent | httpx -silent
@@ -65,23 +64,23 @@ https://docs.hackerone.com
 http://mta-sts.managed.hackerone.com
 ```
 
-## Subfinder and Docker
+## Subfinder和Docker
 
-Pull the latest tagged `subfinder` Docker image using:
+使用以下命令拉取最新标记的`subfinder` Docker镜像：
 ```
 docker pull projectdiscovery/subfinder:latest
 ```
 
-Run `subfinder` using the Docker image:
+使用Docker镜像运行`subfinder`：
 ```
 docker run projectdiscovery/subfinder:latest -d hackerone.com
 ```
 
-Run `subfinder` using the Docker image with a local config file:
+使用Docker镜像和本地配置文件运行`subfinder`：
 ```
 docker run -v $CONFIG/subfinder:/root/.config/subfinder -t projectdiscovery/subfinder -d hackerone.com
 ```
 
-## Subfinder Go library
+## Subfinder Go库
 
-`subfinder` can also be used as library and a minimal examples of using subfinder SDK is available [in the example library.](https://github.com/projectdiscovery/subfinder/blob/dev/v2/examples/main.go)
+`subfinder`也可以作为库使用，在[示例库](https://github.com/projectdiscovery/subfinder/blob/dev/v2/examples/main.go)中提供了使用subfinder SDK的最小示例。

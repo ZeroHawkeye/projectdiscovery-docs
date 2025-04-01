@@ -1,18 +1,18 @@
 ---
-title: Running Notify
-description: "Learn about running Notify with details om variables and examples"
-sidebarTitle: Running
+title: 运行 Notify
+description: "了解有关运行 Notify 的详细信息，包括变量和示例"
+sidebarTitle: 运行
 ---
 
-For all of the flags and options available for **Notify** be sure to check out the [Usage](/tools/notify/usage) page. 
+有关 **Notify** 可用的所有标志和选项，请务必查看 [用法](/tools/notify/usage) 页面。 
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
+<Note> 如果您有疑问，请通过 [帮助](/help) 联系我们。 </Note>
 
-## Basic Usage
+## 基本用法
 
-Notify supports piping output of any tool or output file and send it to configured provider/s (e.g, discord, slack channel) as notification.
+Notify 支持通过管道传输任何工具的输出或输出文件，并将其作为通知发送到已配置的提供者（例如，discord、slack 频道）。
 
-### Send notification using piped(stdin) output
+### 使用管道(stdin)输出发送通知
 
 ```sh
 subfinder -d hackerone.com | notify -bulk
@@ -20,66 +20,61 @@ subfinder -d hackerone.com | notify -bulk
 
 ![image](https://user-images.githubusercontent.com/8293321/130240854-e3031bc6-ecc8-47f8-9654-4c58e09cc622.png)
 
-### Send notification using output file
-
+### 使用输出文件发送通知
 
 ```sh
 subfinder -d hackerone.com -o h1.txt; notify -data h1.txt
 ```
 
-### Send notification using output file in bulk mode
-
+### 在批量模式下使用输出文件发送通知
 
 ```sh
 subfinder -d hackerone.com -o h1.txt; notify -data h1.txt -bulk
 ```
 
-### Send notification using output file to specific provider's
-
+### 使用输出文件向特定提供者发送通知
 
 ```sh
 subfinder -d hackerone.com -o h1.txt; notify -data h1.txt -bulk -provider discord,slack
 ```
 
-### Send notification using output file to specific ID's
-
+### 使用输出文件向特定 ID 发送通知
 
 ```sh
 subfinder -d hackerone.com -o h1.txt; notify -data h1.txt -bulk -id recon,vulns,scan
 ```
 
-## Example Uses
+## 使用示例
 
-Following command will enumerate subdomains using [SubFinder](https://github.com/projectdiscovery/subfinder) and probe alive URLs using [httpx](https://github.com/projectdiscovery/httpx), runs [Nuclei](https://github.com/projectdiscovery/nuclei) templates and send the nuclei results as a notifications to configured provider/s.
-
+以下命令将使用 [SubFinder](https://github.com/projectdiscovery/subfinder) 枚举子域名，使用 [httpx](https://github.com/projectdiscovery/httpx) 探测活跃的 URL，运行 [Nuclei](https://github.com/projectdiscovery/nuclei) 模板，并将 nuclei 结果作为通知发送到已配置的提供者。
 
 ```sh
 subfinder -d intigriti.com | httpx | nuclei -tags exposure -o output.txt; notify -bulk -data output.txt
 ```
 
-## Provider Config
+## 提供者配置
 
-The tool tries to use the default provider config (`$HOME/.config/notify/provider-config.yaml`), it can also be specified via CLI by using **provider-config** flag.
+该工具尝试使用默认提供者配置（`$HOME/.config/notify/provider-config.yaml`），也可以通过使用 **provider-config** 标志在命令行中指定。
 
-To run the tool with custom provider config, just use the following command.
+要使用自定义提供者配置运行该工具，只需使用以下命令。
 
 ```sh
 notify -provider-config providers.yaml
 ```
 
-## Notify Config
+## Notify 配置
 
-Notify flags can be configured at default config (`$HOME/.config/notify/config.yaml`) or custom config can be also provided using `config` flag.
+Notify 标志可以在默认配置（`$HOME/.config/notify/config.yaml`）中配置，也可以使用 `config` 标志提供自定义配置。
 
-## Notes
-- As default notify sends notification line by line
-- Use `-bulk` to send notification as entire message/s (messages might be chunked)
+## 注意事项
+- 默认情况下，notify 逐行发送通知
+- 使用 `-bulk` 将通知作为整条消息发送（消息可能会被分块）
 
-## References
+## 参考资料
 
-- [Creating Slack webhook](https://slack.com/intl/en-it/help/articles/115005265063-Incoming-webhooks-for-Slack)
-- [Creating Discord webhook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
-- [Creating Telegram bot](https://core.telegram.org/bots#3-how-do-i-create-a-bot)
-- [Creating Pushover Token](https://github.com/containrrr/shoutrrr/blob/main/docs/services/pushover.md)
+- [创建 Slack webhook](https://slack.com/intl/en-it/help/articles/115005265063-Incoming-webhooks-for-Slack)
+- [创建 Discord webhook](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
+- [创建 Telegram bot](https://core.telegram.org/bots#3-how-do-i-create-a-bot)
+- [创建 Pushover Token](https://github.com/containrrr/shoutrrr/blob/main/docs/services/pushover.md)
 
-Notify is made with 🖤 by the [projectdiscovery](https://projectdiscovery.io) team.
+Notify 由 [projectdiscovery](https://projectdiscovery.io) 团队用 🖤 制作。

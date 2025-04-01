@@ -1,41 +1,41 @@
-# Namespace: mysql
+# 命名空间: mysql
 
-## Table of contents
+## 目录
 
-### Classes
+### 类
 
 - [MySQLClient](/templates/protocols/javascript/modules/mysql.MySQLClient)
 
-### Interfaces
+### 接口
 
 - [MySQLInfo](/templates/protocols/javascript/modules/mysql.MySQLInfo)
 - [MySQLOptions](/templates/protocols/javascript/modules/mysql.MySQLOptions)
 - [SQLResult](/templates/protocols/javascript/modules/mysql.SQLResult)
 - [ServiceMySQL](/templates/protocols/javascript/modules/mysql.ServiceMySQL)
 
-### Functions
+### 函数
 
 - [BuildDSN](/templates/protocols/javascript/modules/mysql#builddsn)
 
-## Functions
+## 函数
 
 ### BuildDSN
 
 ▸ **BuildDSN**(`opts`): `string` \| ``null``
 
-BuildDSN builds a MySQL data source name (DSN) from the given options.
+BuildDSN 从给定的选项构建 MySQL 数据源名称(DSN)。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `opts` | [`MySQLOptions`](/templates/protocols/javascript/modules/mysql.MySQLOptions) |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const mysql = require('nuclei/mysql');
@@ -45,6 +45,6 @@ options.Port = 3306;
 const dsn = mysql.BuildDSN(options);
 ```
 
-#### Defined in
+#### 定义于
 
 mysql.ts:14

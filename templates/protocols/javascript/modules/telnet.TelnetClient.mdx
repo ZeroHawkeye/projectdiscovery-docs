@@ -1,60 +1,60 @@
-# Class: TelnetClient
+# 类: TelnetClient
 
 [telnet](/templates/protocols/javascript/modules/telnet).TelnetClient
 
-TelnetClient is a minimal Telnet client for nuclei scripts.
+TelnetClient 是用于 nuclei 脚本的简易 Telnet 客户端。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const telnet = require('nuclei/telnet');
 const client = new telnet.Client();
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/telnet.TelnetClient#constructor)
 
-### Methods
+### 方法
 
 - [IsTelnet](/templates/protocols/javascript/modules/telnet.TelnetClient#istelnet)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new TelnetClient**(): [`TelnetClient`](/templates/protocols/javascript/modules/telnet.TelnetClient)
 
-#### Returns
+#### 返回
 
 [`TelnetClient`](/templates/protocols/javascript/modules/telnet.TelnetClient)
 
-#### Defined in
+#### 定义于
 
 telnet.ts:15
 
-## Methods
+## 方法
 
 ### IsTelnet
 
 ▸ **IsTelnet**(`host`, `port`): [`IsTelnetResponse`](/templates/protocols/javascript/modules/telnet.IsTelnetResponse)
 
-IsTelnet checks if a host is running a Telnet server.
+IsTelnet 检查主机是否运行 Telnet 服务器。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsTelnetResponse`](/templates/protocols/javascript/modules/telnet.IsTelnetResponse)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const telnet = require('nuclei/telnet');
@@ -62,6 +62,6 @@ const isTelnet = telnet.IsTelnet('acme.com', 23);
 log(toJSON(isTelnet));
 ```
 
-#### Defined in
+#### 定义于
 
 telnet.ts:25

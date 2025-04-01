@@ -1,103 +1,103 @@
 ---
-title: Nuclei Overview
-description: "A fast and customisable vulnerability scanner powered by simple YAML-based templates"
-sidebarTitle: Overview
+title: Nuclei 概述
+description: "一款由简单YAML模板驱动的快速、可自定义的漏洞扫描器"
+sidebarTitle: 概述
 ---
 
-## What is **Nuclei?**
+## 什么是 **Nuclei?**
 
-Nuclei is a fast vulnerability scanner designed to probe modern applications, infrastructure, cloud platforms, and networks, aiding in the identification and mitigation of exploitable vulnerabilities.
+Nuclei 是一款快速漏洞扫描器，设计用于探测现代应用程序、基础设施、云平台和网络，帮助识别和缓解可利用的漏洞。
 
-At its core, Nuclei uses templates—expressed as straightforward YAML files, that delineate methods for detecting, ranking, and addressing specific security flaws.
+其核心，Nuclei 使用模板——以简单的 YAML 文件表示，这些文件描述了检测、评级和解决特定安全缺陷的方法。
 
-Each template delineates a possible attack route, detailing the vulnerability, its severity, priority rating, and occasionally associated exploits. This template-centric methodology ensures Nuclei not only identifies potential threats, but pinpoints exploitable vulnerabilities with tangible real-world implications.
+每个模板都描述了一种可能的攻击路径，详细说明漏洞、其严重性、优先级评级，以及偶尔相关的漏洞利用方式。这种以模板为中心的方法确保 Nuclei 不仅能识别潜在威胁，还能精确定位具有实际影响的可利用漏洞。
 
-New to scanners and Nuclei? Try it out today with a quick example through our [Getting Started](/getstarted-overview).
+对扫描器和 Nuclei 还不熟悉？通过我们的[入门指南](/getstarted-overview)快速尝试一个例子。
 
-## What are Nuclei's features?
+## Nuclei 有哪些功能?
 
-| Feature                                         | Description                                                                                                                                                        |
+| 功能                                         | 描述                                                                                                                                                        |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Extensive Template Library](#)                 | Nuclei offers a vast collection of community-powered templates for targeted scans of various vulnerabilities and attack vectors.                                   |
-| [Versatile Target Specification](#)             | Support for various target specification options, such as URLs, IP ranges, ASN range, and file input, allowing flexibility in defining the scanning scope.         |
-| [Bulk Scanning](#)                              | Perform bulk scanning by specifying multiple targets at once, enabling efficient scanning of a large number of assets or websites.                                 |
-| [Flexible Customization](#)                     | Customize scanning templates to fit specific needs, allowing tailored scanning and focusing on relevant security checks.                                           |
-| [Parallel Scanning](#)                          | Supports parallel scanning, reducing scanning time and improving efficiency, especially for large-scale targets.                                                   |
-| [Comprehensive Reporting `cloud`](#)            | Generates detailed reports with actionable insights, including vulnerability details, severity levels, affected endpoints, and suggested remediation steps.        |
-| [Integration with CI/CD Pipelines](#)           | Seamlessly integrate Nuclei into CI/CD pipelines for automated security testing as part of the development and deployment process.                                 |
-| [CI/CD Integration `cloud`](#)                  | Actively maintained and developed by the ProjectDiscovery team, introducing new features, bug fixes, and enhancements to provide an up-to-date scanning framework. |
-| [Ticketing integration `cloud`](#)              | Two-way ticketing integration with Jira, Splunk, and many others to easily remediate and retest vulnerabilities.                                                   |
-| [Customizable Output Format](#)                 | Configure the output format of Nuclei's scan results to suit your needs, including options for JSON, YAML, and more.                                               |
-| [Dynamic Variables](#)                          | Utilize dynamic variables in templates to perform parameterized scanning, enabling versatile and flexible scanning configurations.                                 |
-| [Inclusion and Exclusion Filters](#)            | Apply inclusion and exclusion filters to specify targets, reducing scanning scope and focusing on specific areas of interest.                                      |
-| [Authentication Support](/tools/nuclei/authenticated-scans)                     | Nuclei supports various authentication mechanisms, including HTTP basic authentication, JWT token authentication, and more.                                        |
-| [Embedding custom code in templates](#) | Execute custom code within Nuclei templates to incorporate user-defined logic, perform advanced scanning actions, and more.                                        |
-| [AI-Powered Template Generation](#) | Generate and run vulnerability templates on-the-fly using natural language descriptions powered by ProjectDiscovery's AI capabilities.                           |
+| [丰富的模板库](#)                 | Nuclei 提供大量社区驱动的模板，用于针对性扫描各种漏洞和攻击向量。                                   |
+| [多样化的目标指定](#)             | 支持各种目标指定选项，如URL、IP范围、ASN范围和文件输入，允许灵活定义扫描范围。         |
+| [批量扫描](#)                              | 通过一次指定多个目标执行批量扫描，实现对大量资产或网站的高效扫描。                                 |
+| [灵活定制](#)                     | 自定义扫描模板以适应特定需求，允许量身定制扫描并专注于相关安全检查。                                           |
+| [并行扫描](#)                          | 支持并行扫描，减少扫描时间并提高效率，特别是对于大规模目标。                                                   |
+| [全面报告 `cloud`](#)            | 生成详细报告，提供可操作的洞察，包括漏洞详情、严重级别、受影响的端点和建议的修复步骤。        |
+| [与CI/CD管道集成](#)           | 无缝集成到CI/CD管道中，作为开发和部署过程的一部分进行自动安全测试。                                 |
+| [CI/CD集成 `cloud`](#)                  | 由ProjectDiscovery团队积极维护和开发，引入新功能、错误修复和增强功能，提供最新的扫描框架。 |
+| [工单集成 `cloud`](#)              | 与Jira、Splunk等系统的双向工单集成，轻松修复和重新测试漏洞。                                                   |
+| [可自定义输出格式](#)                 | 配置Nuclei扫描结果的输出格式以满足需求，包括JSON、YAML等选项。                                               |
+| [动态变量](#)                          | 在模板中利用动态变量执行参数化扫描，实现多功能和灵活的扫描配置。                                 |
+| [包含和排除过滤器](#)            | 应用包含和排除过滤器来指定目标，减少扫描范围并专注于特定区域。                                      |
+| [认证支持](/tools/nuclei/authenticated-scans)                     | Nuclei支持各种认证机制，包括HTTP基本认证、JWT令牌认证等。                                        |
+| [在模板中嵌入自定义代码](#) | 在Nuclei模板中执行自定义代码，集成用户定义的逻辑，执行高级扫描操作等。                                        |
+| [AI驱动的模板生成](#) | 使用由ProjectDiscovery的AI功能驱动的自然语言描述，即时生成和运行漏洞模板。                           |
 
 
-## How can I use Nuclei?
+## 如何使用Nuclei?
 
-The global security community, including numerous researchers and engineers, actively contributes to the Nuclei template ecosystem. With over 6500 templates contributed thus far, Nuclei is continuously updated with real-world exploits and cutting-edge attack vectors. 
+全球安全社区，包括众多研究人员和工程师，积极为Nuclei模板生态系统做出贡献。迄今为止已贡献了超过6500个模板，Nuclei不断更新，包含实际漏洞利用和前沿攻击向量。
 
-Nuclei templates support scanning for critical issues such as the Log4j vulnerability and RCEs that impact vendors such as GitLab, Cisco, F5, and many others. Nuclei has dozens of use cases, including:
+Nuclei模板支持扫描关键问题，如Log4j漏洞和影响GitLab、Cisco、F5等供应商的RCE漏洞。Nuclei有几十种用例，包括：
 
-| Use Case                                   | Description                                                                                   |
+| 用例                                   | 描述                                                                                   |
 | ------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| Web Application Security                   | Identifies common web vulnerabilities with community-powered templates.                       |
-| Infrastructure Security                    | Audits server configurations, open ports, and insecure services for security issues.          |
-| API Security Testing `alpha`               | Tests APIs against known vulnerabilities and misconfigurations.                               |
-| (CI/CD) Security                           | Integrates into CI/CD pipelines to minimize vulnerability resurface into production.          |
-| Third-party Vendor Assessment              | Evaluates the security of third-party vendors by scanning their digital assets.               |
-| Cloud Security `alpha`                     | Scans cloud environments for misconfigurations and vulnerabilities.                           |
-| Mobile Application Security                | Scans mobile applications for security issues, including API tests and configuration checks.  |
-| Network Device Security `alpha`            | Identifies vulnerabilities in network devices like routers, switches, and firewalls.          |
-| Web Server Assessment                      | Identifies common vulnerabilities and misconfigurations in web servers.                       |
-| Content Management System (CMS) Assessment | Identifies vulnerabilities specific to CMS platforms like WordPress, Joomla, or Drupal.       |
-| Database Security Assessment               | Scans databases for known vulnerabilities, default configurations, and access control issues. |
+| Web应用程序安全                   | 通过社区驱动的模板识别常见web漏洞。                       |
+| 基础设施安全                    | 审计服务器配置、开放端口和不安全服务以发现安全问题。          |
+| API安全测试 `alpha`               | 针对已知漏洞和错误配置测试API。                               |
+| (CI/CD)安全                           | 集成到CI/CD管道中，最小化漏洞重新出现在生产环境的风险。          |
+| 第三方供应商评估              | 通过扫描其数字资产评估第三方供应商的安全性。               |
+| 云安全 `alpha`                     | 扫描云环境中的错误配置和漏洞。                           |
+| 移动应用安全                | 扫描移动应用程序的安全问题，包括API测试和配置检查。  |
+| 网络设备安全 `alpha`            | 识别路由器、交换机和防火墙等网络设备中的漏洞。          |
+| Web服务器评估                      | 识别Web服务器中的常见漏洞和错误配置。                       |
+| 内容管理系统(CMS)评估 | 识别WordPress、Joomla或Drupal等CMS平台特有的漏洞。       |
+| 数据库安全评估               | 扫描数据库的已知漏洞、默认配置和访问控制问题。 |
 
-## Who is Nuclei for?
+## Nuclei适合谁使用?
 
-People use Nuclei in a variety of ways:
+人们以各种方式使用Nuclei：
 
-- **Security Engineers/Analysts**: Conduct security assessments, proactively identify vulnerabilities, convert custom vectors and analyze latest attack vectors.
-- **Red Teams**: Leverage Nuclei as part of their offensive security operations to simulate real-world attack scenarios, identify weaknesses, and provide actionable recommendations for enhancing overall security.
-- **DevOps Teams**: Integrate Nuclei into their CI/CD pipelines to ensure continuous security and regression of custom vulnerabilities.
-- **Bug Bounty Hunters**: Leverage Nuclei to find vulnerabilities across their programs listed on platforms like HackerOne, Bugcrowd, Intigriti etc.
-- **Penetration Testers**: Utilize Nuclei to automate their assessment methodologies into templates for their clients' systems.
+- **安全工程师/分析师**：进行安全评估，主动识别漏洞，转换自定义向量并分析最新攻击向量。
+- **红队**：将Nuclei作为其进攻性安全操作的一部分，模拟真实世界的攻击场景，识别弱点，并提供可操作建议以增强整体安全性。
+- **DevOps团队**：将Nuclei集成到CI/CD管道中，确保持续安全和自定义漏洞回归。
+- **漏洞赏金猎人**：利用Nuclei在HackerOne、Bugcrowd、Intigriti等平台上列出的程序中寻找漏洞。
+- **渗透测试人员**：利用Nuclei将其评估方法自动化为客户系统的模板。
 
-### Security Engineers
+### 安全工程师
 
-Nuclei offers a number of features that are helpful for security engineers to customise workflows in their organization. With the varieties of scan capabilities (like DNS, HTTP, TCP), security engineers can easily create a suite of custom checks with Nuclei.
+Nuclei提供多种功能，帮助安全工程师在组织中自定义工作流程。凭借各种扫描能力（如DNS、HTTP、TCP），安全工程师可以轻松创建Nuclei自定义检查套件。
 
-- Protocols support including: TCP, DNS, HTTP, File, etc
-- Achieve complex vulnerability steps with workflows and [dynamic requests.](https://blog.projectdiscovery.io/nuclei-unleashed-quickly-write-complex-exploits/)
-- Easily integrate into CI/CD, designed to be easily integrated into regression cycle to actively check the fix and re-appearance of vulnerability.
+- 支持的协议包括：TCP、DNS、HTTP、File等
+- 通过工作流和[动态请求](https://blog.projectdiscovery.io/nuclei-unleashed-quickly-write-complex-exploits/)实现复杂的漏洞步骤。
+- 易于集成到CI/CD中，设计为轻松集成到回归周期中，主动检查漏洞修复和重新出现。
 
-### Developers and Organizations
+### 开发者和组织
 
-Nuclei is built with simplicity in mind and templates backed by hundreds of community members, it allows you to stay updated with the latest security threats using continuous Nuclei scanning on the hosts. 
-It is designed to be easily integrated into regression tests cycle, to verify fixes and eliminate future vulnerabilities.
+Nuclei以简单性为设计理念，并有数百名社区成员支持的模板，它允许您通过在主机上持续使用Nuclei扫描来了解最新安全威胁。
+它设计为易于集成到回归测试周期中，验证修复并消除未来漏洞。
 
-- **CI/CD:** Engineers are already using Nuclei within their CI/CD pipeline, it allows them to constantly monitor their staging and production environments with customised templates.
-- **Continuous Regression Cycle:** With Nuclei, you can create your custom template on every new identified vulnerability and put into Nuclei engine to eliminate in the continuous regression cycle.
+- **CI/CD：** 工程师已经在CI/CD管道中使用Nuclei，它允许他们使用自定义模板不断监控其暂存和生产环境。
+- **持续回归周期：** 使用Nuclei，您可以为每个新识别的漏洞创建自定义模板，并放入Nuclei引擎中，在持续回归周期中消除这些漏洞。
 
-### Bug Bounty Hunters
+### 漏洞赏金猎人
 
-Nuclei allows a custom testing approach, supporting your own suite of checks to easily run across your bug bounty programs. In addition, Nuclei can be easily integrated into any continuous scanning workflow.
+Nuclei允许自定义测试方法，支持您自己的检查套件，轻松在漏洞赏金程序中运行。此外，Nuclei可以轻松集成到任何持续扫描工作流中。
 
-- Nuclei is easily integrated into other tool workflows
-- Can process thousands of hosts in few minutes
-- Easily automates your custom testing approach with our simple YAML DSL
+- Nuclei易于集成到其他工具工作流中
+- 可以在几分钟内处理数千台主机
+- 使用我们简单的YAML DSL轻松自动化您的自定义测试方法
 
-Check our projects and tools to see what might fit into your bug bounty workflow: [github.com/projectdiscovery](http://github.com/projectdiscovery). We also host a daily [refresh of DNS data at Chaos](http://chaos.projectdiscovery.io).
+查看我们的项目和工具，了解哪些可能适合您的漏洞赏金工作流：[github.com/projectdiscovery](http://github.com/projectdiscovery)。我们还在[Chaos](http://chaos.projectdiscovery.io)上每日更新DNS数据。
 
-### Penetration Testers
+### 渗透测试人员
 
-Nuclei can immensely improve how you approach security assessment by augmenting the manual, repetitive processes. Consultancies are already converting their manual assessment steps with Nuclei, it allows them to run set of their custom assessment approach across thousands of hosts in an automated manner.
+Nuclei可以通过增强手动、重复的过程，极大地改进您进行安全评估的方式。咨询公司已经在将其手动评估步骤转换为Nuclei，它允许他们以自动化方式在数千台主机上运行一套自定义评估方法。
 
-Pen-testers get the full power public templates and customization capabilities to speed up their assessment process, particularly during the regression cycle where you can easily verify the fix.
+渗透测试人员获得公共模板和自定义功能的全部威力，加速其评估过程，特别是在回归周期中，您可以轻松验证修复。
 
-- Easily create your compliance, standards suite (e.g. OWASP Top 10) checklist
-- Use capabilities like [DAST](https://docs.projectdiscovery.io/templates/protocols/http/fuzzing-overview) and [workflows](https://docs.projectdiscovery.io/templates/workflows/overview) to simplify complex manual steps and repetitive assessment through automated with Nuclei.
-- Easy to re-test vulnerability-fix by just re-running the template.
+- 轻松创建您的合规性、标准套件（如OWASP Top 10）检查表
+- 使用[DAST](https://docs.projectdiscovery.io/templates/protocols/http/fuzzing-overview)和[工作流](https://docs.projectdiscovery.io/templates/workflows/overview)等功能，通过Nuclei自动化简化复杂的手动步骤和重复评估。
+- 只需重新运行模板即可轻松重新测试漏洞修复。
 

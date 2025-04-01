@@ -1,94 +1,94 @@
 ---
-title: "Katana Usage"
-description: "Review Katana usage including flags, configs, and options"
-sidebarTitle: "Usage"
+title: "Katana 使用方法"
+description: "查看 Katana 的使用方法，包括标志、配置和选项"
+sidebarTitle: "使用方法"
 ---
-## Access help 
+## 获取帮助
 
-Use `katana - h` to display all help options. 
+使用 `katana - h` 显示所有帮助选项。
 
-## Katana help options
+## Katana 帮助选项
 
 ```
-Flags:
-INPUT:
-   -u, -list string[]  target url / list to crawl
+标志:
+输入:
+   -u, -list string[]  目标 URL / 要爬取的列表
 
-CONFIGURATION:
-   -r, -resolvers string[]       list of custom resolver (file or comma separated)
-   -d, -depth int                maximum depth to crawl (default 3)
-   -jc, -js-crawl                enable endpoint parsing / crawling in javascript file
-   -jsl, -jsluice                 enable jsluice parsing in javascript file (memory intensive)
-   -ct, -crawl-duration value    maximum duration to crawl the target for (s, m, h, d) (default s)
-   -kf, -known-files string      enable crawling of known files (all,robotstxt,sitemapxml)
-   -mrs, -max-response-size int  maximum response size to read (default 9223372036854775807)
-   -timeout int                  time to wait for request in seconds (default 10)
-   -aff, -automatic-form-fill    enable automatic form filling (experimental)
-   -fx, -form-extraction         extract form, input, textarea & select elements in jsonl output
-   -retry int                    number of times to retry the request (default 1)
-   -proxy string                 http/socks5 proxy to use
-   -H, -headers string[]         custom header/cookie to include in all http request in header:value format (file)
-   -config string                path to the katana configuration file
-   -fc, -form-config string      path to custom form configuration file
-   -flc, -field-config string    path to custom field configuration file
-   -s, -strategy string          Visit strategy (depth-first, breadth-first) (default "depth-first")
-   -iqp, -ignore-query-params    Ignore crawling same path with different query-param values
-   -tlsi, -tls-impersonate       enable experimental client hello (ja3) tls randomization
+配置:
+   -r, -resolvers string[]       自定义解析器列表（文件或逗号分隔）
+   -d, -depth int                最大爬取深度（默认 3）
+   -jc, -js-crawl                启用 JavaScript 文件中的端点解析/爬取
+   -jsl, -jsluice                启用 JavaScript 文件中的 jsluice 解析（内存密集型）
+   -ct, -crawl-duration value    爬取目标的最大持续时间 (s, m, h, d)（默认 s）
+   -kf, -known-files string      启用已知文件的爬取（all,robotstxt,sitemapxml）
+   -mrs, -max-response-size int  要读取的最大响应大小（默认 9223372036854775807）
+   -timeout int                  请求等待时间（秒）（默认 10）
+   -aff, -automatic-form-fill    启用自动表单填充（实验性）
+   -fx, -form-extraction         在 jsonl 输出中提取表单、输入、文本区域和选择元素
+   -retry int                    重试请求的次数（默认 1）
+   -proxy string                 使用的 http/socks5 代理
+   -H, -headers string[]         在所有 HTTP 请求中包含的自定义 header/cookie，格式为 header:value（文件）
+   -config string                katana 配置文件的路径
+   -fc, -form-config string      自定义表单配置文件的路径
+   -flc, -field-config string    自定义字段配置文件的路径
+   -s, -strategy string          访问策略（depth-first, breadth-first）（默认 "depth-first"）
+   -iqp, -ignore-query-params    忽略爬取具有不同查询参数值的相同路径
+   -tlsi, -tls-impersonate       启用实验性 client hello (ja3) tls 随机化
 
-DEBUG:
-   -health-check, -hc        run diagnostic check up
-   -elog, -error-log string  file to write sent requests error log
+调试:
+   -health-check, -hc        运行诊断检查
+   -elog, -error-log string  写入已发送请求错误日志的文件
 
-HEADLESS:
-   -hl, -headless                    enable headless hybrid crawling (experimental)
-   -sc, -system-chrome               use local installed chrome browser instead of katana installed
-   -sb, -show-browser                show the browser on the screen with headless mode
-   -ho, -headless-options string[]   start headless chrome with additional options
-   -nos, -no-sandbox                 start headless chrome in --no-sandbox mode
-   -cdd, -chrome-data-dir string     path to store chrome browser data
-   -scp, -system-chrome-path string  use specified chrome browser for headless crawling
-   -noi, -no-incognito               start headless chrome without incognito mode
-   -cwu, -chrome-ws-url string       use chrome browser instance launched elsewhere with the debugger listening at this URL
-   -xhr, -xhr-extraction             extract xhr request url,method in jsonl output
+无头模式:
+   -hl, -headless                    启用无头混合爬取（实验性）
+   -sc, -system-chrome               使用本地安装的 Chrome 浏览器而不是 katana 安装的浏览器
+   -sb, -show-browser                在无头模式下在屏幕上显示浏览器
+   -ho, -headless-options string[]   使用附加选项启动无头 Chrome
+   -nos, -no-sandbox                 在 --no-sandbox 模式下启动无头 Chrome
+   -cdd, -chrome-data-dir string     存储 Chrome 浏览器数据的路径
+   -scp, -system-chrome-path string  为无头爬取指定 Chrome 浏览器
+   -noi, -no-incognito               不使用隐身模式启动无头 Chrome
+   -cwu, -chrome-ws-url string       使用在其他地方启动的带有调试器监听此 URL 的 Chrome 浏览器实例
+   -xhr, -xhr-extraction             在 jsonl 输出中提取 xhr 请求 url,method
 
-SCOPE:
-   -cs, -crawl-scope string[]       in scope url regex to be followed by crawler
-   -cos, -crawl-out-scope string[]  out of scope url regex to be excluded by crawler
-   -fs, -field-scope string  pre-defined scope field (dn,rdn,fqdn) or custom regex (e.g., '(company-staging.io|company.com)') (default "rdn")
-   -ns, -no-scope                   disables host based default scope
-   -do, -display-out-scope          display external endpoint from scoped crawling
+范围:
+   -cs, -crawl-scope string[]       爬虫要遵循的范围内 URL 正则表达式
+   -cos, -crawl-out-scope string[]  爬虫要排除的范围外 URL 正则表达式
+   -fs, -field-scope string  预定义的范围字段 (dn,rdn,fqdn) 或自定义正则表达式（例如，'(company-staging.io|company.com)'）（默认 "rdn"）
+   -ns, -no-scope                   禁用基于主机的默认范围
+   -do, -display-out-scope          显示来自范围爬取的外部端点
 
-FILTER:
-   -mr, -match-regex string[]       regex or list of regex to match on output url (cli, file)
-   -fr, -filter-regex string[]      regex or list of regex to filter on output url (cli, file)
-   -f, -field string                field to display in output (url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
-   -sf, -store-field string         field to store in per-host output (url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
-   -em, -extension-match string[]   match output for given extension (eg, -em php,html,js)
-   -ef, -extension-filter string[]  filter output for given extension (eg, -ef png,css)
-   -mdc, -match-condition string    match response with dsl based condition
-   -fdc, -filter-condition string   filter response with dsl based condition
+过滤:
+   -mr, -match-regex string[]       匹配输出 URL 的正则表达式或正则表达式列表（cli, file）
+   -fr, -filter-regex string[]      过滤输出 URL 的正则表达式或正则表达式列表（cli, file）
+   -f, -field string                输出中显示的字段 (url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
+   -sf, -store-field string         存储在每个主机输出中的字段 (url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
+   -em, -extension-match string[]   匹配给定扩展名的输出（例如，-em php,html,js）
+   -ef, -extension-filter string[]  过滤给定扩展名的输出（例如，-ef png,css）
+   -mdc, -match-condition string    使用基于 DSL 的条件匹配响应
+   -fdc, -filter-condition string   使用基于 DSL 的条件过滤响应
 
-RATE-LIMIT:
-   -c, -concurrency int          number of concurrent fetchers to use (default 10)
-   -p, -parallelism int          number of concurrent inputs to process (default 10)
-   -rd, -delay int               request delay between each request in seconds
-   -rl, -rate-limit int          maximum requests to send per second (default 150)
-   -rlm, -rate-limit-minute int  maximum number of requests to send per minute
+速率限制:
+   -c, -concurrency int          要使用的并发抓取器数量（默认 10）
+   -p, -parallelism int          要处理的并发输入数量（默认 10）
+   -rd, -delay int               每个请求之间的请求延迟（秒）
+   -rl, -rate-limit int          每秒最大发送请求数（默认 150）
+   -rlm, -rate-limit-minute int  每分钟最大发送请求数
 
-UPDATE:
-   -up, -update                 update katana to latest version
-   -duc, -disable-update-check  disable automatic katana update check
+更新:
+   -up, -update                 更新 katana 到最新版本
+   -duc, -disable-update-check  禁用 katana 自动更新检查
 
-OUTPUT:
-   -o, -output string                file to write output to
-   -sr, -store-response              store http requests/responses
-   -srd, -store-response-dir string  store http requests/responses to custom directory
-   -or, -omit-raw                    omit raw requests/responses from jsonl output
-   -ob, -omit-body                   omit response body from jsonl output
-   -j, -jsonl                        write output in jsonl format
-   -nc, -no-color                    disable output content coloring (ANSI escape codes)
-   -silent                           display output only
-   -v, -verbose                      display verbose output
-   -debug                            display debug output
-   -version                          display project version
+输出:
+   -o, -output string                写入输出的文件
+   -sr, -store-response              存储 HTTP 请求/响应
+   -srd, -store-response-dir string  将 HTTP 请求/响应存储到自定义目录
+   -or, -omit-raw                    从 jsonl 输出中省略原始请求/响应
+   -ob, -omit-body                   从 jsonl 输出中省略响应体
+   -j, -jsonl                        以 jsonl 格式写入输出
+   -nc, -no-color                    禁用输出内容着色（ANSI 转义码）
+   -silent                           仅显示输出
+   -v, -verbose                      显示详细输出
+   -debug                            显示调试输出
+   -version                          显示项目版本
    ```

@@ -1,11 +1,11 @@
 ---
-title: "Basic HTTP Examples"
-sidebarTitle: "Examples"
+title: "基础 HTTP 示例"
+sidebarTitle: "示例"
 ---
 
-## Basic Template
+## 基础模板
 
-This template requests `/` path of URL and match string in the response.
+此模板请求 URL 的 `/` 路径并匹配响应中的字符串。
 
 
 ```yaml
@@ -26,9 +26,9 @@ http:
           - "This is test matcher text"
 ```
 
-## Multiple matchers
+## 多个匹配器
 
-This template requests `/` path of URL and run multiple OR based matchers against response.
+此模板请求 URL 的 `/` 路径并对响应运行多个基于 OR 的匹配器。
 
 
 ```yaml
@@ -68,9 +68,9 @@ http:
         part: header
 ```
 
-## Matchers with conditions
+## 带条件的匹配器
 
-This template requests `/` path of URL and runs two matchers, one with AND conditions with string match in header and another matcher against response body.
+此模板请求 URL 的 `/` 路径并运行两个匹配器，一个带有 AND 条件的头部字符串匹配，另一个匹配器针对响应体。
 
 
 ```yaml
@@ -99,9 +99,9 @@ http:
           - "PHP"
         part: body
 ```
-## Multiple matcher conditions
+## 多匹配器条件
 
-This template requests `/` path of URL and runs two matchers with AND conditions, one with OR conditions with string match in header and another matcher against response body, both condition has to be true in order to match this template.
+此模板请求 URL 的 `/` 路径并运行两个带有 AND 条件的匹配器，一个带有 OR 条件的头部字符串匹配，另一个匹配器针对响应体，两个条件都必须为真才能匹配此模板。
 
 ```yaml
 id: multiple-matchers-conditions
@@ -132,9 +132,9 @@ http:
         part: body
 ```
 
-## Custom headers
+## 自定义头部
 
-This template requests `/` path of the URL as GET request with additional custom headers defined in the template.   
+此模板以 GET 请求方式请求 URL 的 `/` 路径，并在模板中定义了额外的自定义头部。
 
 ```yaml
 id: custom-headers
@@ -147,7 +147,7 @@ info:
 http:
   - method: GET
 
-    # Example of sending some headers to the servers
+    # 向服务器发送一些头部的示例
 
     headers:
 
@@ -168,11 +168,9 @@ http:
         condition: and
 ```
 
-## POST requests
+## POST 请求
 
-This template makes POST request to `/admin` endpoint with defined data as body parameter in the template.   
-
-
+此模板向 `/admin` 端点发送 POST 请求，在模板中定义了主体参数数据。
 
 ```yaml
 id: post-request
@@ -195,9 +193,9 @@ http:
           - Welcome Admin
 ```
 
-## Time based Matcher
+## 基于时间的匹配器
 
-This template is example of DSL based duration matcher that returns `true` when the response time matched the defined duration, in this case 6 or more than 6 seconds.
+此模板是基于 DSL 的持续时间匹配器示例，当响应时间匹配定义的持续时间时返回 `true`，在这种情况下为 6 秒或超过 6 秒。
 
 ```yaml
 id: time-based-matcher

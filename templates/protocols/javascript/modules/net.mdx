@@ -1,43 +1,43 @@
-# Namespace: net
+# 命名空间: net
 
-## Table of contents
+## 目录
 
-### Classes
+### 类
 
 - [NetConn](/templates/protocols/javascript/modules/net.NetConn)
 
-### Functions
+### 函数
 
 - [Open](/templates/protocols/javascript/modules/net#open)
 - [OpenTLS](/templates/protocols/javascript/modules/net#opentls)
 
-## Functions
+## 函数
 
 ### Open
 
 ▸ **Open**(`protocol`): [`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
 
-Open opens a new connection to the address with a timeout.
-supported protocols: tcp, udp
+Open 使用超时机制打开到指定地址的新连接。
+支持的协议: tcp, udp
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `protocol` | `string` |
 
-#### Returns
+#### 返回
 
 [`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const net = require('nuclei/net');
 const conn = net.Open('tcp', 'acme.com:80');
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:12
 
@@ -47,26 +47,26 @@ ___
 
 ▸ **OpenTLS**(`protocol`): [`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
 
-Open opens a new connection to the address with a timeout.
-supported protocols: tcp, udp
+Open 使用超时机制打开到指定地址的新连接。
+支持的协议: tcp, udp
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `protocol` | `string` |
 
-#### Returns
+#### 返回
 
 [`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const net = require('nuclei/net');
 const conn = net.OpenTLS('tcp', 'acme.com:443');
 ```
 
-#### Defined in
+#### 定义于
 
 net.ts:27

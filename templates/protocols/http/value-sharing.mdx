@@ -1,15 +1,15 @@
 ---
-title: "Value Sharing"
-description: "Learn about sharing values between HTTP requests in the HTTP template."
+title: "值共享"
+description: "了解如何在 HTTP 模板中在多个 HTTP 请求之间共享值。"
 ---
 
-## HTTP Value Sharing
+## HTTP 值共享
 
-In Nuclei, It is possible to extract value from one HTTP request and share/reuse it in another HTTP request. This has various use-cases like login, CSRF tokens and other complex.
+在 Nuclei 中，可以从一个 HTTP 请求中提取值并在另一个 HTTP 请求中共享/重用它。这有各种用例，如登录、CSRF tokens 和其他复杂情况。
 
-This concept of value sharing is possible using [Dynamic Extractors](/templates/reference/extractors#dynamic-extractor). Here's a simple example demonstrating value sharing between HTTP requests.
+这种值共享的概念是通过使用 [动态提取器](/templates/reference/extractors#dynamic-extractor) 实现的。以下是一个演示 HTTP 请求之间值共享的简单示例。
 
-This template makes a subsequent HTTP requests maintaining sessions between each request, dynamically extracting data from one request and reusing them into another request using variable name and checking for string match against response.
+此模板发起后续 HTTP 请求，在每个请求之间维持会话，从一个请求动态提取数据并使用变量名将其重用到另一个请求中，并对响应进行字符串匹配检查。
 
 ```yaml
 id: CVE-2020-8193
@@ -79,11 +79,11 @@ http:
 
         <clipermission></clipermission>
 
-    cookie-reuse: true # Using cookie-reuse to maintain session between each request, same as browser.
+    cookie-reuse: true # 使用 cookie-reuse 在每个请求之间维持会话，类似浏览器。
 
     extractors:
       - type: regex
-        name: randkey # Variable name
+        name: randkey # 变量名
         part: body
         internal: true
         regex:
@@ -94,4 +94,3 @@ http:
         regex:
           - "root:[x*]:0:0:"
         part: body
-```

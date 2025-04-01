@@ -1,10 +1,10 @@
 ---
-title: "Raw HTTP Protocol"
-description: "Learn about using Raw HTTP with Nuclei"
+title: "Raw HTTP 协议"
+description: "了解如何在 Nuclei 中使用 Raw HTTP"
 sidebarTitle: "Raw HTTP"
 ---
 
-Another way to create request is using raw requests which comes with more flexibility and support of DSL helper functions, like the following ones (as of now it's suggested to leave the `Host` header as in the example with the variable `{{Hostname}}`), All the Matcher, Extractor capabilities can be used with RAW requests in same the way described above. 
+另一种创建请求的方式是使用原始请求（raw requests），它具有更大的灵活性并支持 DSL 辅助函数，如下所示（目前建议保留示例中带有变量 `{{Hostname}}` 的 `Host` 头），所有的 Matcher 和 Extractor 功能都可以按照上述相同的方式与 RAW 请求一起使用。
 
 ```yaml
 http:
@@ -16,19 +16,19 @@ http:
 
         a=test&b=pd
 ```
-Requests can be fine-tuned to perform the exact tasks as desired. Nuclei requests are fully configurable meaning you can configure and define each and every single thing about the requests that will be sent to the target servers.
+请求可以进行微调以执行所需的确切任务。Nuclei 请求是完全可配置的，这意味着您可以配置和定义发送到目标服务器的请求的每一个细节。
 
-RAW request format also supports [various helper functions](/templates/reference/helper-functions/) letting us do run time manipulation with input. An example of the using a helper function in the header. 
+RAW 请求格式还支持[各种辅助函数](/templates/reference/helper-functions/)，让我们能够对输入进行运行时操作。以下是在头部使用辅助函数的示例。
 
 ```yaml
     - raw:
       - |
         GET /manager/html HTTP/1.1
         Host: {{Hostname}}
-        Authorization: Basic {{base64('username:password')}} # Helper function to encode input at run time.
+        Authorization: Basic {{base64('username:password')}} # 在运行时对输入进行编码的辅助函数
 ```
 
-To make a request to the URL specified as input without any additional tampering, a blank Request URI can be used as specified below which will make the request to user specified input.
+要在不进行任何额外修改的情况下向指定为输入的 URL 发送请求，可以使用如下所示的空请求 URI，这将向用户指定的输入发送请求。
 
 ```yaml
     - raw:
@@ -38,5 +38,5 @@ To make a request to the URL specified as input without any additional tampering
 ```
 
 <Tip>
-More complete examples are provided [here](/templates/protocols/http/raw-http-examples)
+更完整的示例可在[此处](/templates/protocols/http/raw-http-examples)找到
 </Tip>

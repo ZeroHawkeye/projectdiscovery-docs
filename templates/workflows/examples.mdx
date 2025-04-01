@@ -1,13 +1,13 @@
 ---
-title: "Workflow Examples"
-description: "Review some template workflow examples for Nuclei"
-sidebarTitle: "Examples"
+title: "工作流示例"
+description: "查看一些 Nuclei 的模板工作流示例"
+sidebarTitle: "示例"
 icon: "list-timeline"
 ---
 
-## Generic workflows
+## 通用工作流
 
-A generic workflow that runs two templates, one to detect Jira and another to detect Confluence.
+一个通用工作流，运行两个模板，一个用于检测 Jira，另一个用于检测 Confluence。
 
 ```yaml
 id: workflow-example
@@ -20,9 +20,9 @@ workflows:
   - template: technologies/confluence-detect.yaml
 ```
 
-## Basic conditional workflows
+## 基本条件工作流
 
-A condition based workflow, which first tries to detect if springboot is running on a target. If springboot is found, a list of exploits executed against it. 
+一个基于条件的工作流，首先尝试检测目标上是否运行了 springboot。如果发现 springboot，则对其执行一系列漏洞利用。
 
 ```yaml
 id: springboot-workflow
@@ -41,9 +41,9 @@ workflows:
       - template: vulnerabilities/springboot-h2-db-rce.yaml
 ```
 
-## Multi condition workflows
+## 多条件工作流
 
-This template demonstrates nested workflows with nuclei, where there's multiple levels of chaining of templates.
+这个模板演示了 nuclei 中的嵌套工作流，其中有多层模板链接。
 
 ```yaml
 id: springboot-workflow
@@ -64,9 +64,9 @@ workflows:
                   - template: cves/xx-xx-xx.yaml
 ```
 
-## Conditional workflows with matcher
+## 带匹配器的条件工作流
 
-This template detects if WordPress is running on an input host, and if found a set of targeted exploits and CVEs are executed against it.
+这个模板检测输入主机上是否运行 WordPress，如果发现则对其执行一组有针对性的漏洞利用和 CVE。
 
 ```yaml
 id: workflow-example
@@ -97,9 +97,9 @@ workflows:
           - template: vulnerabilities/wordpress-wpcourses-info-disclosure.yaml
 ```
 
-## Multiple Matcher workflow
+## 多匹配器工作流
 
-Very similar to the last example, with multiple matcher names.
+与上一个例子非常相似，但有多个匹配器名称。
 
 ```yaml
 id: workflow-multiple-matcher

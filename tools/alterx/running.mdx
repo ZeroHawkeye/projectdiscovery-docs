@@ -1,89 +1,89 @@
 ---
-title: Running AlterX
-description: "Learn about running AlterX with details on variables and examples"
-sidebarTitle: Running
+title: 运行 AlterX
+description: "了解如何运行 AlterX，包括变量详情和示例"
+sidebarTitle: 运行
 ---
 
-## Basic Usage
-For a detailed overview of **AlterX** options, visit the [Usage](/tools/alterx/usage) page.
+## 基本用法
+有关 **AlterX** 选项的详细概述，请访问[用法](/tools/alterx/usage)页面。
 
-<Note> If you have questions, feel free to reach out through our [Help](/help) page.</Note>
+<Note> 如果您有任何问题，请通过我们的[帮助](/help)页面联系我们。</Note>
 
-## Why AlterX?
+## 为什么选择 AlterX？
 
-What differentiates `alterx` from other subdomain permutation tools like `goaltdns` is its **scripting** feature. AlterX accepts patterns as input and generates subdomain permutation wordlists based on these patterns—similar to how [Nuclei](https://github.com/projectdiscovery/nuclei) works with [fuzzing-templates](https://github.com/projectdiscovery/fuzzing-templates).
+`alterx` 区别于其他子域置换工具（如 `goaltdns`）的地方在于它的**脚本**功能。AlterX 接受模式作为输入，并基于这些模式生成子域置换词列表——类似于 [Nuclei](https://github.com/projectdiscovery/nuclei) 如何使用 [fuzzing-templates](https://github.com/projectdiscovery/fuzzing-templates) 工作。
 
-Active Subdomain Enumeration is challenging due to the probability of finding actual existing domains. On a scale, this process can be visualized as:
+主动子域枚举的挑战在于找到实际存在域名的概率。在规模上，这个过程可以被可视化为：
 
 ```console
-   Using Wordlist < generate permutations with subdomains (goaltdns) < alterx
+   使用词表 < 用子域生成置换 (goaltdns) < alterx
 ```
 
-Most subdomain permutation tools rely on hardcoded patterns, generating massive wordlists that may contain millions of subdomains—making bruteforcing with tools like `dnsx` infeasible. With `alterx`, you can create patterns based on results from passive subdomain enumeration, significantly increasing the chances of finding valid subdomains and making brute-forcing more efficient.
+大多数子域置换工具依赖于硬编码模式，生成可能包含数百万子域的大型词表——这使得使用像 `dnsx` 这样的工具进行暴力破解变得不可行。使用 `alterx`，您可以基于被动子域枚举的结果创建模式，显著提高找到有效子域的机会，并使暴力破解更有效率。
 
-## Variables
+## 变量
 
-`alterx` uses variable-like syntax similar to nuclei-templates. You can create custom patterns using these variables . when domains are passed as input `alterx` evaluates input and extracts variables from it .
+`alterx` 使用类似于 nuclei-templates 的变量语法。您可以使用这些变量创建自定义模式。当域名作为输入传递时，`alterx` 评估输入并从中提取变量。
 
-### Basic Variables
+### 基本变量
   
 ```yaml
-{{sub}}     :  subdomain prefix or left most part of a subdomain
-{{suffix}}  :  everything except {{sub}} in subdomain name is suffix
-{{tld}}     :  top level domain name (ex com,uk,in etc)
-{{etld}}    :  also know as public suffix (ex co.uk , gov.in etc)
+{{sub}}     :  子域前缀或子域的最左部分
+{{suffix}}  :  子域名中除了 {{sub}} 之外的所有内容都是后缀
+{{tld}}     :  顶级域名 (例如 com, uk, in 等)
+{{etld}}    :  也称为公共后缀 (例如 co.uk, gov.in 等)
 ```
 
-| Variable   | api.scanme.sh | admin.dev.scanme.sh | cloud.scanme.co.uk |
+| 变量     | api.scanme.sh | admin.dev.scanme.sh | cloud.scanme.co.uk |
 | ---------- | ------------- | ------------------- | ------------------ |
 | `{{sub}}`    | `api`         | `admin`             | `cloud`          |
 | `{{suffix}}` | `scanme.sh`   | `dev.scanme.sh`     | `scanme.co.uk`   |
 | `{{tld}}`    | `sh`          | `sh`                | `uk`             |
 | `{{etld}}`   | `-`           | `-`                 | `co.uk`          |
 
-### Advanced Variables
+### 高级变量
 
 ```yaml
-{{root}}  :  also known as eTLD+1 i.e only root domain (ex for api.scanme.sh => {{root}} is scanme.sh)
-{{subN}}  :  here N is an integer (ex {{sub1}} , {{sub2}} etc) .
+{{root}}  :  也称为 eTLD+1，即仅根域名 (例如对于 api.scanme.sh => {{root}} 是 scanme.sh)
+{{subN}}  :  这里 N 是一个整数 (例如 {{sub1}}, {{sub2}} 等)。
 
-// {{subN}} is advanced variable which exists depending on input
-// lets say there is a multi level domain cloud.nuclei.scanme.sh
-// in this case {{sub}} = cloud and {{sub1}} = nuclei`
+// {{subN}} 是一个高级变量，其存在取决于输入
+// 假设有一个多级域名 cloud.nuclei.scanme.sh
+// 在这种情况下 {{sub}} = cloud 和 {{sub1}} = nuclei
 ```
 
-| Variable | api.scanme.sh | admin.dev.scanme.sh | cloud.scanme.co.uk |
+| 变量 | api.scanme.sh | admin.dev.scanme.sh | cloud.scanme.co.uk |
 | -------- | ------------- | ------------------- | ------------------ |
 | `{{root}}` | `scanme.sh`   | `scanme.sh`         | `scanme.co.uk`   |
 | `{{sub1}}` | `-`           | `dev`               | `-`              |
 | `{{sub2}}` | `-`           | `-`                 | `-`              |
 
 
-## Patterns
+## 模式
 
-In simple terms, a pattern is a `template` that describes what type of permutations AlterX should generate.
+简单来说，模式是描述 AlterX 应该生成什么类型的置换的`模板`。
 
 ```console
-// Below are some of example patterns which can be used to generate permutations
-// assuming api.scanme.sh was given as input and variable {{word}} was given as input with only one value prod
-// alterx generates subdomains for below patterns
+// 以下是一些可用于生成置换的示例模式
+// 假设输入了 api.scanme.sh，变量 {{word}} 作为输入，其值为 prod
+// alterx 为以下模式生成子域
 
-"{{sub}}-{{word}}.{{suffix}}" // ex: api-prod.scanme.sh
-"{{word}}-{{sub}}.{{suffix}}" // ex: prod-api.scanme.sh
-"{{word}}.{{sub}}.{{suffix}}" // ex: prod.api.scanme.sh
-"{{sub}}.{{word}}.{{suffix}}" // ex: api.prod.scanme.sh
+"{{sub}}-{{word}}.{{suffix}}" // 例如: api-prod.scanme.sh
+"{{word}}-{{sub}}.{{suffix}}" // 例如: prod-api.scanme.sh
+"{{word}}.{{sub}}.{{suffix}}" // 例如: prod.api.scanme.sh
+"{{sub}}.{{word}}.{{suffix}}" // 例如: api.prod.scanme.sh
 ```
-You can find an example of a pattern configuration file [here](https://github.com/projectdiscovery/alterx/blob/main/permutations.yaml). This file is customizable based on your security assessments or penetration test requirements.
+您可以在[这里](https://github.com/projectdiscovery/alterx/blob/main/permutations.yaml)找到模式配置文件的示例。这个文件可以根据您的安全评估或渗透测试需求进行自定义。
 
-This configuration file generates subdomain permutations for security assessments or penetration tests using customizable patterns and dynamic payloads. Patterns include dash-based, dot-based, and others. Users can create custom payload sections, such as words, region identifiers, or numbers, to suit their specific needs.
+这个配置文件使用可自定义的模式和动态负载为安全评估或渗透测试生成子域置换。模式包括基于破折号、基于点和其他模式。用户可以创建自定义负载部分，例如单词、区域标识符或数字，以满足他们的特定需求。
 
-For example, a user could define a new payload section `env` with values like `prod` and `dev`, then use it in patterns like `{{env}}-{{word}}.{{suffix}}` to generate subdomains like `prod-app.example.com` and `dev-api.example.com`. This flexibility allows tailored subdomain list for unique testing scenarios and target environments.
+例如，用户可以定义一个新的负载部分 `env`，其值为 `prod` 和 `dev`，然后在模式中使用它，如 `{{env}}-{{word}}.{{suffix}}`，以生成子域，如 `prod-app.example.com` 和 `dev-api.example.com`。这种灵活性允许为独特的测试场景和目标环境定制子域列表。
 
-Default pattern config file used for generation is stored in `$HOME/.config/alterx/` directory, and custom config file can be also used using `-ac` option.
+用于生成的默认模式配置文件存储在 `$HOME/.config/alterx/` 目录中，也可以使用 `-ac` 选项使用自定义配置文件。
 
-## Examples
+## 示例
 
-An example of running alterx on existing list of passive subdomains of `tesla.com` yield us **10 additional NEW** and **valid subdomains** resolved using [dnsx](https://github.com/projectdiscovery/dnsx).
+在 `tesla.com` 的现有被动子域列表上运行 alterx 的示例，使用 [dnsx](https://github.com/projectdiscovery/dnsx) 解析，产生了**10个额外的新**和**有效的子域**。
 
 ```console
 $ chaos -d tesla.com | alterx | dnsx
@@ -110,7 +110,7 @@ shop-stage.tesla.com
 www-uat-dev.tesla.com
 ```
 
-Similarly `-enrich` option can be used to populate known subdomains as world input to generate **target aware permutations**.
+类似地，`-enrich` 选项可用于填充已知子域作为世界输入，以生成**目标感知置换**。
 
 ```console
 $ chaos -d tesla.com | alterx -enrich
@@ -125,7 +125,7 @@ $ chaos -d tesla.com | alterx -enrich
 [INF] Generated 662010 permutations in 3.9989s
 ```
 
-You can alter the default patterns at run time using `-pattern` CLI option. 
+您可以使用 `-pattern` CLI 选项在运行时更改默认模式。
 
 ```console
 $ chaos -d tesla.com | alterx -enrich -p '{{word}}-{{suffix}}'
@@ -140,7 +140,7 @@ $ chaos -d tesla.com | alterx -enrich -p '{{word}}-{{suffix}}'
 [INF] Generated 21523 permutations in 0.7984s
 ```
 
-You can also overwrite existing variable values using the `-payload` CLI options.
+您还可以使用 `-payload` CLI 选项覆盖现有变量值。
 
 ```console
 $ alterx -list tesla.txt -enrich -p '{{word}}-{{year}}.{{suffix}}' -pp word=keywords.txt -pp year=2023
@@ -155,11 +155,11 @@ $ alterx -list tesla.txt -enrich -p '{{word}}-{{year}}.{{suffix}}' -pp word=keyw
 [INF] Generated 21419 permutations in 1.1699s
 ```
 
-<Tip>For more information, check out the release **[blog](https://blog.projectdiscovery.io/introducing-alterx-simplifying-active-subdomain-enumeration-with-patterns/)**</Tip>
+<Tip>更多信息，请查看发布**[博客](https://blog.projectdiscovery.io/introducing-alterx-simplifying-active-subdomain-enumeration-with-patterns/)**</Tip>
 
 
 
-Explore other subdomain permutation tools that might integrate well with your workflow:
+探索其他可能与您的工作流程很好集成的子域置换工具：
 
 - [altdns](https://github.com/infosec-au/altdns)
 - [goaltdns](https://github.com/subfinder/goaltdns)

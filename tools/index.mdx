@@ -1,16 +1,16 @@
 ---
-title: "Open Source Tools"
-description: "Learn about ProjectDiscovery's Open Source Tools"
-sidebarTitle: "Overview"
+title: "开源工具"
+description: "了解ProjectDiscovery的开源工具"
+sidebarTitle: "概述"
 ---
 
 <Snippet file="tools-statement.mdx" />
 
-Let's delve into the specifics of each category and its corresponding tools.
+让我们深入了解每个类别及其相应工具的具体情况。
 
-## Discover
+## 发现（Discover）
 
-In the discovery phase, the goal is to map out the entire's online presence, finding subdomains, open ports, and other valuable endpoints. The tools in this category are instrumental in revealing a comprehensive view of the target's landscape. This stage includes tools like:
+在发现阶段，目标是绘制整个在线存在的地图，找到子域名、开放端口和其他有价值的端点。此类别中的工具有助于揭示目标环境的全面视图。这个阶段包括以下工具：
 
 <CardGroup cols={2}>
   <Card
@@ -19,8 +19,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="/tools/subfinder"
   >
-    A robust tool focused on passive subdomain enumeration, providing a holistic
-    view of a target's online assets.
+    一个专注于被动子域名枚举的强大工具，提供目标在线资产的整体视图。
   </Card>
   <Card
     title="Cloudlist"
@@ -28,8 +27,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/cloudlist"
   >
-    A comprehensive tool for enumerating assets across multiple cloud providers,
-    ensuring visibility into the cloud-based infrastructure of your target.
+    一个用于枚举多个云提供商资产的综合工具，确保对目标的基于云的基础设施具有可见性。
   </Card>
   <Card
     title="Naabu"
@@ -37,8 +35,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/naabu"
   >
-    A lightning-fast port scanner designed to swiftly identify open ports on
-    target hosts, ensuring no potential entry point is overlooked.
+    一个闪电般快速的端口扫描器，旨在迅速识别目标主机上的开放端口，确保不会忽略任何潜在的入口点。
   </Card>
   <Card
     title="Katana"
@@ -46,8 +43,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/katana"
   >
-    A next-generation web crawling framework designed to navigate and parse web
-    content efficiently, revealing hidden details of web assets.
+    一个下一代Web爬虫框架，旨在高效导航和解析Web内容，揭示Web资产的隐藏细节。
   </Card>
   <Card
     title="Chaos"
@@ -55,8 +51,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/chaos-client"
   >
-    Offering an internet-wide asset data source, Chaos is crucial for expanding
-    the scope of your asset discovery efforts.
+    提供互联网范围的资产数据源，Chaos对于扩展资产发现工作的范围至关重要。
   </Card>
   <Card
     title="Uncover"
@@ -64,8 +59,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/uncover"
   >
-    Designed to search and highlight exposed hosts across various APIs, ensuring
-    that no stone is left unturned in the discovery phase.
+    设计用于搜索和突出显示各种API中暴露的主机，确保在发现阶段不放过任何细节。
   </Card>
   <Card
     title="ASNmap"
@@ -73,8 +67,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/asnmap"
   >
-    Quickly map an organization's network ranges using autonomous system number
-    (ASN) information.
+    使用自治系统编号(ASN)信息快速映射组织的网络范围。
   </Card>
   <Card
     title="alterx"
@@ -82,7 +75,7 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/alterx"
   >
-    Fast and customizable subdomain wordlist generator using DSL.
+    使用DSL的快速且可定制的子域名词表生成器。
   </Card>
   <Card
     title="shuffledns"
@@ -90,18 +83,17 @@ In the discovery phase, the goal is to map out the entire's online presence, fin
     iconType="duotone"
     href="https://github.com/projectdiscovery/shuffledns"
   >
-    massDNS wrapper to bruteforce and resolve the subdomains with wildcard handling support
+    massDNS包装器，用于暴力破解和解析带有通配符处理支持的子域名
   </Card>
 </CardGroup>
 
-## Enrich
+## 丰富（Enrich）
 
-Once assets are discovered, the next step is to enrich the gathered data. This phase involves understanding the nature of the assets, the technologies behind them, and their exposure level. This stage includes tools like:
+一旦发现了资产，下一步就是丰富收集到的数据。这个阶段涉及了解资产的性质、背后的技术及其暴露级别。这个阶段包括以下工具：
 
 <CardGroup cols={2}>
   <Card title="httpx" icon="browser" iconType="duotone" href="/tools/httpx">
-    An essential HTTP toolkit that probes services, identifying crucial details
-    about web servers, status codes, and other valuable metadata.
+    一个基本的HTTP工具包，探测服务，识别有关Web服务器、状态代码和其他有价值的元数据的关键细节。
   </Card>
   <Card
     title="dnsx"
@@ -109,8 +101,7 @@ Once assets are discovered, the next step is to enrich the gathered data. This p
     iconType="duotone"
     href="https://github.com/projectdiscovery/dnsx"
   >
-    A versatile DNS toolkit that allows for efficient operations such as mass
-    DNS resolutions, wildcard testing, and more.
+    一个多功能DNS工具包，允许高效执行诸如大规模DNS解析、通配符测试等操作。
   </Card>
   <Card
     title="tlsx"
@@ -118,20 +109,17 @@ Once assets are discovered, the next step is to enrich the gathered data. This p
     iconType="duotone"
     href="https://github.com/projectdiscovery/tlsx"
   >
-    Specialized for TLS-based data collection, Tlsx offers insights into
-    certificates, cipher suites, and other SSL/TLS details of a target.
+    专门用于基于TLS的数据收集，Tlsx提供了有关目标证书、密码套件和其他SSL/TLS详细信息的见解。
   </Card>
 </CardGroup>
 
-## Detect
+## 检测（Detect）
 
-With the landscape mapped and details enriched, the next phase is detection. Here, the aim is to pinpoint exploitable vulnerabilities, ensuring a thorough risk assessment. This stage includes tools like:
+随着环境被映射并且细节得到丰富，下一阶段是检测。在这里，目标是精确定位可利用的漏洞，确保进行全面的风险评估。这个阶段包括以下工具：
 
 <CardGroup cols={2}>
   <Card title="Nuclei" icon="atom" iconType="regular" href="/tools/nuclei">
-    A vulnerability scanner designed to identify exploitable weaknesses in the
-    attack surface with a vast library of templates for various known
-    vulnerabilities.
+    一种漏洞扫描器，旨在识别攻击面中可利用的弱点，拥有各种已知漏洞的庞大模板库。
   </Card>
   <Card
     title="interactsh"
@@ -139,9 +127,7 @@ With the landscape mapped and details enriched, the next phase is detection. Her
     iconType="solid"
     href="https://github.com/projectdiscovery/interactsh"
   >
-    An out-of-band (OOB) interaction gathering library, essential for
-    identifying vulnerabilities that may not be immediately evident through
-    conventional scanning methods.
+    一个带外(OOB)交互收集库，对于识别可能不会通过常规扫描方法立即显现的漏洞至关重要。
   </Card>
   <Card
     title="cvemap"
@@ -149,7 +135,7 @@ With the landscape mapped and details enriched, the next phase is detection. Her
     iconType="solid"
     href="https://github.com/projectdiscovery/cvemap"
   >
-    Navigate the Common Vulnerabilities and Exposures (CVE) jungle with ease using cvemap, a CLI tool designed to provide a structured and easily navigable interface to various vulnerability databases.
+    使用cvemap轻松导航常见漏洞和暴露(CVE)丛林，这是一个CLI工具，旨在为各种漏洞数据库提供结构化且易于导航的界面。
   </Card>
   <Card
     title="Notify"
@@ -157,14 +143,13 @@ With the landscape mapped and details enriched, the next phase is detection. Her
     iconType="solid"
     href="https://github.com/projectdiscovery/notify"
   >
-    Streamlining the workflow, Notify allows users to stream the output of
-    various tools to multiple platforms, ensuring real-time updates and alerts.
+    简化工作流程，Notify允许用户将各种工具的输出流式传输到多个平台，确保实时更新和警报。
   </Card>
 </CardGroup>
 
-## Utilities
+## 实用工具（Utilities）
 
-These utilities can be combined with our other tooling based on the [Unix philosophy](https://blog.projectdiscovery.io/how-projectdiscovery-applies-the-unix-philosophy-to-their-tools/) to create pipelines and customize your offensive security or bug bounty hunting program.
+这些实用工具可以根据[Unix哲学](https://blog.projectdiscovery.io/how-projectdiscovery-applies-the-unix-philosophy-to-their-tools/)与我们的其他工具结合使用，创建管道并定制您的攻击性安全或漏洞赏金计划。
 
 <CardGroup cols={2}>
   <Card
@@ -173,8 +158,7 @@ These utilities can be combined with our other tooling based on the [Unix philos
     iconType="solid"
     href="https://github.com/projectdiscovery/pdtm"
   >
-    pdtm is a simple and easy-to-use tool for managing all of the open source
-    projects from ProjectDiscovery.
+    pdtm是一个简单易用的工具，用于管理ProjectDiscovery的所有开源项目。
   </Card>
   <Card
     title="mapcidr"
@@ -182,8 +166,7 @@ These utilities can be combined with our other tooling based on the [Unix philos
     iconType="solid"
     href="https://github.com/projectdiscovery/mapcidr"
   >
-    A utility program to perform multiple operations for a given subnet/CIDR
-    ranges.
+    一个实用程序，用于对给定的子网/CIDR范围执行多种操作。
   </Card>
   <Card
     title="cdncheck"
@@ -191,7 +174,7 @@ These utilities can be combined with our other tooling based on the [Unix philos
     iconType="duotone"
     href="https://github.com/projectdiscovery/cdncheck"
   >
-    A utility to detect various technologies for a given DNS / IP address.
+    一个用于检测给定DNS/IP地址的各种技术的实用工具。
   </Card>
   <Card
     title="aix"
@@ -199,7 +182,7 @@ These utilities can be combined with our other tooling based on the [Unix philos
     iconType="duotone"
     href="https://github.com/projectdiscovery/aix"
   >
-    AIx is a cli tool to interact with Large Language Models (LLM) APIs.
+    AIx是一个与大型语言模型(LLM)API交互的命令行工具。
   </Card>
   <Card
     title="proxify"
@@ -207,7 +190,7 @@ These utilities can be combined with our other tooling based on the [Unix philos
     iconType="solid"
     href="https://github.com/projectdiscovery/proxify"
   >
-    Swiss Army Knife Proxy for rapid deployments. 
+    用于快速部署的瑞士军刀代理。
   </Card>
   <Card
     title="simplehttpserver"
@@ -215,10 +198,10 @@ These utilities can be combined with our other tooling based on the [Unix philos
     iconType="duotone"
     href="https://github.com/projectdiscovery/simplehttpserver"
   >
-    A golang enhanced version of the well known python simplehttpserver.
+    著名的python simplehttpserver的golang增强版本。
   </Card>
 </CardGroup>
 
 ---
 
-Dive into the individual tool's documentation to explore in-depth functionalities, usage examples, and best practices. Your journey into enhanced offensive security starts here!
+深入查看各个工具的文档，探索深入功能、使用示例和最佳实践。您的增强攻击性安全之旅从这里开始！

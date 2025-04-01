@@ -1,30 +1,30 @@
 ---
-title: "Installing Katana"
-description: "Learn about how to install Katana"
-sidebarTitle: "Install"
+title: "安装 Katana"
+description: "了解如何安装 Katana"
+sidebarTitle: "安装"
 ---
 <Tabs>
   <Tab title="Go">
-    <Note> Enter the command below in a terminal to install ProjectDiscovery's Katana using Go. </Note>
+    <Note> 在终端中输入以下命令，使用 Go 安装 ProjectDiscovery 的 Katana。 </Note>
     ```bash
     go install github.com/projectdiscovery/katana/cmd/katana@latest
    ```
   </Tab>
   <Tab title="Docker">
-  <Note> Enter the command below in a terminal to install ProjectDiscovery's Katana using Go. </Note>
-    To install/update Docker to the latest tag
+  <Note> 在终端中输入以下命令，使用 Docker 安装 ProjectDiscovery 的 Katana。 </Note>
+    安装/更新 Docker 到最新版本
     ```bash
    docker pull projectdiscovery/katana:latest
     ```
   </Tab>
     <Tab title="GitHub">
-   <Note> Enter the command below in a terminal to install ProjectDiscovery's Katana using GitHub. </Note>
+   <Note> 在终端中输入以下命令，使用 GitHub 安装 ProjectDiscovery 的 Katana。 </Note>
     ```bash
    go install github.com/projectdiscovery/katana/cmd/katana@latest
     ```
   </Tab>
     <Tab title="Ubuntu">
-    For running Ubuntu we recommend installing the following prerequisits
+    对于运行 Ubuntu，我们建议安装以下先决条件
 
     ```sh
     sudo apt update
@@ -43,20 +43,20 @@ sidebarTitle: "Install"
     ```
 
     <Tip>
-    - Download the latest binary for your OS.
-    - Unzip the file to run binary.
+    - 下载适用于您操作系统的最新二进制文件。
+    - 解压文件以运行二进制文件。
     </Tip>
 
   </Tab>
 </Tabs>
 
-## Installation Notes
-  - Katana requires the latest version of [**Go**](https://go.dev/doc/install)
-  - Add the Go bin path to the system paths. On OSX or Linux, in your terminal use
+## 安装说明
+  - Katana 需要最新版本的 [**Go**](https://go.dev/doc/install)
+  - 将 Go bin 路径添加到系统路径中。在 OSX 或 Linux 中，在终端使用
   
   ```
   echo export $PATH=$PATH:$HOME/go/bin >> $home/.bashrc
   source $home/.bashrc
   ```
-  - To add the Go bin path in Windows, [click this link for instructions.](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
-  - The binary will be located in `$home/go/bin/katana`  
+  - 要在 Windows 中添加 Go bin 路径，[点击此链接获取说明。](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+  - 二进制文件将位于 `$home/go/bin/katana`  

@@ -1,10 +1,10 @@
-# Interface: IsVNCResponse
+# 接口: IsVNCResponse
 
 [vnc](/templates/protocols/javascript/modules/vnc).IsVNCResponse
 
-IsVNCResponse is the response from the IsVNC function.
+IsVNCResponse 是 IsVNC 函数的响应结果。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const vnc = require('nuclei/vnc');
@@ -12,20 +12,20 @@ const isVNC = vnc.IsVNC('acme.com', 5900);
 log(toJSON(isVNC));
 ```
 
-## Table of contents
+## 目录
 
-### Properties
+### 属性
 
 - [Banner](/templates/protocols/javascript/modules/vnc.IsVNCResponse#banner)
 - [IsVNC](/templates/protocols/javascript/modules/vnc.IsVNCResponse#isvnc)
 
-## Properties
+## 属性
 
 ### Banner
 
 • `Optional` **Banner**: `string`
 
-#### Defined in
+#### 定义于
 
 vnc.ts:33
 
@@ -35,6 +35,6 @@ ___
 
 • `Optional` **IsVNC**: `boolean`
 
-#### Defined in
+#### 定义于
 
 vnc.ts:31

@@ -1,52 +1,52 @@
 ---
-title: "Matchers"
-description: "Review details on matchers for Nuclei"
+title: "匹配器"
+description: "查看Nuclei的匹配器详细信息"
 icon: "spell-check"
 iconType: "duotone"
 ---
 
-Matchers allow different type of flexible comparisons on protocol responses. They are what makes nuclei so powerful, checks are very simple to write and multiple checks can be added as per need for very effective scanning.
+匹配器允许对协议响应进行不同类型的灵活比较。这是使nuclei如此强大的原因，检查非常简单易写，并且可以根据需要添加多个检查以进行非常有效的扫描。
 
-### Types
+### 类型
 
-Multiple matchers can be specified in a request. There are basically 7 types of matchers:
+一个请求中可以指定多个匹配器。基本上有7种类型的匹配器：
 
-| Matcher Type | Part Matched                |
+| 匹配器类型 | 匹配部分                |
 |--------------|-----------------------------|
-| status       | Integer Comparisons of Part |
-| size         | Content Length of Part      |
-| word         | Part for a protocol         |
-| regex        | Part for a protocol         |
-| binary       | Part for a protocol         |
-| dsl          | Part for a protocol         |
-| xpath        | Part for a protocol         |
+| status       | 部分的整数比较 |
+| size         | 部分的内容长度      |
+| word         | 协议的部分         |
+| regex        | 协议的部分         |
+| binary       | 协议的部分         |
+| dsl          | 协议的部分         |
+| xpath        | 协议的部分         |
 
-To match status codes for responses, you can use the following syntax.
+要匹配响应的状态码，可以使用以下语法。
 
 ```yaml
 matchers:
-  # Match the status codes
+  # 匹配状态码
   - type: status
-    # Some status codes we want to match
+    # 我们想要匹配的一些状态码
     status:
       - 200
       - 302
 ```
 
-To match binary for hexadecimal responses, you can use the following syntax.
+要匹配十六进制响应的二进制数据，可以使用以下语法。
 
 ```yaml
 matchers:
   - type: binary
     binary:
-      - "504B0304" # zip archive
-      - "526172211A070100" # RAR archive version 5.0
-      - "FD377A585A0000" # xz tar.xz archive
+      - "504B0304" # zip压缩文件
+      - "526172211A070100" # RAR压缩文件 版本5.0
+      - "FD377A585A0000" # xz tar.xz压缩文件
     condition: or
     part: body
 ```
 
-Matchers also support hex encoded data which will be decoded and matched.
+匹配器还支持十六进制编码的数据，这些数据将被解码并匹配。
 
 ```yaml
 matchers:
@@ -57,9 +57,9 @@ matchers:
     part: body
 ```
 
-**Word** and **Regex** matchers can be further configured depending on the needs of the users.
+**Word**和**Regex**匹配器可以根据用户的需求进行进一步配置。
 
-**XPath** matchers use XPath queries to match XML and HTML responses. If the XPath query returns any results, it's considered a match.
+**XPath**匹配器使用XPath查询来匹配XML和HTML响应。如果XPath查询返回任何结果，则被视为匹配。
 
 ```yaml
 matchers:
@@ -69,63 +69,63 @@ matchers:
       - "/html/head/title[contains(text(), 'Example Domain')]"
 ```
 
-Complex matchers of type **dsl** allows building more elaborate expressions with helper functions. These function allow access to Protocol Response which contains variety of data based on each protocol. See protocol specific documentation to learn about different returned results.
+**dsl**类型的复杂匹配器允许使用辅助函数构建更复杂的表达式。这些函数允许访问包含各种数据的协议响应，具体取决于每个协议。请参阅特定协议的文档了解不同的返回结果。
 
 
 ```yaml
 matchers:
   - type: dsl
     dsl:
-      - "len(body)<1024 && status_code==200" # Body length less than 1024 and 200 status code
-      - "contains(toupper(body), md5(cookie))" # Check if the MD5 sum of cookies is contained in the uppercase body
+      - "len(body)<1024 && status_code==200" # 正文长度小于1024且状态码为200
+      - "contains(toupper(body), md5(cookie))" # 检查cookie的MD5值是否包含在大写的正文中
 ```
 
-Every part of a Protocol response can be matched with DSL matcher. Some examples - 
+协议响应的每个部分都可以用DSL匹配器匹配。一些例子 - 
 
-| Response Part  | Description                                     | Example                |
+| 响应部分  | 描述                                     | 示例                |
 |----------------|-------------------------------------------------|------------------------|
-| content_length | Content-Length Header                           | content_length >= 1024 |
-| status_code    | Response Status Code                            | status_code==200       |
-| all_headers    | Unique string containing all headers            | len(all_headers)       |
-| body           | Body as string                                  | len(body)              |
-| header_name    | Lowercase header name with `-` converted to `_` | len(user_agent)        |
-| raw            | Headers + Response                              | len(raw)               |
+| content_length | Content-Length头                           | content_length >= 1024 |
+| status_code    | 响应状态码                            | status_code==200       |
+| all_headers    | 包含所有头的唯一字符串            | len(all_headers)       |
+| body           | 正文字符串                                  | len(body)              |
+| header_name    | 小写头名称，`-`转换为`_` | len(user_agent)        |
+| raw            | 头+响应                              | len(raw)               |
 
 
-### Conditions
+### 条件
 
-Multiple words and regexes can be specified in a single matcher and can be configured with different conditions like **AND** and **OR**. When no condition is specified, **OR** is used as the default.
+单个匹配器中可以指定多个单词和正则表达式，并且可以使用不同的条件如**AND**和**OR**进行配置。当未指定条件时，默认使用**OR**。
 
-1. **AND** - Using AND conditions allows matching of all the words from the list of words for the matcher. Only then will the request be marked as successful when all the words have been matched.
-2. **OR** - Using OR conditions allows matching of a single word from the list of matcher. The request will be marked as successful when even one of the word is matched for the matcher.
+1. **AND** - 使用AND条件允许匹配匹配器的单词列表中的所有单词。只有当所有单词都匹配时，请求才会被标记为成功。
+2. **OR** - 使用OR条件允许匹配匹配器的列表中的单个单词。当匹配器的任何一个单词匹配时，请求将被标记为成功。
 
-### Matched Parts
+### 匹配部分
 
-Multiple parts of the response can also be matched for the request, default matched part is `body` if not defined. 
+还可以为请求匹配响应的多个部分，如果未定义，默认匹配部分是`body`。
 
-Example matchers for HTTP response body using the AND condition:
+使用AND条件的HTTP响应体匹配器示例：
 
 ```yaml
 matchers:
-  # Match the body word
+  # 匹配正文单词
   - type: word
-   # Some words we want to match
+   # 我们想要匹配的一些单词
    words:
      - "[core]"
      - "[config]"
-   # Both words must be found in the response body
+   # 两个单词都必须在响应正文中找到
    condition: and
-   #  We want to match request body (default)
+   # 我们要匹配请求正文（默认）
    part: body
 ```
 
-Similarly, matchers can be written to match anything that you want to find in the response body allowing unlimited creativity and extensibility.
+类似地，可以编写匹配器来匹配您想在响应正文中找到的任何内容，允许无限的创造性和可扩展性。
 
-### Negative Matchers
+### 否定匹配器
 
-All types of matchers also support negative conditions, mostly useful when you look for a match with an exclusions. This can be used by adding `negative: true` in the **matchers** block.
+所有类型的匹配器也支持否定条件，当您需要排除某些匹配时非常有用。这可以通过在**matchers**块中添加`negative: true`来使用。
 
-Here is an example syntax using `negative` condition, this will return all the URLs not having `PHPSESSID` in the response header. 
+以下是使用`negative`条件的示例语法，这将返回响应头中没有`PHPSESSID`的所有URL。
 
 ```yaml
 matchers:
@@ -136,11 +136,11 @@ matchers:
     negative: true
 ```
 
-### Multiple Matchers
+### 多个匹配器
 
-Multiple matchers can be used in a single template to fingerprint multiple conditions with a single request.
+在单个模板中可以使用多个匹配器，通过单个请求对多个条件进行指纹识别。
 
-Here is an example of syntax for multiple matchers.
+以下是多个匹配器的语法示例。
 
 ```yaml
 matchers:
@@ -166,9 +166,9 @@ matchers:
     part: header
 ```
 
-### Matchers Condition
+### 匹配器条件
 
-While using multiple matchers the default condition is to follow OR operation in between all the matchers, AND operation can be used to make sure return the result if all matchers returns true.
+在使用多个匹配器时，默认条件是在所有匹配器之间遵循OR操作，可以使用AND操作来确保只有当所有匹配器返回true时才返回结果。
 
 ```yaml
     matchers-condition: and
@@ -186,13 +186,13 @@ While using multiple matchers the default condition is to follow OR operation in
         part: body
 ```
 
-### Internal Matchers
+### 内部匹配器
 
-When writing multi-protocol or `flow` based templates, there might be a case where we need to validate/match first request then proceed to next request and a good example of this is [`CVE-2023-6553`](https://github.com/projectdiscovery/nuclei-templates/blob/c5be73e328ebd9a0c122ea0324f60bbdd7eb940d/http/cves/2023/CVE-2023-6553.yaml#L21)
+在编写多协议或基于`flow`的模板时，可能会有一种情况，我们需要验证/匹配第一个请求，然后再进行下一个请求，一个很好的例子是[`CVE-2023-6553`](https://github.com/projectdiscovery/nuclei-templates/blob/c5be73e328ebd9a0c122ea0324f60bbdd7eb940d/http/cves/2023/CVE-2023-6553.yaml#L21)
 
-In this template, we are first checking if target is actual using `Backup Migration` plugin using matchers and if true then proceed to next request with help of `flow`
+在此模板中，我们首先使用匹配器检查目标是否实际使用了`Backup Migration`插件，如果为true，则在`flow`的帮助下继续下一个请求
 
-But this will print two results, one for each request match since we are using the first request matchers as a pre-condition to proceed to next request we can mark it as internal using `internal: true` in the matchers block.
+但这将打印两个结果，每个请求匹配一个，由于我们使用第一个请求匹配器作为继续下一个请求的先决条件，我们可以使用`internal: true`在匹配器块中将其标记为内部。
 
 ```yaml
 id: CVE-2023-6553
@@ -215,7 +215,7 @@ http:
           - 'status_code == 200'
           - 'contains(body, "Backup Migration")'
         condition: and
-        internal: true  # <- updated logic (this will skip printing this event/result)
+        internal: true  # <- 更新逻辑（这将跳过打印此事件/结果）
 
   - method: POST
     path:
@@ -232,17 +232,17 @@ http:
         condition: and
 ```
 
-### Global Matchers
+### 全局匹配器
 
-Global matchers are essentially `matchers` that apply globally across all HTTP responses received from running other templates. This makes them super useful for things like passive detection, fingerprinting, spotting errors, WAF detection, identifying unusual behaviors, or even catching secrets and information leaks. By setting `global-matchers` to **true**, you're enabling the template to automatically match events triggered by other templates without having to configure them individually.
+全局匹配器本质上是适用于运行其他模板时接收到的所有HTTP响应的`matchers`。这使它们对于被动检测、指纹识别、发现错误、WAF检测、识别异常行为，甚至捕获秘密和信息泄漏非常有用。通过将`global-matchers`设置为**true**，您可以启用模板自动匹配由其他模板触发的事件，而无需单独配置它们。
 
 <Note>
-* Global matchers only work with [HTTP-protocol-based](/templates/protocols/http) templates.
-* When global matchers are enabled, no requests defined in the template will be sent.
-* This feature is not limited to `matchers`; you can also define `extractors` in a global matchers template.
+* 全局匹配器仅适用于基于[HTTP协议](/templates/protocols/http)的模板。
+* 启用全局匹配器时，不会发送模板中定义的请求。
+* 此功能不仅限于`matchers`；您还可以在全局匹配器模板中定义`extractors`。
 </Note>
 
-Let's look at a quick example of how this works:
+让我们看一个快速示例，了解它的工作原理：
 
 ```yaml
 # http-template-with-global-matchers.yaml
@@ -264,9 +264,9 @@ http:
         part: body
 ```
 
-In this example, we're using a template that has `global-matchers` set to **true**. It looks for specific patterns, like an asymmetric private key or a Slack webhook, across all HTTP requests. Now, when you run this template along with others, the global matcher will automatically check for those patterns in all HTTP responses. You don't have to set up individual matchers in every single template for it to work.
+在此示例中，我们使用了一个将`global-matchers`设置为**true**的模板。它在所有HTTP请求中查找特定模式，如非对称私钥或Slack webhook。现在，当您运行此模板以及其他模板时，全局匹配器将自动检查所有HTTP响应中的这些模式。您不必在每个模板中单独设置匹配器即可使其工作。
 
-To run it, use a command like this:
+要运行它，使用如下命令：
 
 ```console
 > nuclei -egm -u http://example.com -t http-template-with-global-matchers.yaml -t http-template-1.yaml -t http-template-2.yaml -silent
@@ -275,7 +275,8 @@ To run it, use a command like this:
 ```
 
 <Warning>
-  Global matchers are NOT applied by default. You need to explicitly enable them using the `-enable-global-matchers`/`-egm` flag or programmatically via [`nuclei.EnableGlobalMatchersTemplates`](https://pkg.go.dev/github.com/projectdiscovery/nuclei/v3/lib#EnableGlobalMatchersTemplates) if you're working with the Nuclei SDK.
+  全局匹配器默认不应用。您需要使用`-enable-global-matchers`/`-egm`标志或通过[`nuclei.EnableGlobalMatchersTemplates`](https://pkg.go.dev/github.com/projectdiscovery/nuclei/v3/lib#EnableGlobalMatchersTemplates)以编程方式显式启用它们（如果您正在使用Nuclei SDK）。
 </Warning>
 
-In this case, the global matchers are looking for an asymmetric private key and a Slack webhook. As you can see in the output, it found a match in requests from the other templates, even though the matching logic was only defined once in the global matchers template. This makes it really efficient for detecting patterns across multiple requests without duplicating code in every single template.
+在这种情况下，全局匹配器正在寻找非对称私钥和Slack webhook。如您在输出中所见，它在来自其他模板的请求中找到了匹配项，尽管匹配逻辑仅在全局匹配器模板中定义了一次。这使得在多个请求中检测模式非常高效，而无需在每个模板中复制代码。
+

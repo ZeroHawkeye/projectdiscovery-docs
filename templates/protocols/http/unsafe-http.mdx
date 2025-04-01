@@ -1,14 +1,14 @@
 ---
-title: "Unsafe HTTP"
-description: "Learn about using rawhttp or unsafe HTTP with Nuclei"
+title: "不安全的 HTTP"
+description: "了解如何在 Nuclei 中使用 rawhttp 或不安全的 HTTP"
 
 ---
 
-Nuclei supports [rawhttp](https://github.com/projectdiscovery/rawhttp) for complete request control and customization allowing **any kind of malformed requests** for issues like HTTP request smuggling, Host header injection, CRLF with malformed characters and more.
+Nuclei 支持 [rawhttp](https://github.com/projectdiscovery/rawhttp) 来实现完全的请求控制和自定义，允许**任何类型的畸形请求**，用于解决 HTTP 请求走私、Host 头注入、带有畸形字符的 CRLF 等问题。
 
-**rawhttp** library is disabled by default and can be enabled by including `unsafe: true` in the request block. 
+默认情况下，**rawhttp** 库是禁用的，可以通过在请求块中包含 `unsafe: true` 来启用。
 
-Here is an example of HTTP request smuggling detection template using `rawhttp`. 
+以下是使用 `rawhttp` 进行 HTTP 请求走私检测的模板示例。
 
 ```yaml
 http:
@@ -32,7 +32,7 @@ http:
         GET /post?postId=5 HTTP/1.1
         Host: {{Hostname}}
 
-    unsafe: true # Enables rawhttp client
+    unsafe: true # 启用 rawhttp 客户端
     matchers:
       - type: dsl
         dsl:

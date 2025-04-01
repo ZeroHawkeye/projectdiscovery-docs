@@ -1,67 +1,67 @@
-# Class: Client
+# 类: Client
 
 [kerberos](/templates/protocols/javascript/modules/kerberos).Client
 
-Known Issues:
-Hardcoded timeout in gokrb5 library
-TGT / Session Handling not exposed
-Client is kerberos client
+已知问题:
+gokrb5 库中的硬编码超时
+TGT / Session 处理未暴露
+Client 是 kerberos 客户端
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
-// if controller is empty a dns lookup for default kdc server will be performed
+// 如果 controller 为空，将执行默认 kdc 服务器的 dns 查询
 const client = new kerberos.Client('acme.com', 'kdc.acme.com');
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/kerberos.Client#constructor)
 
-### Properties
+### 属性
 
 - [Krb5Config](/templates/protocols/javascript/modules/kerberos.Client#krb5config)
 - [Realm](/templates/protocols/javascript/modules/kerberos.Client#realm)
 - [controller](/templates/protocols/javascript/modules/kerberos.Client#controller)
 - [domain](/templates/protocols/javascript/modules/kerberos.Client#domain)
 
-### Methods
+### 方法
 
 - [EnumerateUser](/templates/protocols/javascript/modules/kerberos.Client#enumerateuser)
 - [GetServiceTicket](/templates/protocols/javascript/modules/kerberos.Client#getserviceticket)
 - [SetConfig](/templates/protocols/javascript/modules/kerberos.Client#setconfig)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new Client**(`domain`, `controller?`): [`Client`](/templates/protocols/javascript/modules/kerberos.Client)
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `domain` | `string` |
 | `controller?` | `string` |
 
-#### Returns
+#### 返回值
 
 [`Client`](/templates/protocols/javascript/modules/kerberos.Client)
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:90
 
-## Properties
+## 属性
 
 ### Krb5Config
 
 • `Optional` **Krb5Config**: [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:82
 
@@ -71,7 +71,7 @@ ___
 
 • `Optional` **Realm**: `string`
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:86
 
@@ -81,7 +81,7 @@ ___
 
 • `Optional` **controller**: `string`
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:90
 
@@ -91,29 +91,29 @@ ___
 
 • **domain**: `string`
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:90
 
-## Methods
+## 方法
 
 ### EnumerateUser
 
 ▸ **EnumerateUser**(`username`): [`EnumerateUserResponse`](/templates/protocols/javascript/modules/kerberos.EnumerateUserResponse)
 
-EnumerateUser and attempt to get AS-REP hash by disabling PA-FX-FAST
+EnumerateUser 尝试通过禁用 PA-FX-FAST 获取 AS-REP 哈希
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `username` | `string` |
 
-#### Returns
+#### 返回值
 
 [`EnumerateUserResponse`](/templates/protocols/javascript/modules/kerberos.EnumerateUserResponse)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -122,7 +122,7 @@ const resp = client.EnumerateUser('pdtm');
 log(resp);
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:122
 
@@ -132,19 +132,19 @@ ___
 
 ▸ **GetServiceTicket**(`User`): [`TGS`](/templates/protocols/javascript/modules/kerberos.TGS)
 
-GetServiceTicket returns a TGS for a given user, password and SPN
+GetServiceTicket 为给定的用户、密码和 SPN 返回 TGS
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `User` | `string` |
 
-#### Returns
+#### 返回值
 
 [`TGS`](/templates/protocols/javascript/modules/kerberos.TGS)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -153,7 +153,7 @@ const resp = client.GetServiceTicket('pdtm', 'password', 'HOST/CLIENT1');
 log(resp);
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:137
 
@@ -163,21 +163,21 @@ ___
 
 ▸ **SetConfig**(`cfg`): `void`
 
-SetConfig sets additional config for the kerberos client
-Note: as of now ip and timeout overrides are only supported
-in EnumerateUser due to fastdialer but can be extended to other methods currently
+SetConfig 为 kerberos 客户端设置额外配置
+注意：目前由于 fastdialer，ip 和超时覆盖仅在 EnumerateUser 中支持
+但可以扩展到其他方法
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `cfg` | [`Config`](/templates/protocols/javascript/modules/kerberos.Config) |
 
-#### Returns
+#### 返回值
 
 `void`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -188,6 +188,6 @@ cfg.SetTimeout(5);
 client.SetConfig(cfg);
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:107

@@ -1,44 +1,42 @@
 ---
 title: "HTTP Payloads"
-description: "Learn about bruteforcing HTTP requests using payloads with Nuclei"
+description: "了解如何使用Nuclei的payloads进行HTTP请求暴力破解"
 ---
 
-## Overview
+## 概述
 
-Nuclei engine supports brute forcing any value/component of HTTP Requests using payloads module, that allows to run various type of payloads in multiple format, It's possible to define placeholders with simple keywords (or using brackets `{{helper_function(variable)}}` in case mutator functions are needed), and perform **batteringram**, **pitchfork** and **clusterbomb** attacks. 
+Nuclei引擎支持使用payloads模块对HTTP请求的任何值/组件进行暴力破解，该模块允许以多种格式运行各种类型的payloads。可以使用简单关键字定义占位符（或在需要变异函数时使用括号`{{helper_function(variable)}}`），并执行**batteringram**、**pitchfork**和**clusterbomb**攻击。
 
-The **wordlist** for these attacks needs to be defined during the request definition under the `payload` field, with a name matching the keyword. Nuclei supports both file-based and in template wordlist support and finally all DSL functionalities are fully available and supported, and can be used to manipulate the final values.
+这些攻击的**wordlist**需要在请求定义下的`payload`字段中定义，名称与关键字匹配。Nuclei同时支持基于文件和模板内的wordlist，最后所有DSL功能都完全可用和支持，可用于操作最终值。
 
 <Note>
-  Note that if you are developing a file-based payload and storing it outside the Nuclei
-  templates directory, you must run Nuclei with the `-lfa`
-  (or `-allow-local-file-access`) flag. This is necessary to allow access to
-  local files that are not within the default templates directory.
+  注意，如果您正在开发基于文件的payload并将其存储在Nuclei模板目录之外，
+  您必须使用`-lfa`（或`-allow-local-file-access`）标志运行Nuclei。
+  这是允许访问不在默认模板目录中的本地文件所必需的。
 </Note>
 
-Payloads are defined using variable name and can be referenced in the request in between `{{ }}` marker.
+Payloads使用变量名定义，可以在请求中的`{{ }}`标记之间引用。
 
-### Difference between **HTTP Payloads** and **HTTP Fuzzing**
+### **HTTP Payloads**和**HTTP Fuzzing**之间的区别
 
-While both may sound similar, the major difference between  **Fuzzing** and **Payloads/BruteForce** is that Fuzzing is a superset of Payloads/BruteForce and has extra features related to finding Unknown Vulnerabilities while Payloads is just plain brute forcing of values with a given attack type and set of payloads.
+虽然两者听起来相似，但**Fuzzing**和**Payloads/BruteForce**之间的主要区别在于Fuzzing是Payloads/BruteForce的超集，具有与发现未知漏洞相关的额外功能，而Payloads只是使用给定攻击类型和一组payloads对值进行简单的暴力破解。
 
+## 示例
 
-## Examples 
-
-An example of the using payloads with local wordlist:
+使用本地wordlist的payloads示例：
 
 ```yaml
-# HTTP Intruder fuzzing using local wordlist.
+# 使用本地wordlist的HTTP Intruder fuzzing
 
 payloads:
   paths: params.txt
   header: local.txt
 ```
 
-An example of the using payloads with in template wordlist support:
+使用模板内wordlist支持的payloads示例：
 
 ```yaml
-# HTTP Intruder fuzzing using in template wordlist.
+# 使用模板内wordlist的HTTP Intruder fuzzing
 
 payloads:
   password:
@@ -47,40 +45,39 @@ payloads:
     - password
 ```
 
-**Note:** be careful while selecting attack type, as unexpected input will break the template.
+**注意：** 选择攻击类型时要小心，因为意外的输入会破坏模板。
 
-For example, if you used `clusterbomb` or `pitchfork` as attack type and defined only one variable in the payload section, template will fail to compile, as `clusterbomb` or `pitchfork` expect more than one variable to use in the template.
+例如，如果您使用`clusterbomb`或`pitchfork`作为攻击类型，但在payload部分只定义了一个变量，模板将无法编译，因为`clusterbomb`或`pitchfork`期望在模板中使用多个变量。
 
-## Attack mode
+## 攻击模式
 
-Nuclei engine supports multiple attack types, including `batteringram` as default type which generally used to fuzz single parameter, `clusterbomb` and `pitchfork` for fuzzing multiple parameters which works same as classical burp intruder.
+Nuclei引擎支持多种攻击类型，包括默认类型`batteringram`（通常用于模糊测试单个参数）、`clusterbomb`和`pitchfork`（用于模糊测试多个参数，其工作方式与经典的burp intruder相同）。
 
-| **Type**    | batteringram | pitchfork | clusterbomb |
+| **类型**    | batteringram | pitchfork | clusterbomb |
 | ----------- | ------------ | --------- | ----------- |
-| **Support** | ✔            | ✔         | ✔           |
+| **支持** | ✔            | ✔         | ✔           |
 
 ### batteringram
 
-The battering ram attack type places the same payload value in all positions. It uses only one payload set. It loops through the payload set and replaces all positions with the payload value.
-
+batteringram攻击类型在所有位置放置相同的payload值。它只使用一个payload集。它遍历payload集并用payload值替换所有位置。
 
 ### pitchfork
-The pitchfork attack type uses one payload set for each position. It places the first payload in the first position, the second payload in the second position, and so on.
+pitchfork攻击类型为每个位置使用一个payload集。它将第一个payload放在第一个位置，第二个payload放在第二个位置，依此类推。
 
-It then loops through all payload sets at the same time. The first request uses the first payload from each payload set, the second request uses the second payload from each payload set, and so on.
+然后，它同时遍历所有payload集。第一个请求使用每个payload集中的第一个payload，第二个请求使用每个payload集中的第二个payload，依此类推。
 
 ### clusterbomb
-The cluster bomb attack tries all different combinations of payloads. It still puts the first payload in the first position, and the second payload in the second position. But when it loops through the payload sets, it tries all combinations.
+clusterbomb攻击尝试payloads的所有不同组合。它仍然将第一个payload放在第一个位置，第二个payload放在第二个位置。但是当它遍历payload集时，它会尝试所有组合。
 
-It then loops through all payload sets at the same time. The first request uses the first payload from each payload set, the second request uses the second payload from each payload set, and so on.
+它同时遍历所有payload集。第一个请求使用每个payload集中的第一个payload，第二个请求使用每个payload集中的第二个payload，依此类推。
 
-This attack type is useful for a brute-force attack. Load a list of commonly used usernames in the first payload set, and a list of commonly used passwords in the second payload set. The cluster bomb attack will then try all combinations.
+这种攻击类型对于暴力破解攻击很有用。在第一个payload集中加载常用用户名列表，在第二个payload集中加载常用密码列表。clusterbomb攻击将尝试所有组合。
 
-More details [here](https://www.sjoerdlangkemper.nl/2017/08/02/burp-intruder-attack-types/).
+更多详情[在这里](https://www.sjoerdlangkemper.nl/2017/08/02/burp-intruder-attack-types/)。
 
-## Attack Mode Example
+## 攻击模式示例
 
-An example of the using `clusterbomb` attack to fuzz.
+使用`clusterbomb`攻击进行fuzzing的示例：
 
 ```yaml
 http:
@@ -90,7 +87,7 @@ http:
         User-Agent: {{header}}
         Host: {{Hostname}}
 
-    attack: clusterbomb # Defining HTTP fuzz attack type
+    attack: clusterbomb # 定义HTTP fuzz攻击类型
     payloads:
       path: helpers/wordlists/prams.txt
       header: helpers/wordlists/header.txt

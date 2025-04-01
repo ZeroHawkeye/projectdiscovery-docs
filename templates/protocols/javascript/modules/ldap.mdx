@@ -1,12 +1,12 @@
-# Namespace: ldap
+# 命名空间: ldap
 
-## Table of contents
+## 目录
 
-### Classes
+### 类
 
 - [Client](/templates/protocols/javascript/modules/ldap.Client)
 
-### Interfaces
+### 接口
 
 - [Config](/templates/protocols/javascript/modules/ldap.Config)
 - [LdapAttributes](/templates/protocols/javascript/modules/ldap.LdapAttributes)
@@ -14,7 +14,7 @@
 - [Metadata](/templates/protocols/javascript/modules/ldap.Metadata)
 - [SearchResult](/templates/protocols/javascript/modules/ldap.SearchResult)
 
-### Variables
+### 变量
 
 - [FilterAccountDisabled](/templates/protocols/javascript/modules/ldap#filteraccountdisabled)
 - [FilterAccountEnabled](/templates/protocols/javascript/modules/ldap#filteraccountenabled)
@@ -45,7 +45,7 @@
 - [FilterUseDesKeyOnly](/templates/protocols/javascript/modules/ldap#filterusedeskeyonly)
 - [FilterWorkstationTrustAccount](/templates/protocols/javascript/modules/ldap#filterworkstationtrustaccount)
 
-### Functions
+### 函数
 
 - [DecodeADTimestamp](/templates/protocols/javascript/modules/ldap#decodeadtimestamp)
 - [DecodeSID](/templates/protocols/javascript/modules/ldap#decodesid)
@@ -53,15 +53,15 @@
 - [JoinFilters](/templates/protocols/javascript/modules/ldap#joinfilters)
 - [NegativeFilter](/templates/protocols/javascript/modules/ldap#negativefilter)
 
-## Variables
+## 变量
 
 ### FilterAccountDisabled
 
 • `Const` **FilterAccountDisabled**: ``"(userAccountControl:1.2.840.113556.1.4.803:=2)"``
 
-The user account is disabled.
+用户账户已禁用。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:4
 
@@ -71,9 +71,9 @@ ___
 
 • `Const` **FilterAccountEnabled**: ``"(!(userAccountControl:1.2.840.113556.1.4.803:=2))"``
 
-The user account is enabled.
+用户账户已启用。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:7
 
@@ -83,9 +83,9 @@ ___
 
 • `Const` **FilterCanSendEncryptedPassword**: ``"(userAccountControl:1.2.840.113556.1.4.803:=128)"``
 
-The user can send an encrypted password.
+用户可以发送加密密码。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:10
 
@@ -95,9 +95,9 @@ ___
 
 • `Const` **FilterDontExpirePassword**: ``"(userAccountControl:1.2.840.113556.1.4.803:=65536)"``
 
-Represents the password, which should never expire on the account.
+表示密码在账户上不会过期。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:13
 
@@ -107,9 +107,9 @@ ___
 
 • `Const` **FilterDontRequirePreauth**: ``"(userAccountControl:1.2.840.113556.1.4.803:=4194304)"``
 
-This account doesn't require Kerberos pre-authentication for logging on.
+此账户不需要 Kerberos 预身份验证即可登录。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:16
 
@@ -119,9 +119,9 @@ ___
 
 • `Const` **FilterHasServicePrincipalName**: ``"(servicePrincipalName=*)"``
 
-The object has a service principal name.
+对象具有服务主体名称。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:19
 
@@ -131,9 +131,9 @@ ___
 
 • `Const` **FilterHomedirRequired**: ``"(userAccountControl:1.2.840.113556.1.4.803:=8)"``
 
-The home folder is required.
+需要主目录。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:22
 
@@ -143,9 +143,9 @@ ___
 
 • `Const` **FilterInterdomainTrustAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=2048)"``
 
-It's a permit to trust an account for a system domain that trusts other domains.
+这是允许信任系统域的账户，该域信任其他域。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:25
 
@@ -155,9 +155,9 @@ ___
 
 • `Const` **FilterIsAdmin**: ``"(adminCount=1)"``
 
-The object is an admin.
+对象是管理员。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:28
 
@@ -167,9 +167,9 @@ ___
 
 • `Const` **FilterIsComputer**: ``"(objectCategory=computer)"``
 
-The object is a computer.
+对象是计算机。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:31
 
@@ -179,9 +179,9 @@ ___
 
 • `Const` **FilterIsDuplicateAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=256)"``
 
-It's an account for users whose primary account is in another domain.
+这是主账户在另一个域中的用户账户。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:34
 
@@ -191,9 +191,9 @@ ___
 
 • `Const` **FilterIsGroup**: ``"(objectCategory=group)"``
 
-The object is a group.
+对象是组。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:37
 
@@ -203,9 +203,9 @@ ___
 
 • `Const` **FilterIsNormalAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=512)"``
 
-It's a default account type that represents a typical user.
+这是代表典型用户的默认账户类型。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:40
 
@@ -215,9 +215,9 @@ ___
 
 • `Const` **FilterIsPerson**: ``"(objectCategory=person)"``
 
-The object is a person.
+对象是人员。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:43
 
@@ -227,9 +227,9 @@ ___
 
 • `Const` **FilterLockout**: ``"(userAccountControl:1.2.840.113556.1.4.803:=16)"``
 
-The user is locked out.
+用户被锁定。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:46
 
@@ -239,9 +239,9 @@ ___
 
 • `Const` **FilterLogonScript**: ``"(userAccountControl:1.2.840.113556.1.4.803:=1)"``
 
-The logon script will be run.
+将运行登录脚本。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:49
 
@@ -251,9 +251,9 @@ ___
 
 • `Const` **FilterMnsLogonAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=131072)"``
 
-It's an MNS logon account.
+这是一个 MNS 登录账户。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:52
 
@@ -263,9 +263,9 @@ ___
 
 • `Const` **FilterNotDelegated**: ``"(userAccountControl:1.2.840.113556.1.4.803:=1048576)"``
 
-When this flag is set, the security context of the user isn't delegated to a service even if the service account is set as trusted for Kerberos delegation.
+当设置此标志时，即使服务账户被设置为信任 Kerberos 委派，用户的安全上下文也不会委派给服务。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:55
 
@@ -275,9 +275,9 @@ ___
 
 • `Const` **FilterPartialSecretsAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=67108864)"``
 
-The account is a read-only domain controller (RODC).
+该账户是只读域控制器(RODC)。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:58
 
@@ -287,9 +287,9 @@ ___
 
 • `Const` **FilterPasswordCantChange**: ``"(userAccountControl:1.2.840.113556.1.4.803:=64)"``
 
-The user can't change the password.
+用户无法更改密码。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:61
 
@@ -299,9 +299,9 @@ ___
 
 • `Const` **FilterPasswordExpired**: ``"(userAccountControl:1.2.840.113556.1.4.803:=8388608)"``
 
-The user's password has expired.
+用户的密码已过期。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:64
 
@@ -311,9 +311,9 @@ ___
 
 • `Const` **FilterPasswordNotRequired**: ``"(userAccountControl:1.2.840.113556.1.4.803:=32)"``
 
-No password is required.
+不需要密码。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:67
 
@@ -323,9 +323,9 @@ ___
 
 • `Const` **FilterServerTrustAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=8192)"``
 
-It's a computer account for a domain controller that is a member of this domain.
+这是作为此域成员的域控制器的计算机账户。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:70
 
@@ -335,9 +335,9 @@ ___
 
 • `Const` **FilterSmartCardRequired**: ``"(userAccountControl:1.2.840.113556.1.4.803:=262144)"``
 
-When this flag is set, it forces the user to log on by using a smart card.
+设置此标志时，强制用户使用智能卡登录。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:73
 
@@ -347,9 +347,9 @@ ___
 
 • `Const` **FilterTrustedForDelegation**: ``"(userAccountControl:1.2.840.113556.1.4.803:=524288)"``
 
-When this flag is set, the service account (the user or computer account) under which a service runs is trusted for Kerberos delegation.
+设置此标志时，服务运行的服务账户（用户或计算机账户）被信任用于 Kerberos 委派。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:76
 
@@ -359,9 +359,9 @@ ___
 
 • `Const` **FilterTrustedToAuthForDelegation**: ``"(userAccountControl:1.2.840.113556.1.4.803:=16777216)"``
 
-The account is enabled for delegation.
+该账户已启用委派。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:79
 
@@ -371,9 +371,9 @@ ___
 
 • `Const` **FilterUseDesKeyOnly**: ``"(userAccountControl:1.2.840.113556.1.4.803:=2097152)"``
 
-Restrict this principal to use only Data Encryption Standard (DES) encryption types for keys.
+限制此主体仅使用数据加密标准(DES)加密类型的密钥。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:82
 
@@ -383,9 +383,9 @@ ___
 
 • `Const` **FilterWorkstationTrustAccount**: ``"(userAccountControl:1.2.840.113556.1.4.803:=4096)"``
 
-It's a computer account for a computer that is running old Windows builds.
+这是运行旧版 Windows 的计算机的计算机账户。
 
-#### Defined in
+#### 定义于
 
 ldap.ts:85
 
@@ -395,19 +395,19 @@ ldap.ts:85
 
 ▸ **DecodeADTimestamp**(`timestamp`): `string`
 
-DecodeADTimestamp decodes an Active Directory timestamp
+DecodeADTimestamp 解码 Active Directory 时间戳
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `timestamp` | `string` |
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -415,7 +415,7 @@ const timestamp = ldap.DecodeADTimestamp('132036744000000000');
 log(timestamp);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:96
 
@@ -425,19 +425,19 @@ ___
 
 ▸ **DecodeSID**(`s`): `string`
 
-DecodeSID decodes a SID string
+DecodeSID 解码 SID 字符串
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `s` | `string` |
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -445,7 +445,7 @@ const sid = ldap.DecodeSID('S-1-5-21-3623811015-3361044348-30300820-1013');
 log(sid);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:111
 
@@ -455,19 +455,19 @@ ___
 
 ▸ **DecodeZuluTimestamp**(`timestamp`): `string`
 
-DecodeZuluTimestamp decodes a Zulu timestamp
+DecodeZuluTimestamp 解码 Zulu 时间戳
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `timestamp` | `string` |
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -475,7 +475,7 @@ const timestamp = ldap.DecodeZuluTimestamp('2021-08-25T10:00:00Z');
 log(timestamp);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:126
 
@@ -485,26 +485,26 @@ ___
 
 ▸ **JoinFilters**(`filters`): `string`
 
-JoinFilters joins multiple filters into a single filter
+JoinFilters 将多个过滤器合并为单个过滤器
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `filters` | `any` |
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
 const filter = ldap.JoinFilters(ldap.FilterIsPerson, ldap.FilterAccountEnabled);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:140
 
@@ -514,25 +514,25 @@ ___
 
 ▸ **NegativeFilter**(`filter`): `string`
 
-NegativeFilter returns a negative filter for a given filter
+NegativeFilter 返回给定过滤器的否定过滤器
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `filter` | `string` |
 
-#### Returns
+#### 返回
 
 `string`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
 const filter = ldap.NegativeFilter(ldap.FilterIsPerson);
 ```
 
-#### Defined in
+#### 定义于
 
 ldap.ts:154

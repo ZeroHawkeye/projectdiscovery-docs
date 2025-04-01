@@ -1,35 +1,35 @@
-# Namespace: telnet
+# 命名空间: telnet
 
-## Table of contents
+## 目录
 
-### Interfaces
+### 接口
 
 - [IsTelnetResponse](/templates/protocols/javascript/modules/telnet.IsTelnetResponse)
 
-### Functions
+### 函数
 
 - [IsTelnet](/templates/protocols/javascript/modules/telnet#istelnet)
 
-## Functions
+## 函数
 
 ### IsTelnet
 
 ▸ **IsTelnet**(`host`, `port`): [`IsTelnetResponse`](/templates/protocols/javascript/modules/telnet.IsTelnetResponse) \| ``null``
 
-IsTelnet checks if a host is running a Telnet server.
+IsTelnet 检查主机是否运行 Telnet 服务器。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsTelnetResponse`](/templates/protocols/javascript/modules/telnet.IsTelnetResponse) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const telnet = require('nuclei/telnet');
@@ -37,6 +37,6 @@ const isTelnet = telnet.IsTelnet('acme.com', 23);
 log(toJSON(isTelnet));
 ```
 
-#### Defined in
+#### 定义于
 
 telnet.ts:12

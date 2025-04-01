@@ -1,50 +1,50 @@
-# Class: IKEMessage
+# 类: IKEMessage
 
 [ikev2](/templates/protocols/javascript/modules/ikev2).IKEMessage
 
-IKEMessage is the IKEv2 message
-IKEv2 implements a limited subset of IKEv2 Protocol, specifically
-the IKE_NOTIFY and IKE_NONCE payloads and the IKE_SA_INIT exchange.
+IKEMessage 是 IKEv2 消息
+IKEv2 实现了 IKEv2 协议的有限子集，特别是
+IKE_NOTIFY 和 IKE_NONCE 有效载荷以及 IKE_SA_INIT 交换。
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/ikev2.IKEMessage#constructor)
 
-### Properties
+### 属性
 
 - [ExchangeType](/templates/protocols/javascript/modules/ikev2.IKEMessage#exchangetype)
 - [Flags](/templates/protocols/javascript/modules/ikev2.IKEMessage#flags)
 - [InitiatorSPI](/templates/protocols/javascript/modules/ikev2.IKEMessage#initiatorspi)
 - [Version](/templates/protocols/javascript/modules/ikev2.IKEMessage#version)
 
-### Methods
+### 方法
 
 - [AppendPayload](/templates/protocols/javascript/modules/ikev2.IKEMessage#appendpayload)
 - [Encode](/templates/protocols/javascript/modules/ikev2.IKEMessage#encode)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new IKEMessage**(): [`IKEMessage`](/templates/protocols/javascript/modules/ikev2.IKEMessage)
 
-#### Returns
+#### 返回值
 
 [`IKEMessage`](/templates/protocols/javascript/modules/ikev2.IKEMessage)
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:52
 
-## Properties
+## 属性
 
 ### ExchangeType
 
 • `Optional` **ExchangeType**: `number`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:44
 
@@ -54,7 +54,7 @@ ___
 
 • `Optional` **Flags**: `number`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:48
 
@@ -64,7 +64,7 @@ ___
 
 • `Optional` **InitiatorSPI**: `number`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:36
 
@@ -74,30 +74,30 @@ ___
 
 • `Optional` **Version**: `number`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:40
 
-## Methods
+## 方法
 
 ### AppendPayload
 
 ▸ **AppendPayload**(`payload`): `void`
 
-AppendPayload appends a payload to the IKE message
-payload can be any of the payloads like IKENotification, IKENonce, etc.
+AppendPayload 向 IKE 消息追加有效载荷
+payload 可以是任何有效载荷，如 IKENotification、IKENonce 等。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `payload` | `any` |
 
-#### Returns
+#### 返回值
 
 `void`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ikev2 = require('nuclei/ikev2');
@@ -107,7 +107,7 @@ nonce.NonceData = [1, 2, 3];
 message.AppendPayload(nonce);
 ```
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:65
 
@@ -117,13 +117,13 @@ ___
 
 ▸ **Encode**(): `Uint8Array`
 
-Encode encodes the final IKE message
+Encode 编码最终的 IKE 消息
 
-#### Returns
+#### 返回值
 
 `Uint8Array`
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ikev2 = require('nuclei/ikev2');
@@ -134,6 +134,6 @@ message.AppendPayload(nonce);
 log(message.Encode());
 ```
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:82

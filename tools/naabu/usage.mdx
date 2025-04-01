@@ -1,100 +1,100 @@
 ---
-title: "Naabu Usage"
-description: "Review Naabu usage including flags, configs, and optimization"
-sidebarTitle: "Usage"
+title: "Naabu 使用方法"
+description: "查看Naabu使用方法，包括参数、配置和优化"
+sidebarTitle: "使用方法"
 ---
-## Access Help 
+## 获取帮助
 
-Use `naabu - h` to display all help options. 
+使用 `naabu -h` 显示所有帮助选项。
 
-## Naabu Help Options
+## Naabu 帮助选项
 
 ```yaml
-Usage:
+使用方法:
   ./naabu [flags]
 
-INPUT:
-   -host string[]              hosts to scan ports for (comma-separated)
-   -list, -l string            list of hosts to scan ports (file)
-   -exclude-hosts, -eh string  hosts to exclude from the scan (comma-separated)
-   -exclude-file, -ef string   list of hosts to exclude from scan (file)
+输入选项:
+   -host string[]              要扫描端口的主机（逗号分隔）
+   -list, -l string            要扫描端口的主机列表（文件）
+   -exclude-hosts, -eh string  从扫描中排除的主机（逗号分隔）
+   -exclude-file, -ef string   从扫描中排除的主机列表（文件）
 
-PORT:
-   -port, -p string            ports to scan (80,443, 100-200)
-   -top-ports, -tp string      top ports to scan (default 100) [full,100,1000]
-   -exclude-ports, -ep string  ports to exclude from scan (comma-separated)
-   -ports-file, -pf string     list of ports to scan (file)
-   -port-threshold, -pts int   port threshold to skip port scan for the host
-   -exclude-cdn, -ec           skip full port scans for CDN/WAF (only scan for port 80,443)
-   -display-cdn, -cdn          display cdn in use
+端口选项:
+   -port, -p string            要扫描的端口（80,443, 100-200）
+   -top-ports, -tp string      要扫描的顶级端口（默认100）[full,100,1000]
+   -exclude-ports, -ep string  从扫描中排除的端口（逗号分隔）
+   -ports-file, -pf string     要扫描的端口列表（文件）
+   -port-threshold, -pts int   跳过主机端口扫描的端口阈值
+   -exclude-cdn, -ec           跳过CDN/WAF的完整端口扫描（仅扫描80,443端口）
+   -display-cdn, -cdn          显示正在使用的CDN
 
-RATE-LIMIT:
-   -c int     general internal worker threads (default 25)
-   -rate int  packets to send per second (default 1000)
+速率限制:
+   -c int     通用内部工作线程数（默认25）
+   -rate int  每秒发送的数据包数（默认1000）
 
-UPDATE:
-   -up, -update                 update naabu to latest version
-   -duc, -disable-update-check  disable automatic naabu update check
+更新:
+   -up, -update                 更新naabu到最新版本
+   -duc, -disable-update-check  禁用自动naabu更新检查
 
-OUTPUT:
-   -o, -output string  file to write output to (optional)
-   -j, -json           write output in JSON lines format
-   -csv                write output in csv format
+输出:
+   -o, -output string  写入输出的文件（可选）
+   -j, -json           以JSON行格式写入输出
+   -csv                以csv格式写入输出
 
-CONFIGURATION:
-   -scan-all-ips, -sa               scan all the IP's associated with DNS record
-   -ip-version, -iv string[]        ip version to scan of hostname (4,6) - (default 4)
-   -scan-type, -s string            type of port scan (SYN/CONNECT) (default "s")
-   -source-ip string                source ip and port (x.x.x.x:yyy)
-   -interface-list, -il             list available interfaces and public ip
-   -interface, -i string            network Interface to use for port scan
-   -nmap                            invoke nmap scan on targets (nmap must be installed) - Deprecated
-   -nmap-cli string                 nmap command to run on found results (example: -nmap-cli 'nmap -sV')
-   -r string                        list of custom resolver dns resolution (comma separated or from file)
-   -proxy string                    socks5 proxy (ip[:port] / fqdn[:port]
-   -proxy-auth string               socks5 proxy authentication (username:password)
-   -resume                          resume scan using resume.cfg
-   -stream                          stream mode (disables resume, nmap, verify, retries, shuffling, etc)
-   -passive                         display passive open ports using shodan internetdb api
-   -irt, -input-read-timeout value  timeout on input read (default 3m0s)
-   -no-stdin                        Disable Stdin processing
+配置:
+   -scan-all-ips, -sa               扫描与DNS记录关联的所有IP
+   -ip-version, -iv string[]        要扫描的主机名IP版本（4,6）-（默认4）
+   -scan-type, -s string            端口扫描类型（SYN/CONNECT）（默认"s"）
+   -source-ip string                源IP和端口（x.x.x.x:yyy）
+   -interface-list, -il             列出可用接口和公共IP
+   -interface, -i string            用于端口扫描的网络接口
+   -nmap                            对目标调用nmap扫描（必须安装nmap）- 已弃用
+   -nmap-cli string                 对发现的结果运行的nmap命令（例如：-nmap-cli 'nmap -sV'）
+   -r string                        自定义解析器DNS解析列表（逗号分隔或来自文件）
+   -proxy string                    socks5代理（ip[:port] / fqdn[:port]
+   -proxy-auth string               socks5代理认证（用户名:密码）
+   -resume                          使用resume.cfg恢复扫描
+   -stream                          流模式（禁用恢复、nmap、验证、重试、洗牌等）
+   -passive                         使用shodan internetdb api显示被动开放端口
+   -irt, -input-read-timeout value  输入读取超时（默认3m0s）
+   -no-stdin                        禁用Stdin处理
 
-HOST-DISCOVERY:
-   -sn, -host-discovery           Perform Only Host Discovery
-   -Pn, -skip-host-discovery      Skip Host discovery
-   -ps, -probe-tcp-syn string[]   TCP SYN Ping (host discovery needs to be enabled)
-   -pa, -probe-tcp-ack string[]   TCP ACK Ping (host discovery needs to be enabled)
-   -pe, -probe-icmp-echo          ICMP echo request Ping (host discovery needs to be enabled)
-   -pp, -probe-icmp-timestamp     ICMP timestamp request Ping (host discovery needs to be enabled)
-   -pm, -probe-icmp-address-mask  ICMP address mask request Ping (host discovery needs to be enabled)
-   -arp, -arp-ping                ARP ping (host discovery needs to be enabled)
-   -nd, -nd-ping                  IPv6 Neighbor Discovery (host discovery needs to be enabled)
-   -rev-ptr                       Reverse PTR lookup for input ips
+主机发现:
+   -sn, -host-discovery           仅执行主机发现
+   -Pn, -skip-host-discovery      跳过主机发现
+   -ps, -probe-tcp-syn string[]   TCP SYN Ping（需要启用主机发现）
+   -pa, -probe-tcp-ack string[]   TCP ACK Ping（需要启用主机发现）
+   -pe, -probe-icmp-echo          ICMP echo请求Ping（需要启用主机发现）
+   -pp, -probe-icmp-timestamp     ICMP时间戳请求Ping（需要启用主机发现）
+   -pm, -probe-icmp-address-mask  ICMP地址掩码请求Ping（需要启用主机发现）
+   -arp, -arp-ping                ARP ping（需要启用主机发现）
+   -nd, -nd-ping                  IPv6邻居发现（需要启用主机发现）
+   -rev-ptr                       输入IP的反向PTR查找
 
-OPTIMIZATION:
-   -retries int       number of retries for the port scan (default 3)
-   -timeout int       millisecond to wait before timing out (default 1000)
-   -warm-up-time int  time in seconds between scan phases (default 2)
-   -ping              ping probes for verification of host
-   -verify            validate the ports again with TCP verification
+优化:
+   -retries int       端口扫描的重试次数（默认3）
+   -timeout int       超时前等待的毫秒数（默认1000）
+   -warm-up-time int  扫描阶段之间的秒数（默认2）
+   -ping              用于主机验证的ping探测
+   -verify            使用TCP验证再次验证端口
 
-DEBUG:
-   -health-check, -hc        run diagnostic check up
-   -debug                    display debugging information
-   -verbose, -v              display verbose output
-   -no-color, -nc            disable colors in CLI output
-   -silent                   display only results in output
-   -version                  display version of naabu
-   -stats                    display stats of the running scan (deprecated)
-   -si, -stats-interval int  number of seconds to wait between showing a statistics update (deprecated) (default 5)
-   -mp, -metrics-port int    port to expose nuclei metrics on (default 63636)
+调试:
+   -health-check, -hc        运行诊断检查
+   -debug                    显示调试信息
+   -verbose, -v              显示详细输出
+   -no-color, -nc            禁用CLI输出中的颜色
+   -silent                   仅在输出中显示结果
+   -version                  显示naabu版本
+   -stats                    显示正在运行的扫描统计信息（已弃用）
+   -si, -stats-interval int  显示统计更新之间等待的秒数（已弃用）（默认5）
+   -mp, -metrics-port int    暴露nuclei指标的端口（默认63636）
 ```
 
 
-# Notes on Usage
+# 使用注意事项
 
-- Naabu allows arbitrary binary execution as a feature to support [nmap integration](https://github.com/projectdiscovery/naabu#nmap-integration).
-- Naabu is designed to scan ports on multiple hosts / mass port scanning. 
-- Naabu is configured by default with that assumption that you are running it from VPS.
-- We suggest tuning the flags / rate if running Naabu from local system.
-- For best results, run Naabu as **root** user.
+- Naabu允许任意二进制执行作为支持[nmap集成](https://github.com/projectdiscovery/naabu#nmap-integration)的功能。
+- Naabu设计用于扫描多个主机上的端口/大规模端口扫描。
+- Naabu默认配置假设您从VPS运行它。
+- 如果从本地系统运行Naabu，我们建议调整参数/速率。
+- 为获得最佳结果，请以**root**用户身份运行Naabu。

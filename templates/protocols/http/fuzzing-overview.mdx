@@ -1,23 +1,23 @@
 ---
-title: "Fuzzing Overview"
-description: "Learn about fuzzing HTTP requests with Nuclei"
-sidebarTitle: "Overview"
+title: "Fuzzing 概览"
+description: "学习如何使用 Nuclei 进行 HTTP 请求 fuzzing"
+sidebarTitle: "概览"
 ---
 
-Nuclei supports fuzzing of HTTP requests based on rules defined in the `fuzzing` section of the HTTP request. This allows creating templates for generic Web Application vulnerabilities like SQLi, SSRF, CMDi, etc without any information of the target like a classic web fuzzer. We call this concept as **Fuzzing for Unknown Vulnerabilities**.
+Nuclei 支持基于 HTTP 请求中 `fuzzing` 部分定义的规则对 HTTP 请求进行 fuzzing。这允许创建针对通用 Web 应用程序漏洞（如 SQLi、SSRF、CMDi 等）的模板，而无需像传统 web fuzzer 那样获取目标的任何信息。我们将这一概念称为**未知漏洞 Fuzzing**。
 
-### pre-condition
+### pre-condition（前置条件）
 
-More often than not, we want to only attempt fuzzing on those requests where it makes sense. For example,
+通常情况下，我们只希望在有意义的请求上尝试 fuzzing。例如：
 
-- Fuzz Body When Body is Present
-- Ignore PreFlight and CONNECT requests
+- 当存在 Body 时才对 Body 进行 Fuzz
+- 忽略 PreFlight 和 CONNECT 请求
 
-and so on. With Nuclei v3.2.4 we have introduced a new `pre-condition` section which contains conditions when the fuzzing template should be executed.
+等等。在 Nuclei v3.2.4 中，我们引入了新的 `pre-condition` 部分，其中包含了 fuzzing 模板应该执行的条件。
 
-pre-condition can be considered a twin of [matchers](/templates/reference/matchers) in nuclei. They support all matcher types, including DSL, and the only difference is that this serves a different purpose.
+pre-condition 可以被视为 nuclei 中 [matchers](/templates/reference/matchers) 的孪生兄弟。它们支持所有匹配器类型，包括 DSL，唯一的区别是它们服务于不同的目的。
 
-For example, to only execute template on POST request with some body, you can use the following filter.
+例如，要仅在具有某些 body 的 POST 请求上执行模板，可以使用以下过滤器：
 
 ```yaml
 - pre-condition:
@@ -28,65 +28,65 @@ For example, to only execute template on POST request with some body, you can us
       condition: and
 ```
 
-<Note>Currently, Only request data like header, host, input, method, path, etc is available, but soon, response data will be available once the support for loading the response along with the request is added. </Note>
+<Note>目前，只有 header、host、input、method、path 等请求数据可用，但很快，一旦添加了加载响应和请求的支持，响应数据也将可用。</Note>
 
 
 <Tip>
- When writing/executing a template, you can use the -v -svd flags to see all variables available in filters before applying the filter.
+ 在编写/执行模板时，可以使用 -v -svd 标志查看应用过滤器之前可用的所有变量。
 </Tip>
 
 
-### Part
+### Part（部分）
 
-Part specifies what part of the request should be fuzzed based on the specified rules. Available options for this parameter are - 
+Part 指定请求的哪一部分应该根据指定的规则进行 fuzzing。该参数的可用选项有：
 
-**query** (`default`) - fuzz query parameters for URL
-
-```yaml
-fuzzing:
-  - part: query # fuzz parameters in URL query
-```
-
-**path** - fuzz path parameters for requests
+**query**（`默认`）- 对 URL 的查询参数进行 fuzzing
 
 ```yaml
 fuzzing:
-  - part: path # fuzz path parameters
+  - part: query # 对 URL 查询中的参数进行 fuzzing
 ```
 
-**header** - fuzz header parameters for requests
+**path** - 对请求的路径参数进行 fuzzing
 
 ```yaml
 fuzzing:
-  - part: header # fuzz headers
+  - part: path # 对路径参数进行 fuzzing
 ```
 
-**cookie** - fuzz cookie parameters for requests
+**header** - 对请求的头部参数进行 fuzzing
 
 ```yaml
 fuzzing:
-  - part: cookie # fuzz cookies
+  - part: header # 对头部进行 fuzzing
 ```
 
-**body** - fuzz body parameters for requests
+**cookie** - 对请求的 cookie 参数进行 fuzzing
 
 ```yaml
 fuzzing:
-  - part: body # fuzz parameters in body
+  - part: cookie # 对 cookies 进行 fuzzing
 ```
 
-#### Special Part
-
-**request** - fuzz the entire request (all parts mentioned above)
+**body** - 对请求的 body 参数进行 fuzzing
 
 ```yaml
 fuzzing:
-  - part: request # fuzz entire request
+  - part: body # 对 body 中的参数进行 fuzzing
 ```
 
-#### Multiple selective parts
+#### 特殊部分
 
-Multiple parts can be selected for fuzzing by defining a `parts` field which is the plural of above allowing selected multiple parts to be fuzzed.
+**request** - 对整个请求进行 fuzzing（上面提到的所有部分）
+
+```yaml
+fuzzing:
+  - part: request # 对整个请求进行 fuzzing
+```
+
+#### 多重选择部分
+
+可以通过定义 `parts` 字段（即上述选项的复数形式）来选择多个部分进行 fuzzing。
 
 ```yaml
 fuzzing:
@@ -96,30 +96,30 @@ fuzzing:
       - header
 ```
 
-### Type
+### Type（类型）
 
-Type specifies the type of replacement to perform for the fuzzing rule value. Available options for this parameter are - 
+Type 指定了要为 fuzzing 规则值执行的替换类型。该参数的可用选项有：
 
-1. **replace** (`default`) - replace the value with payload
-2. **prefix** - prefix the value with payload
-3. **postfix** - postfix the value with payload
-4. **infix** - infix the value with payload (place in between)
-5. **replace-regex** - replace the value with payload using regex
+1. **replace**（`默认`）- 使用 payload 替换值
+2. **prefix** - 使用 payload 作为值的前缀
+3. **postfix** - 使用 payload 作为值的后缀
+4. **infix** - 使用 payload 作为值的中缀（放在中间）
+5. **replace-regex** - 使用正则表达式通过 payload 替换值
 
 ```yaml
 fuzzing:
   - part: query
-    type: postfix # Fuzz query and postfix payload to params
+    type: postfix # 对查询进行 fuzzing 并将 payload 作为参数的后缀
 ```
 
 
-### Key-Value Abstraction
+### Key-Value 抽象
 
-In a HTTP request, there are various parts like query, path, headers, cookies, and body and each part has different in various formats. For example, the query part is a key-value pair, the path part is a list of values, the body part can be a JSON, XML, or form-data.
+在 HTTP 请求中，有各种部分如 query、path、headers、cookies 和 body，每个部分在不同格式中有所不同。例如，query 部分是键值对，path 部分是值列表，body 部分可以是 JSON、XML 或 form-data。
 
-To effectively abstract these parts and allow them to be fuzzed, Nuclei exposes these values as `key` and `value` pairs. This allows users to fuzz based on the key or value of the request part.
+为了有效地抽象这些部分并允许它们被 fuzzed，Nuclei 将这些值暴露为 `key` 和 `value` 对。这允许用户基于请求部分的键或值进行 fuzzing。
 
-For example, Below sample HTTP request can be abstracted as key-value pairs as shown below.
+例如，下面的示例 HTTP 请求可以抽象为如下所示的键值对：
 
 ```http
 POST /reset-password?token=x0x0x0&source=app HTTP/1.1
@@ -171,45 +171,45 @@ Connection: close
 | password | 12345678 |
 
 
-**Note:** XML, JSON, Form, Multipart-FormData will be in kv format, but if the Body is binary or in any other format, the entire Body will be represented as a single key-value pair with key as `value` and value as the entire Body.
+**注意：** XML、JSON、Form、Multipart-FormData 将采用 kv 格式，但如果 Body 是二进制或任何其他格式，整个 Body 将表示为单个键值对，键为 `value`，值为整个 Body。
 
 | key   | value                            |
 | ----- | -------------------------------- |
 | value | "\\x08\\x96\\x01\\x12\\x07\\x74" |
 
 
-This abstraction really levels up the game since you only need to write a single rule for the Body, and it will be applied to all formats. For example, if you check for SQLi in body values, a single rule will work on all formats, i.e., JSON, XML, Form, Multipart-FormData, etc.
+这种抽象真正提升了效率，因为你只需要为 Body 编写一个规则，它就会应用于所有格式。例如，如果你检查 body 值中的 SQLi，单个规则将适用于所有格式，即 JSON、XML、Form、Multipart-FormData 等。
 
-### Mode
+### Mode（模式）
 
-Mode specifies the mode in which to perform the replacements. Available modes are - 
+Mode 指定执行替换的模式。可用模式有：
 
-1. **multiple** (`default`) - replace all values at once
-2. **single** - replace one value at a time
+1. **multiple**（`默认`）- 一次替换所有值
+2. **single** - 一次替换一个值
 
 ```yaml
 fuzzing:
   - part: query
     type: postfix
-    mode: multiple # Fuzz query postfixing payloads to all parameters at once
+    mode: multiple # 对查询进行 fuzzing，同时将 payloads 作为所有参数的后缀
 ```
 
-> **Note**: default values are set/used when other options are not defined.
+> **注意**：当未定义其他选项时，将设置/使用默认值。
 
-### Component Data Filtering
+### 组件数据过滤
 
-Multiple filters are supported to restrict the scope of fuzzing to only interesting parameter keys and values. Nuclei HTTP Fuzzing engine converts request parts into Keys and Values which then can be filtered by their related options.
+支持多种过滤器，以将 fuzzing 的范围限制为仅感兴趣的参数键和值。Nuclei HTTP Fuzzing 引擎将请求部分转换为键和值，然后可以通过相关选项进行过滤。
 
-The following filter fields are supported - 
+支持以下过滤字段：
 
-1. **keys** - list of parameter names to fuzz (exact match)
-2. **keys-regex** - list of parameter regex to fuzz 
-3. **values** - list of value regex to fuzz
+1. **keys** - 要进行 fuzzing 的参数名称列表（精确匹配）
+2. **keys-regex** - 要进行 fuzzing 的参数正则表达式列表
+3. **values** - 要进行 fuzzing 的值正则表达式列表
 
-These filters can be used in combination to run highly targeted fuzzing based on the parameter input. A few examples of such filtering are provided below.
+这些过滤器可以组合使用，基于参数输入运行高度针对性的 fuzzing。下面提供了一些此类过滤的示例：
 
 ```yaml
-# fuzzing command injection based on parameter name value
+# 基于参数名称值进行命令注入 fuzzing
 fuzzing:
   - part: query
     type: replace
@@ -227,7 +227,7 @@ fuzzing:
 ```
 
 ```yaml
-# fuzzing openredirects based on parameter name regex
+# 基于参数名称正则表达式进行开放重定向 fuzzing
 fuzzing:
   - part: query
     type: replace
@@ -237,7 +237,7 @@ fuzzing:
 ```
 
 ```yaml
-# fuzzing ssrf based on parameter value regex
+# 基于参数值正则表达式进行 SSRF fuzzing
 fuzzing:
   - part: query
     type: replace
@@ -248,10 +248,10 @@ fuzzing:
 
 ### Fuzz
 
-Fuzz specifies the values to replace with a `type` for a parameter. It supports payloads, DSL functions, etc and allows users to fully utilize the existing nuclei feature-set for fuzzing purposes.
+Fuzz 指定用于参数的 `type` 替换值。它支持 payloads、DSL 函数等，并允许用户充分利用现有的 nuclei 功能集进行 fuzzing。
 
 ```yaml
-# fuzz section for xss fuzzing with stop-at-first-match
+# 使用 stop-at-first-match 进行 XSS fuzzing 的 fuzz 部分
 payloads:
   reflection:
     - "6842'\"><9967"
@@ -265,7 +265,7 @@ fuzzing:
 ```
 
 ```yaml
-# using interactsh-url placeholder for oob testing
+# 使用 interactsh-url 占位符进行 oob 测试
 payloads:
   redirect:
     - "{{interactsh-url}}"
@@ -282,7 +282,7 @@ fuzzing:
 ```
 
 ```yaml
-# using template-level variables for SSTI testing
+# 使用模板级变量进行 SSTI 测试
 variables:
   first: "{{rand_int(10000, 99999)}}"
   second: "{{rand_int(10000, 99999)}}"
@@ -301,46 +301,45 @@ http:
           - "{{reflection}}"
 ```
 
-### Analyzer
+### Analyzer（分析器）
 
-Analyzers is a new concept introduced in nuclei fuzzing which allow the engine to make additional verification requests based on a certain logic to verify the vulnerability. 
+Analyzers 是 nuclei fuzzing 中引入的一个新概念，它允许引擎基于特定逻辑进行额外的验证请求，以验证漏洞。
 
 #### time_delay
 
-The `time_delay` analyzer verifies that the response time of the request is controllable by the fuzzed payload. It uses a Linear Regression algorithm ported from ZAP with alternating requests to determine the server time is actually controllable rather than just noise. You can configure it like so
+`time_delay` 分析器验证请求的响应时间是否可由 fuzzed payload 控制。它使用从 ZAP 移植的线性回归算法，通过交替请求来确定服务器时间实际上是可控制的，而不仅仅是噪音。你可以像这样配置它：
 
 ```yaml
-# Create a new time delay analyzer
+# 创建一个新的时间延迟分析器
 analyzer:
   name: time_delay
-  # Optionally, you can define parameters for the
-  # analyzer like below.
+  # 可选地，你可以像下面这样定义分析器的参数。
   # 
-  # the defaults are good enough for most use cases. 
+  # 默认值对于大多数用例已足够好。
   parameters:
-    sleep_duration: 10 # sleep for 10 seconds (default: 5)
-    requests_limit: 6 # make 6 verification requests (default: 4)
-    time_correlation_error_range: 0.30 # error range for time correlation (default: 0.15)
-    time_slope_error_range: 0.40 # error range for time slope (default: 0.30)
+    sleep_duration: 10 # 睡眠 10 秒（默认值：5）
+    requests_limit: 6 # 发出 6 个验证请求（默认值：4）
+    time_correlation_error_range: 0.30 # 时间相关性的错误范围（默认值：0.15）
+    time_slope_error_range: 0.40 # 时间斜率的错误范围（默认值：0.30）
 ```
 
-The following dynamic placeholders are available in payloads with `time_delay` analyzer.
+以下动态占位符在带有 `time_delay` 分析器的 payloads 中可用：
 
-- `[SLEEPTIME]` - The sleep time in seconds for the time delay analyzer.
-- `[INFERENCE]` - The inference condition (%d=%d) for the time delay analyzer.
+- `[SLEEPTIME]` - 时间延迟分析器的睡眠时间（以秒为单位）。
+- `[INFERENCE]` - 时间延迟分析器的推断条件 (%d=%d)。
 
-These values are substituted at runtime with the actual values for the analyzer. The following is how a usual verification process looks.
+这些值会在运行时用分析器的实际值替换。以下是一个通常的验证过程：
 
-1. Send the request with the payload to the target with 5 second delay. 
-2. If the response time is less than 5, do nothing.
-3. Send the request to the analyzer which queues it with 5 seconds delay.
-4. Next a 1 second delay
-5. Next a 5 second delay
-6. Finally, the last 1 second delay.
+1. 使用 payload 向目标发送请求，延迟 5 秒。
+2. 如果响应时间小于 5，不执行任何操作。
+3. 将请求发送到分析器，该分析器将其排队，延迟 5 秒。
+4. 接下来是 1 秒延迟
+5. 接下来是 5 秒延迟
+6. 最后，最后 1 秒延迟。
 
-If the response time is controllable, the analyzer will report the vulnerability.
+如果响应时间是可控的，分析器将报告漏洞。
 
-Matching for the analyzer matches is pretty straightforward as well. Simiar to interactsh, you can use `part: analyzer` to match the analyzer response.
+分析器匹配的匹配也相当简单。与 interactsh 类似，你可以使用 `part: analyzer` 来匹配分析器响应。
 
 ```yaml
 matchers:
@@ -350,11 +349,11 @@ matchers:
       - "true"
 ```
 
-Optionally, you can also extract the `analyzer_details` from the analyzer for matches.
+可选地，你还可以从分析器中提取 `analyzer_details` 进行匹配。
 
-### Example **Fuzzing** template
+### 示例 **Fuzzing** 模板
 
-An example sample template for fuzzing XSS vulnerabilities is provided below.
+下面提供了一个用于 fuzzing XSS 漏洞的示例模板：
 
 ```yaml
 id: fuzz-reflection-xss
@@ -368,7 +367,7 @@ http:
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "GET"'       # only run if method is GET
+          - 'method == "GET"'       # 仅在方法为 GET 时运行
     payloads:
       reflection:
         - "6842'\"><9967"
@@ -395,5 +394,5 @@ http:
 ```
 
 <Tip>
-More complete examples are provided [here](/templates/protocols/http/fuzzing-examples)
+更完整的示例在[这里](/templates/protocols/http/fuzzing-examples)提供
 </Tip>

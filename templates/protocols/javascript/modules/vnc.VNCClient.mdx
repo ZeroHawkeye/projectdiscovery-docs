@@ -1,62 +1,62 @@
-# Class: VNCClient
+# 类: VNCClient
 
 [vnc](/templates/protocols/javascript/modules/vnc).VNCClient
 
-VNCClient is a minimal VNC client for nuclei scripts.
+VNCClient 是用于 nuclei 脚本的简易 VNC 客户端。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const vnc = require('nuclei/vnc');
 const client = new vnc.Client();
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/vnc.VNCClient#constructor)
 
-### Methods
+### 方法
 
 - [IsVNC](/templates/protocols/javascript/modules/vnc.VNCClient#isvnc)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new VNCClient**(): [`VNCClient`](/templates/protocols/javascript/modules/vnc.VNCClient)
 
-#### Returns
+#### 返回
 
 [`VNCClient`](/templates/protocols/javascript/modules/vnc.VNCClient)
 
-#### Defined in
+#### 定义于
 
 vnc.ts:15
 
-## Methods
+## 方法
 
 ### IsVNC
 
 ▸ **IsVNC**(`host`, `port`): [`IsVNCResponse`](/templates/protocols/javascript/modules/vnc.IsVNCResponse)
 
-IsVNC checks if a host is running a VNC server.
-It returns a boolean indicating if the host is running a VNC server
-and the banner of the VNC server.
+IsVNC 检查主机是否运行 VNC 服务器。
+它返回一个布尔值，指示主机是否运行 VNC 服务器，
+以及 VNC 服务器的横幅信息。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsVNCResponse`](/templates/protocols/javascript/modules/vnc.IsVNCResponse)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const vnc = require('nuclei/vnc');
@@ -64,6 +64,6 @@ const isVNC = vnc.IsVNC('acme.com', 5900);
 log(toJSON(isVNC));
 ```
 
-#### Defined in
+#### 定义于
 
 vnc.ts:27

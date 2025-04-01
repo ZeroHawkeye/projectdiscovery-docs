@@ -1,57 +1,57 @@
 ---
 title: 'Nuclei SDK'
-description: "Learn more about using the Nuclei SDK"
+description: "了解更多关于使用Nuclei SDK的信息"
 sidebarTitle: 'Go SDK'
 ---
 
 ## Nuclei SDK
 
-Nuclei is primarily built as a CLI tool and typically optimizations and options are focused on improvements to the CLI. To address the increased usage of Nuclei from Go, we have introduced a revamped Go SDK of Nuclei in [v3.0.0](https://blog.projectdiscovery.io/nuclei-v3-featurefusion/#sdk-4-all-revamped-go-sdk).
+Nuclei主要是作为CLI工具构建的，通常优化和选项都集中在对CLI的改进上。为了解决从Go中使用Nuclei的增长需求，我们在[v3.0.0](https://blog.projectdiscovery.io/nuclei-v3-featurefusion/#sdk-4-all-revamped-go-sdk)中引入了改进后的Nuclei Go SDK。
 
-While the CLI is still the primary way to use Nuclei, additional documentation and an API reference along with examples are available at [pkg.go.dev](https://pkg.go.dev/github.com/projectdiscovery/nuclei/v3@v3.1.10/lib#section-readme).
+虽然CLI仍然是使用Nuclei的主要方式，但在[pkg.go.dev](https://pkg.go.dev/github.com/projectdiscovery/nuclei/v3@v3.1.10/lib#section-readme)上提供了额外的文档和API参考以及示例。
 
-> **Things to Note**:
+> **注意事项**:
 >
-> - Nuclei is still in active development, so breaking changes can be expected in the SDK. The team will continute to maintain the documentation to address changes as they are implementd.  
-> - Running Nuclei as a service may pose security risks. We recommended implementing Nuclei as a service with caution and additional security measures suited to your environment. 
+> - Nuclei仍在积极开发中，因此SDK可能会有重大变更。团队将继续维护文档以解决实施中的变化。  
+> - 将Nuclei作为服务运行可能会带来安全风险。我们建议谨慎实施Nuclei作为服务，并采取适合您环境的额外安全措施。
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
-
-
-### Nuclei Version
-
-Nuclei does not support an LTS version or a stable version. This is because Nuclei and templates function as a single unit and the Nuclei Engine will evolve to meet requirements and features to support writing new templates. 
-To ensure the best results we recommend keeping up to date with the latest version of the Nuclei SDK.
+<Note> 如果您有疑问，请通过[Help](/help)联系我们。</Note>
 
 
-## Performance and Optimization
+### Nuclei版本
 
-Optimal and resource efficient usage of the Nuclei SDK requires a thorough understanding of [How Nuclei Consumes Resources](/tools/nuclei/mass-scanning-cli#understanding-how-nuclei-consumes-resources). We also recommend understanding optimization based on multiple factors.  Refer to [mass-scanning](/tools/nuclei/mass-scanning-cli) for more details on scanning for larger target quantities. 
-
-
-### General Suggestions for Usage
-
-- Implement a `host-spray` strategy when possible
-- Donot constraint GC (Garbage Collection) by setting low memory limits if possible. Nuclei(just like go standard http library) focuses on reusing memory than freeing it and allocating it again. This is why Nuclei, like other Go tools does not have high fluctuation in memory usage and either increases or decreases memory usage gradually
-- Properly adjust `-c` , `-bs`, and `-rl` flags after understanding requirement and capabilities of your own system as well as targets you are scanning
-- While Nuclei can handle any target quantity with the correct configuration, we recommended batching targets (based on target/system capabilities)
-- Using Nuclei from SDK provides more control in terms of customization for what to run and how to run and we recommended a proper chunking strategy that takes all factors into account
-- Since SDK still in active development, we recommend reviewing Nuclei capabilities, especially `tmplexec` and `core` package. Understanding the execution flow will give you more granular insights into how to optimize Nuclei for your use case
+Nuclei不支持LTS版本或稳定版本。这是因为Nuclei和模板作为一个整体运行，Nuclei引擎将不断发展以满足编写新模板的需求和功能。
+为确保最佳结果，我们建议保持使用最新版本的Nuclei SDK。
 
 
-### Reporting Issues
+## 性能和优化
 
-After understanding all factors and optimization techniques mentioned in above linked documentation, if you are still facing performance issues like crash, memory leak etc then please report this issue  with below details:
+Nuclei SDK的最佳和资源高效使用需要对[Nuclei如何消耗资源](/tools/nuclei/mass-scanning-cli#understanding-how-nuclei-consumes-resources)有透彻的理解。我们还建议基于多种因素进行优化。有关扫描更大目标数量的更多详情，请参考[大规模扫描](/tools/nuclei/mass-scanning-cli)。
 
-- Nuclei Version (if not latest please try with latest version before reporting)
-- Target/Input Count
-- Template Count
-- Values of all flags mentioned in [mass-scanning](/tools/nuclei/mass-scanning-cli) documentation or actual code snippet containing the same
-- Observed Memory Usage
-- Type of Handler used (NucleiEngine or ThreadSafeNucleiEngine)
-- Any other relevant details 
 
-For memory leak issues, debug profiles using [pprof](https://go.dev/blog/pprof) are required to properly diagnose the issue.
+### 使用的一般建议
+
+- 尽可能实施`host-spray`策略
+- 如果可能，不要通过设置低内存限制来约束GC(垃圾收集)。Nuclei(就像go标准http库一样)专注于重用内存而非释放并再次分配。这就是为什么Nuclei与其他Go工具一样，内存使用没有大幅波动，而是逐渐增加或减少内存使用
+- 在了解自己系统以及您正在扫描的目标的需求和能力后，正确调整`-c`、`-bs`和`-rl`标志
+- 虽然Nuclei可以通过正确的配置处理任何数量的目标，但我们建议批处理目标(基于目标/系统能力)
+- 从SDK使用Nuclei提供了更多在运行内容和方式方面的自定义控制，我们建议制定考虑所有因素的适当分块策略
+- 由于SDK仍在积极开发中，我们建议查看Nuclei功能，特别是`tmplexec`和`core`包。了解执行流程将使您更深入地了解如何为您的用例优化Nuclei
+
+
+### 报告问题
+
+在理解上述链接文档中提到的所有因素和优化技术后，如果您仍然面临性能问题如崩溃、内存泄漏等，请附上以下详情报告此问题：
+
+- Nuclei版本(如果不是最新版，请在报告前尝试最新版本)
+- 目标/输入数量
+- 模板数量
+- [大规模扫描](/tools/nuclei/mass-scanning-cli)文档中提到的所有标志的值或包含相同内容的实际代码片段
+- 观察到的内存使用情况
+- 使用的处理程序类型(NucleiEngine或ThreadSafeNucleiEngine)
+- 任何其他相关详情
+
+对于内存泄漏问题，需要使用[pprof](https://go.dev/blog/pprof)进行调试分析以正确诊断问题。
 
 
 

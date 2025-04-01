@@ -1,24 +1,24 @@
 ---
-title: 'Running Katana'
-description: "Learn about running Katana with examples including commands and output"
-sidebarTitle: 'Running'
+title: '运行 Katana'
+description: "了解如何运行 Katana，包括命令示例和输出结果"
+sidebarTitle: '运行'
 ---
 
-For all of the flags and options available for Katana be sure to check out the [Usage](/tools/katana/usage) page. 
+有关 Katana 所有可用的标志和选项，请务必查看[使用说明](/tools/katana/usage)页面。
 
-On this page we share examples of Katana with specific flags and goals and the output you can expect from each. 
+在本页中，我们将分享使用特定标志和目标运行 Katana 的示例，以及每个示例预期的输出结果。
 
 
-<Note> If you have questions, reach out to us through [Help](/help). </Note>
+<Note> 如果您有疑问，请通过[帮助](/help)联系我们。</Note>
 
-## Running Katana  
-Katana requires a URL or endpoint to crawl and accepts single or multiple inputs.
+## 运行 Katana  
+Katana 需要一个 URL 或端点来爬取，并且接受单个或多个输入。
 
-A URL can be provided using -u option, and multiple values can be provided using comma-separated input, similarly file input is supported using -list option and additionally piped input (stdin) is also supported.
+可以使用 -u 选项提供 URL，多个值可以通过逗号分隔输入，同样，文件输入可以使用 -list 选项，此外还支持管道输入（stdin）。
 
-### Input for katana
+### Katana 的输入方式
 
-A URL can be provided using -u option, and multiple values can be provided using comma-separated input, similarly file input is supported using -list option and additionally piped input (stdin) is also supported.
+可以使用 -u 选项提供 URL，多个值可以通过逗号分隔输入，同样，文件输入可以使用 -list 选项，此外还支持管道输入（stdin）。
 
 #### URL Input
 
@@ -725,29 +725,29 @@ katana_response/example.com/327c3fda87ce286848a574982ddd0b7c7487f816.txt https:/
 katana_response/www.iana.org/bfc096e6dd93b993ca8918bf4c08fdc707a70723.txt http://www.iana.org/domains/reserved (200 OK)
 ```
 
-**Note:**
+**注意：**
 
-*`-store-response` option is not supported in `-headless` mode.*
+*`-store-response` 选项在 `-headless` 模式下不受支持。*
 
-Here are additional CLI options related to output -
+以下是与输出相关的其他命令行选项 -
 
 ```console
 katana -h output
 
-OUTPUT:
-   -o, -output string                file to write output to
-   -sr, -store-response              store http requests/responses
-   -srd, -store-response-dir string  store http requests/responses to custom directory
-   -j, -json                         write output in JSONL(ines) format
-   -nc, -no-color                    disable output content coloring (ANSI escape codes)
-   -silent                           display output only
-   -v, -verbose                      display verbose output
-   -version                          display project version
+输出:
+   -o, -output string                将输出写入文件
+   -sr, -store-response              存储 HTTP 请求/响应
+   -srd, -store-response-dir string  将 HTTP 请求/响应存储到自定义目录
+   -j, -json                         以 JSONL(ines) 格式输出
+   -nc, -no-color                    禁用输出内容着色（ANSI 转义码）
+   -silent                           仅显示输出内容
+   -v, -verbose                      显示详细输出
+   -version                          显示项目版本
 ```
 
-## Katana as a library
-`katana` can be used as a library by creating an instance of the `Option` struct and populating it with the same options that would be specified via CLI. Using the options you can create `crawlerOptions` and so standard or hybrid `crawler`.
-`crawler.Crawl` method should be called to crawl the input.
+## Katana 作为库使用
+`katana` 可以作为库使用，方法是创建 `Option` 结构体的实例，并填充与通过命令行界面指定的相同选项。使用这些选项，您可以创建 `crawlerOptions` 以及标准或混合模式的 `crawler`。
+应调用 `crawler.Crawl` 方法来爬取输入内容。
 
 ```go
 package main

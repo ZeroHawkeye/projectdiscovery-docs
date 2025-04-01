@@ -1,7 +1,7 @@
 ---
-title: 'Installing Nuclei'
-description: "Learn about how to install and get started with Nuclei"
-sidebarTitle: 'Install'
+title: '安装 Nuclei'
+description: "了解如何安装和开始使用 Nuclei"
+sidebarTitle: '安装'
 ---
 
 <Tabs>
@@ -10,7 +10,7 @@ sidebarTitle: 'Install'
     go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
     ```
 
-    <Note>Nuclei requires the latest **GO** version to install successfully.</Note>
+    <Note>Nuclei 需要最新版本的 **GO** 才能成功安装。</Note>
 
   </Tab>
   <Tab title="Brew">
@@ -18,7 +18,7 @@ sidebarTitle: 'Install'
     brew install nuclei
     ```
 
-    <Note>Supported in **macOS** (or Linux)</Note>
+    <Note>支持 **macOS**（或 Linux）</Note>
 
   </Tab>
   <Tab title="Docker">
@@ -26,7 +26,7 @@ sidebarTitle: 'Install'
     docker pull projectdiscovery/nuclei:latest
     ```
 
-    Docker-specific usage instructions can be found [here](./running#running-with-docker).
+    Docker 特定的使用说明可以在[这里](./running#running-with-docker)找到。
   </Tab>
   <Tab title="GitHub">
     ```bash
@@ -37,7 +37,7 @@ sidebarTitle: 'Install'
     nuclei -version;
     ```
 
-    <Note> Nuclei require the latest **GO** version to install successfully.</Note>
+    <Note>Nuclei 需要最新版本的 **GO** 才能成功安装。</Note>
 
   </Tab>
   <Tab title="Binary">
@@ -46,8 +46,8 @@ sidebarTitle: 'Install'
     ```
 
     <Tip>
-    - Download the latest binary for your OS.
-    - Unzip the ready to run binary.
+    - 下载适用于您操作系统的最新二进制文件。
+    - 解压缩即可运行的二进制文件。
     </Tip>
 
   </Tab>
@@ -59,11 +59,11 @@ sidebarTitle: 'Install'
     ```
 
     <Tip>
-    This Helm chart creates two primary resources (intended to be configured via `values.yaml`):
+    这个 Helm chart 创建了两个主要资源（可以通过 `values.yaml` 进行配置）：
 
-      - A Kubernetes CronJob to run Nuclei on a defined schedule
+      - 一个 Kubernetes CronJob，按照定义的计划运行 Nuclei
 
-      - An [Interactsh](https://github.com/projectdiscovery/interactsh) service for Nuclei to use
+      - 一个供 Nuclei 使用的 [Interactsh](https://github.com/projectdiscovery/interactsh) 服务
     </Tip>
 
 </Tab>

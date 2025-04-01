@@ -1,171 +1,170 @@
 ---
-title: 'Mass Scanning with Nuclei'
-description: "Running Nuclei through the CLI on hundreds of targets"
-sidebarTitle: 'Mass Scanning'
+title: '使用Nuclei进行大规模扫描'
+description: "通过CLI在数百个目标上运行Nuclei"
+sidebarTitle: '大规模扫描'
 ---
 
-## What is **Mass Scanning?**
+## 什么是**大规模扫描？**
 
-Mass scanning in the context of Nuclei means running the Nuclei CLI on more than 100 targets. While Nuclei works out-of-the-box for running scans on any number of targets -  we recommend learning more to understand 
-the resource requirements for running Nuclei in different scenarios and how to properly adjust flags and options to avoid overutilization of resources and to get the best performance.
-
-
-## Overutilization of Resources
-
-If flags and available options are not properly configured, Nuclei can overutilize resources and can cause following issues:
-
-- OOM Killed by the system
-
-- Hangs and crashes
-
-- Error code 137 etc
+在Nuclei上下文中，大规模扫描意味着在超过100个目标上运行Nuclei CLI。虽然Nuclei可以直接用于对任意数量的目标进行扫描，但我们建议了解更多内容以理解在不同场景下运行Nuclei的资源需求，以及如何正确调整标志和选项，避免资源过度使用并获得最佳性能。
 
 
-## Understanding How Nuclei Consumes Resources
+## 资源过度使用
 
-Nuclei is a highly concurrent tool that has major Network I/O due to nature of the tool. There is a direct correlation between concurrency and memory usage. 
+如果标志和可用选项配置不当，Nuclei可能会过度使用资源，并可能导致以下问题：
+
+- 被系统OOM Killed（内存不足被杀死）
+
+- 挂起和崩溃
+
+- 错误代码137等
+
+
+## 了解Nuclei如何消耗资源
+
+Nuclei是一个高并发工具，由于工具性质，具有主要的网络I/O。并发性和内存使用之间存在直接关系。
 
 **max-requests**
 
-    `max-requests` is a metadata field under info section of template that contains maximum number of outgoing requests this template can make.
+    `max-requests`是模板info部分下的元数据字段，包含此模板可以发出的最大出站请求数。
 
 
-**Below are some flags and options that directly affect the resource utilization of Nuclei:**
+**以下是一些直接影响Nuclei资源利用率的标志和选项：**
 
-- **-c or -concurrency**
+- **-c或-concurrency**
 
-    This flag controls concurrency/parallelism of two components/operations in Nuclei and its default value is 25.
-    1. Number of templates to run in parallel at a time (IN Template-Spray/Default mode/strategy)
+    此标志控制Nuclei中两个组件/操作的并发/并行性，其默认值为25。
+    1. 一次并行运行的模板数量（在Template-Spray/默认模式/策略中）
 
-       Number of templates to run in parallel per target (IN Host-Spray mode/strategy)
+       每个目标并行运行的模板数量（在Host-Spray模式/策略中）
 
-    2. Number of Requests to send in parallel per template
+    2. 每个模板并行发送的请求数
 
-        Ex: Some template have `payloads` field in template and usually sends multiple requests. This concurrency per template is controlled by `threads: 10` value in template
+        例如：某些模板具有`payloads`字段，并通常发送多个请求。每个模板的这种并发性由模板中的`threads: 10`值控制
 
-        But if `threads` is not defined or missing (since it is optional), then nuclei will use `-c` value to decide concurrency of requests per template
+        但如果`threads`未定义或缺失（因为它是可选的），则nuclei将使用`-c`值来决定每个模板的请求并发性
 
-- **-bs or -bulk-size**
+- **-bs或-bulk-size**
 
-    This flag controls concurrency/parallelism of targets in Nuclei and its default value is 25.
+    此标志控制Nuclei中目标的并发/并行性，其默认值为25。
 
-    IN Host-Spray mode/strategy, this flag controls maximum number of targets to run in parallel at a time
+    在Host-Spray模式/策略中，此标志控制一次并行运行的最大目标数
 
-    IN Template-Spray/Default mode/strategy, this flag controls maximum number of targets to run in parallel for each template
+    在Template-Spray/默认模式/策略中，此标志控制每个模板并行运行的最大目标数
 
-- **-hbs and -headc**
+- **-hbs和-headc**
 
-    `-hbs` (-headless-bulk-size) and `-headc` (-headless-concurrency) flags are variants of `-bs` and `-c` flags specifically for headless templates since headless templates are resource intensive and run a headless browser in background.
+    `-hbs`（-headless-bulk-size）和`-headc`（-headless-concurrency）标志是`-bs`和`-c`标志的变体，专门用于headless模板，因为headless模板资源密集且在后台运行headless浏览器。
 
-- **-jsc or -js-concurrency**
+- **-jsc或-js-concurrency**
 
-    (Introduced in v3.1.8) This flag controls maximum number of javascript runtimes to run in parallel at a time. Javascript runtimes are used in templates with `flow` field and javascript protocol
+    （v3.1.8引入）此标志控制一次并行运行的最大JavaScript运行时数量。JavaScript运行时用于带有`flow`字段和javascript协议的模板
 
-    Although javascript templates are few compared to http templates, but this provides a way to control the resource utilization of javascript templates.
+    虽然与http模板相比，javascript模板较少，但这提供了控制javascript模板资源利用率的方法。
 
-    Default value of this flag is 120 and is tested to be optimal with minimal resource utilization (Note: Nuclei by default reuses javascript runtimes to avoid overhead of creating new runtimes for each request)
+    此标志的默认值为120，经测试以最小的资源利用率达到最佳效果（注意：Nuclei默认重用javascript运行时，以避免为每个请求创建新运行时的开销）
 
-- **-pc or -payload-concurrency**
+- **-pc或-payload-concurrency**
 
-    (Introduced in v3.2.0) This flag controls maximum number of payloads to run in parallel for each template. This flag is only applicable to templates with `payloads` field and does not have `threads` field set, default of this flag is 25 and can be updated as per requirement
+    （v3.2.0引入）此标志控制每个模板并行运行的最大payload数量。此标志仅适用于带有`payloads`字段且没有设置`threads`字段的模板，默认值为25，可根据需求更新
 
-- **-rl or -rate-limit**
+- **-rl或-rate-limit**
 
-    This flag controls the global rate limit of http requests in nuclei and its default value is 150 requests per second.
+    此标志控制nuclei中http请求的全局速率限制，其默认值为每秒150个请求。
 
-    Note: Setting Low/Very Low value of this flag directly affects speed (RPS) and Memory Usage of Nuclei since ratelimit is applied just before sending requests but at this point the requests are already prepared and are in memory waiting to be sent
+    注意：设置较低/非常低的值会直接影响Nuclei的速度（RPS）和内存使用率，因为速率限制是在发送请求之前应用的，但此时请求已经准备好并在内存中等待发送
 
-- **-rlm or -rate-limit-minute**
+- **-rlm或-rate-limit-minute**
     
-    Alternative to `-rl` flag, this flag controls the global rate limit of http requests in nuclei but in terms of requests per minute (Not used as default and is mutually exclusive with `-rl` flag)
+    `-rl`标志的替代方案，此标志控制nuclei中http请求的全局速率限制，但以每分钟请求数为单位（默认不使用，与`-rl`标志互斥）
 
-- **-ss or -scan-strategy**
+- **-ss或-scan-strategy**
 
-    This flag controls the strategy of scanning targets and its default value is `auto`
-    1. `auto` is currently a placeholder for `template-spray` strategy
-    2. `template-spray` strategy can be understood as stealthy mode of scanning and does not aggressively scan a single target. Instead of running all templates on single target it runs a template on multiple targets thereby reducing the load on single target without compromising the speed of scanning
-    3. `host-spray` strategy can be understood as more of a focused mode of scanning where it runs all templates on single target before moving to next target
+    此标志控制扫描目标的策略，其默认值为`auto`
+    1. `auto`当前是`template-spray`策略的占位符
+    2. `template-spray`策略可理解为扫描的隐蔽模式，不会积极扫描单个目标。它不是在单个目标上运行所有模板，而是在多个目标上运行一个模板，从而减轻单个目标的负载，同时不影响扫描速度
+    3. `host-spray`策略可理解为更集中的扫描模式，它在单个目标上运行所有模板，然后再移至下一个目标
 
-    Although difference might not seem significant but in reality this plays a major role in resource utilization and speed of scanning. Ex: `template-spray` strategy is more stealthy but consumes more memory than `host-spray` since input/target chunk is different for each template contrary to `host-spray` strategy where input/target chunk is same for all templates
+    虽然差异可能看起来不显著，但在现实中，这在资源利用率和扫描速度方面起着主要作用。例如：`template-spray`策略更隐蔽，但消耗更多内存，因为每个模板的输入/目标块不同，这与`host-spray`策略相反，后者所有模板的输入/目标块相同
 
-    This flag only decides strategy of scanning and uses concurrency specified by `-c` and  `-bs` flags
+    此标志仅决定扫描策略，并使用由`-c`和`-bs`标志指定的并发性
 
-    **Note**: `host-spray` strategy currently does not support resume feature due to complexity of implementation
+    **注意**：`host-spray`策略当前不支持恢复功能，因为实现复杂
 
-- **-rsr or -response-size-read**
+- **-rsr或-response-size-read**
     
-    This flag controls the maximum response size of http response that nuclei should read and its default value is 4MB (max).
+    此标志控制nuclei应该读取的http响应的最大响应大小，其默认值为4MB（最大）。
 
-    Ex: If a endpoint/targets returns a response of 100MB(a zip file or something) then nuclei will only read first 4MB of response to avoid DOS as data read is stored in memory
+    例如：如果一个端点/目标返回100MB的响应（如zip文件或其他），则nuclei将只读取响应的前4MB，以避免DOS，因为读取的数据存储在内存中
 
-    This plays a major role in Memory Usage of Nuclei because at any moment heap memory of Nuclei is `1-1.5x x (concurrency * response-size-read)`
+    这在Nuclei的内存使用中起着重要作用，因为在任何时刻，Nuclei的堆内存为`1-1.5x x (并发性 * response-size-read)`
 
 - **-stream**
 
-    Instead of probing all input urls and then proceeding with scan (default behavior), this flag continiously stream inputs to nuclei instead of waiting for probe to finish
+    此标志使nuclei持续将输入流式传输到nuclei，而不是等待探测完成（默认行为），而不是探测所有输入url然后进行扫描
 
-    It was observed that this flag may lead to high memory usage when running in `template-spray` strategy as there is a Marshal/Unmarshal overhead is involved and each template has different copy of input/target chunk
-
-
-
-## Recommendations for Optimizing Resource Usage
-
-Currently, there is no out-of-the-box solution to optimize Nuclei automatically for mass scanning. Understanding the proper use of flags and options can help in optimizing Nuclei for mass scanning.
-
-In general, here are some recommendations to optimize Nuclei for mass scanning:
-
-- Prefer `host-spray` strategy when possible
-- Do not constraint GC (Garbage Collection) by setting low memory limits if possible. Nuclei (just like go standard http library) focuses on reusing memory than freeing it and allocating it again. This is why Nuclei like other Go tools does not have high fluctuation in memory usage and either increases or decreases memory usage gradually
-- Properly adjust `-c` , `-bs` and `-rl` flags after understanding requirement and capabilities of your own system as well as targets you are scanning
-- Although Nuclei can handle any number of targets we recommended batching targets based on targets or system capabilities
+    观察到此标志在`template-spray`策略中运行时可能导致高内存使用率，因为涉及Marshal/Unmarshal开销，每个模板都有不同的输入/目标块副本
 
 
-## Feature-based Optimizations for Mass Scanning
+
+## 优化资源使用的建议
+
+目前，没有现成的解决方案可以自动优化Nuclei进行大规模扫描。了解标志和选项的正确使用可以帮助优化Nuclei进行大规模扫描。
+
+一般来说，以下是优化Nuclei进行大规模扫描的一些建议：
+
+- 尽可能首选`host-spray`策略
+- 如果可能，不要通过设置低内存限制来限制GC（垃圾收集）。Nuclei（就像go标准http库一样）专注于重用内存，而不是释放它并再次分配它。这就是为什么Nuclei与其他Go工具一样，内存使用没有高波动，内存使用量要么逐渐增加，要么逐渐减少
+- 在了解自己系统以及正在扫描的目标的需求和能力后，适当调整`-c`、`-bs`和`-rl`标志
+- 虽然Nuclei可以处理任何数量的目标，但我们建议根据目标或系统能力对目标进行批处理
+
+
+## 基于功能的大规模扫描优化
 
 - **-timeout**
-    Timeout controls the maximum time Nuclei should wait for a response (current default is 10 sec for http 6 * -timout value for code protocol)
-    This flag depends on your targets and the network conditions. Setting a low value might cause false negatives and setting a high value might cause high memory usage and slow down the scanning process.
+    Timeout控制Nuclei等待响应的最长时间（当前默认值为http为10秒，code协议为6 * -timeout值）
+    此标志取决于您的目标和网络条件。设置低值可能导致假阴性，设置高值可能导致高内存使用率并减慢扫描过程。
 
 - **-retries**
-    Retries controls the maximum number of retries Nuclei should attempt for a request (current default is 1)
-    This flag is useful when you are scanning targets with unstable network conditions. Setting a high value might cause high memory usage and slow down the scanning process.
+    Retries控制Nuclei应该尝试请求的最大重试次数（当前默认值为1）
+    当您在网络条件不稳定的目标上扫描时，此标志很有用。设置高值可能导致高内存使用率并减慢扫描过程。
 
-- **-mhe or -max-host-error**
-    This flag controls the maximum number of (network type) errors to allow per host before removing the unresponsive host from the scan (current default is 30)
+- **-mhe或-max-host-error**
+    此标志控制在从扫描中移除无响应主机之前允许每个主机的最大（网络类型）错误数（当前默认值为30）
 
-- **-nmhe or -no-max-host-error**
-    This flag disables the behavior of removing unresponsive hosts from the scan when they reach maximum number of errors (current default is 30)
-    Note: This flag directly affects the speed and memory usage of Nuclei since it keeps unresponsive hosts in memory and retries them.
-
-
-## Reporting Performance Issues
-
-Unlike other type of issues, Performance Issue require more information and a different kind of information to debug and fix this issue. Hence it is recommended to report performance issues with following information:
+- **-nmhe或-no-max-host-error**
+    此标志禁用当无响应主机达到最大错误数时从扫描中移除它们的行为（当前默认值为30）
+    注意：此标志直接影响Nuclei的速度和内存使用率，因为它将无响应主机保留在内存中并重试它们。
 
 
-- Nuclei Version (if not latest then try with latest version)
-- System Information (OS, Memory, CPU)
-- Target Count and Template Count
-- Above mentioned flags and options used especially -c, -bs, -rl, -ss
-- Any other flags and options used
+## 报告性能问题
+
+与其他类型的问题不同，性能问题需要更多信息和不同类型的信息来调试和修复此问题。因此，建议报告性能问题时提供以下信息：
 
 
-Above information will help in understanding if the issue is due to misconfiguration or due to a bug in nuclei. If Issue is of a more complex nature like memory leak then application profiles need to be collected and shared in the issue description
+- Nuclei版本（如果不是最新版本，请尝试使用最新版本）
+- 系统信息（操作系统、内存、CPU）
+- 目标数量和模板数量
+- 上述使用的标志和选项，特别是-c、-bs、-rl、-ss
+- 使用的任何其他标志和选项
 
-Profiling can be enabled in nuclei using `PPROF=1` environment variable and also accepts addition option `PPROF_TIME=10s` using these two env variables will enable profiling and snapshot of cpu profile and memory profile will be collected and store in appropriate directories every 10 seconds(PPROF_TIME). For addition options about profiling refer to [nuclei-pprof](https://github.com/projectdiscovery/utils/tree/main/pprof).
 
-A good example of reporting performance issue like memory leak is [#4552](https://github.com/projectdiscovery/nuclei/issues/4552) .
+上述信息将有助于了解问题是由于配置错误还是由于nuclei中的bug。如果问题性质更复杂，如内存泄漏，则需要收集应用程序配置文件并在问题描述中共享
+
+可以使用`PPROF=1`环境变量在nuclei中启用分析，并接受附加选项`PPROF_TIME=10s`，使用这两个环境变量将启用分析，并且每10秒（PPROF_TIME）将收集CPU配置文件和内存配置文件的快照并存储在适当的目录中。有关分析的其他选项，请参阅[nuclei-pprof](https://github.com/projectdiscovery/utils/tree/main/pprof)。
+
+报告内存泄漏等性能问题的一个好例子是[#4552](https://github.com/projectdiscovery/nuclei/issues/4552)。
 
 
-## Maximize Your Nuclei Experience with PDCP
+## 通过PDCP最大化您的Nuclei体验
 
-Building a Nuclei automation or running recurrent scans on more than 100 targets can be a challenging task without understanding Nuclei and experimenting with the flags and options.
+在超过100个目标上构建Nuclei自动化或运行循环扫描，如果不了解Nuclei并实验标志和选项，可能是一项具有挑战性的任务。
 
-One additional option is to consider evaluating ProjectDiscovery Cloud Platform or [PDCP](https://cloud.projectdiscovery.io). As a managed service it offers:
+另一个选择是考虑评估ProjectDiscovery Cloud Platform或[PDCP](https://cloud.projectdiscovery.io)。作为托管服务，它提供：
 
-- All Scaling and Optimizations is abstracted
-- Scans are distributed and requests are approriately chunked in a manner to Scale without False Negatives 
+- 所有扩展和优化都被抽象
+- 扫描是分布式的，请求以适当的方式分块，以便在没有假阴性的情况下扩展
 
-PDCP includes many other helpful features for vulnerability scanning and ASM like Dashboard, Integrations, Reporting, Recurring Scans and much more
+PDCP包括许多其他有用的功能，用于漏洞扫描和ASM，如仪表板、集成、报告、循环扫描等
 
-For more information on PDCP, Visit [PDCP](https://docs.projectdiscovery.io/cloud/introduction)
+有关PDCP的更多信息，请访问[PDCP](https://docs.projectdiscovery.io/cloud/introduction)

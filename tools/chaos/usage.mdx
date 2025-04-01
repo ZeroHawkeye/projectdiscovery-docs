@@ -1,26 +1,26 @@
 ---
-title: Chaos Usage
-description: "Learn Chaos usage including flags and filters"
-sidebarTitle: Usage
+title: Chaos 使用方法
+description: "学习 Chaos 的使用方法，包括参数和过滤器"
+sidebarTitle: 使用方法
 ---
 
-## Access help
+## 获取帮助
 
-Use `chaos -h` to display all of the help options.
+使用 `chaos -h` 显示所有帮助选项。
 
-## Chaos options
+## Chaos 选项
 
-| Flag                       | Description                              | Example                                                    |
+| 参数                       | 描述                              | 示例                                                    |
 |----------------------------|------------------------------------------|------------------------------------------------------------|
-| `-d`                       | Domain to find subdomains for            | `chaos -d uber.com`                                        |
-| `-count`                   | Show statistics for the specified domain | `chaos -d uber.com -count`                                 |
-| `-o`                       | File to write output to (optional)       | `chaos -d uber.com -o uber.txt`                            |
-| `-json`                    | Print output as json                     | `chaos -d uber.com -json`                                  |
-| `-key`                     | Chaos key for API                        | `chaos -key API_KEY`                                       |
-| `-dL`                      | File with list of domains (optional)     | `chaos -dL domains.txt`                                    |
-| `-silent`                  | Make the output silent                   | `chaos -d uber.com -silent`                                |
-| `-version`                 | Print current version of chaos client    | `chaos -version`                                           |
-| `-verbose`                 | Show verbose output                      | `chaos -verbose`                                           |
-| `-update`                  | updates to latest version                | `chaos -up`                                                | 
-| `-disable-update-check`    | disables automatic update check          | `chaos -duc`                                               |
+| `-d`                       | 要查找子域名的域名                | `chaos -d uber.com`                                        |
+| `-count`                   | 显示指定域名的统计信息             | `chaos -d uber.com -count`                                 |
+| `-o`                       | 将输出写入的文件（可选）           | `chaos -d uber.com -o uber.txt`                            |
+| `-json`                    | 以 json 格式打印输出              | `chaos -d uber.com -json`                                  |
+| `-key`                     | API 的 Chaos 密钥                | `chaos -key API_KEY`                                       |
+| `-dL`                      | 包含域名列表的文件（可选）         | `chaos -dL domains.txt`                                    |
+| `-silent`                  | 使输出静默                        | `chaos -d uber.com -silent`                                |
+| `-version`                 | 打印当前 chaos 客户端版本          | `chaos -version`                                           |
+| `-verbose`                 | 显示详细输出                      | `chaos -verbose`                                           |
+| `-update`                  | 更新到最新版本                    | `chaos -up`                                                | 
+| `-disable-update-check`    | 禁用自动更新检查                  | `chaos -duc`                                               |
 

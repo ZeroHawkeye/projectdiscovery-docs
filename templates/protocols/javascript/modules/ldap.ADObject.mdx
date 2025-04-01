@@ -1,10 +1,10 @@
-# Interface: ADObject
+# 接口: ADObject
 
 [ldap](/templates/protocols/javascript/modules/ldap).ADObject
 
-ADObject represents an Active Directory object
+ADObject 表示一个 Active Directory 对象
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ldap = require('nuclei/ldap');
@@ -13,9 +13,9 @@ const users = client.GetADUsers();
 log(to_json(users));
 ```
 
-## Table of contents
+## 目录
 
-### Properties
+### 属性
 
 - [DistinguishedName](/templates/protocols/javascript/modules/ldap.ADObject#distinguishedname)
 - [LastLogon](/templates/protocols/javascript/modules/ldap.ADObject#lastlogon)
@@ -24,13 +24,13 @@ log(to_json(users));
 - [SAMAccountName](/templates/protocols/javascript/modules/ldap.ADObject#samaccountname)
 - [ServicePrincipalName](/templates/protocols/javascript/modules/ldap.ADObject#serviceprincipalname)
 
-## Properties
+## 属性
 
 ### DistinguishedName
 
 • `Optional` **DistinguishedName**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:496
 
@@ -40,7 +40,7 @@ ___
 
 • `Optional` **LastLogon**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:502
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **MemberOf**: `string`[]
 
-#### Defined in
+#### 定义于
 
 ldap.ts:504
 
@@ -60,7 +60,7 @@ ___
 
 • `Optional` **PWDLastSet**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:500
 
@@ -70,7 +70,7 @@ ___
 
 • `Optional` **SAMAccountName**: `string`
 
-#### Defined in
+#### 定义于
 
 ldap.ts:498
 
@@ -80,6 +80,6 @@ ___
 
 • `Optional` **ServicePrincipalName**: `string`[]
 
-#### Defined in
+#### 定义于
 
 ldap.ts:506

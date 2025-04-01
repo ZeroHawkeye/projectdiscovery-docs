@@ -1,37 +1,37 @@
-# Namespace: vnc
+# 命名空间: vnc
 
-## Table of contents
+## 目录
 
-### Interfaces
+### 接口
 
 - [IsVNCResponse](/templates/protocols/javascript/modules/vnc.IsVNCResponse)
 
-### Functions
+### 函数
 
 - [IsVNC](/templates/protocols/javascript/modules/vnc#isvnc)
 
-## Functions
+## 函数
 
 ### IsVNC
 
 ▸ **IsVNC**(`host`, `port`): [`IsVNCResponse`](/templates/protocols/javascript/modules/vnc.IsVNCResponse) \| ``null``
 
-IsVNC checks if a host is running a VNC server.
-It returns a boolean indicating if the host is running a VNC server
-and the banner of the VNC server.
+IsVNC 检查主机是否运行 VNC 服务器。
+它返回一个布尔值，指示主机是否运行 VNC 服务器，
+以及 VNC 服务器的横幅信息。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsVNCResponse`](/templates/protocols/javascript/modules/vnc.IsVNCResponse) \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const vnc = require('nuclei/vnc');
@@ -39,6 +39,6 @@ const isVNC = vnc.IsVNC('acme.com', 5900);
 log(toJSON(isVNC));
 ```
 
-#### Defined in
+#### 定义于
 
 vnc.ts:14

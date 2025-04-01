@@ -1,43 +1,43 @@
 ---
-title: "Template Signing"
-description: "Review details on template signing for Nuclei"
+title: "模板签名"
+description: "查看Nuclei模板签名的详细信息"
 icon: "signature"
 iconType: "solid"
 ---
 
-Template signing via the private-public key mechanism is a crucial aspect of ensuring the integrity, authenticity, and security of templates. This mechanism involves the use of asymmetric cryptography, specifically the Elliptic Curve Digital Signature Algorithm (ECDSA), to create a secure and verifiable signature.
+通过公私钥机制进行模板签名是确保模板完整性、真实性和安全性的关键方面。这种机制涉及使用非对称加密技术，特别是椭圆曲线数字签名算法(ECDSA)，创建安全可验证的签名。
 
-In this process, a template author generates a private key that remains confidential and securely stored. The corresponding public key is then shared with the template consumers. When a template is created or modified, the author signs it using their private key, generating a unique signature that is attached to the template.
+在这个过程中，模板作者生成一个保密且安全存储的私钥。相应的公钥随后与模板使用者共享。当创建或修改模板时，作者使用其私钥对其进行签名，生成附加到模板的唯一签名。
 
-Template consumers can verify the authenticity and integrity of a signed template by using the author's public key. By applying the appropriate cryptographic algorithm (ECDSA), they can validate the signature and ensure that the template has not been tampered with since it was signed. This provides a level of trust, as any modifications or unauthorized changes to the template would result in a failed verification process.
+模板使用者可以使用作者的公钥验证已签名模板的真实性和完整性。通过应用适当的加密算法(ECDSA)，他们可以验证签名并确保模板自签名后未被篡改。这提供了一定程度的信任，因为模板的任何修改或未授权更改都会导致验证过程失败。
 
-By employing the private-public key mechanism, template signing adds an additional layer of security and trust to the template ecosystem. It helps establish the identity of the template author and ensures that the templates used in various systems are genuine and have not been altered maliciously.
+通过采用公私钥机制，模板签名为模板生态系统增加了额外的安全和信任层。它有助于确立模板作者的身份，并确保在各种系统中使用的模板是真实的且未被恶意篡改。
 
-**What does signing a template mean?**
+**签名模板意味着什么？**
 
-Template signing is a mechanism to ensure the integrity and authenticity of templates. The primary goal is to provide template writers and consumers a way to trust crowdsourced or custom templates ensuring that they are not tampered with.
+模板签名是确保模板完整性和真实性的机制。主要目标是为模板编写者和使用者提供一种信任众包或自定义模板的方式，确保它们不被篡改。
 
-All [official Nuclei templates](https://github.com/projectdiscovery/nuclei-templates) include a digital signature and are verified by Nuclei while loading templates using ProjectDiscovery's public key (shipped with the Nuclei binary).
+所有[官方Nuclei模板](https://github.com/projectdiscovery/nuclei-templates)都包含数字签名，并在加载模板时使用ProjectDiscovery的公钥(随Nuclei二进制文件提供)进行验证。
 
-Individuals or organizations running Nuclei in their work environment can generate their own key-pair with `nuclei` and sign their custom templates with their private key, thus ensuring that only authorized templates are being used in their environment.
+在工作环境中运行Nuclei的个人或组织可以使用`nuclei`生成自己的密钥对，并使用其私钥签署自定义模板，从而确保在其环境中仅使用经授权的模板。
 
-This also allows entities to fully utilize the power of new protocols like `code` without worrying about malicious custom templates being used in their environment.
+这也允许实体充分利用`code`等新协议的能力，而不必担心在其环境中使用恶意自定义模板。
 
-**NOTE:**
+**注意：**
 
-- **Template signing is optional for all protocols except `code`**.
-- **Unsigned code templates are disabled and can not be executed using Nuclei**.
-- **Only signed code templates by the author (yourself) or ProjectDiscovery can be executed.**
-- **Template signing is primarily introduced to ensure security of template to run code on host machine.**
-- Code file references (for example: `source: protocols/code/pyfile.py`) are allowed and content of these files is included in the template digest.
-- Payload file references (for example: `payloads: protocols/http/params.txt`) are not included in the template digest as it is treated as a payload/helper and not actual code that is being executed.
-- Template signing is deterministic while both signing and verifying a template i.e. if a code file is referenced in a template that is present outside of templates directory with `-lfa` flag then verification will fail if same template is used without `-lfa` flag. (Note this only applies to `-lfa` i.e. local file access flag only)
+- **除`code`协议外，所有协议的模板签名都是可选的**。
+- **未签名的code模板被禁用，无法使用Nuclei执行**。
+- **只有作者(您自己)或ProjectDiscovery签名的code模板才能被执行**。
+- **模板签名主要是为了确保在主机上运行代码的模板的安全性**。
+- 允许代码文件引用(例如：`source: protocols/code/pyfile.py`)，这些文件的内容包含在模板摘要中。
+- 有效载荷文件引用(例如：`payloads: protocols/http/params.txt`)不包含在模板摘要中，因为它被视为有效载荷/辅助工具，而不是实际执行的代码。
+- 模板签名在签名和验证模板时是确定性的，即如果使用`-lfa`标志引用模板目录外的代码文件，那么如果没有`-lfa`标志使用相同的模板，验证将失败。(注意这仅适用于`-lfa`，即仅本地文件访问标志)
 
-### Signing Custom Template
+### 签署自定义模板
 
-The simplest and recommended way to generate key-pair and signing/verfifying templates is to use `nuclei` itself.
+生成密钥对和签名/验证模板的最简单且推荐的方法是使用`nuclei`本身。
 
-When signing a template if key-pair does not exist then Nuclei will prompt user to generate a new key-pair with options.
+当签署模板时，如果密钥对不存在，Nuclei将提示用户生成新的密钥对并提供选项。
 
 ```console
 $ ./nuclei -t templates.yaml -sign
@@ -47,52 +47,52 @@ $ ./nuclei -t templates.yaml -sign
 [*] Enter same passphrase again: 
 [INF] Successfully generated new key-pair for signing templates
 ```
-> **Note:** Passphrase is optional and can be left blank when used private key is encrypted with passphrase using PEMCipherAES256 Algo
+> **注意：** 密码短语是可选的，当使用PEMCipherAES256算法加密私钥时可以留空
 
-Once a key-pair is generated, you can sign any custom template using `-sign` flag as shown below.
+一旦生成了密钥对，您可以使用`-sign`标志签署任何自定义模板，如下所示。
 
 ```console
 $ ./nuclei -t templates.yaml -sign
 [INF] All templates signatures were elaborated success=1 failed=0
 ```
 
-> **Note:** Every time you make any change in your code template, you need to re-sign it to run with Nuclei.
+> **注意：** 每次对代码模板进行任何更改时，您都需要重新签名才能使用Nuclei运行。
 
-### Template Digest and Signing Keys
+### 模板摘要和签名密钥
 
-When a template is signed, a digest is generated and added to the template. This digest is a hash of the template content and is used to verify the integrity of the template. If the template is modified after signing, the digest will change, and the signature verification will fail during template loading.
+当模板被签名时，会生成摘要并添加到模板中。这个摘要是模板内容的哈希值，用于验证模板的完整性。如果模板在签名后被修改，摘要将会改变，模板加载期间的签名验证将会失败。
 
 ```yaml
 # digest: 4a0a00473045022100eb01da6b97893e7868c584f330a0cd52df9bddac005860bb8595ba5b8aed58c9022050043feac68d69045cf320cba9298a2eb2e792ea4720d045d01e803de1943e7d:4a3eb6b4988d95847d4203be25ed1d46
 ```
 
-The digest is in the format of `signature:fragment`, where the signature is the digital signature of the template used to verify its integrity, and the fragment is metadata generated by MD5 hashing the public key to disable re-signing of code templates not written by you.
+摘要的格式为`签名:片段`，其中签名是用于验证模板完整性的数字签名，片段是通过MD5哈希公钥生成的元数据，用于禁止对非您编写的代码模板进行重新签名。
 
-The key-pair generated by Nuclei is stored in two files in the `$CONFIG/nuclei/keys directory`, where `$CONFIG` is the system-specific config directory. The private key is stored in nuclei-user-private-key.pem, which is encrypted with a passphrase if provided. The public key is stored in nuclei-user.crt, which includes the public key and identifier (e.g., user/org name) in a self-signed certificate.
+Nuclei生成的密钥对存储在`$CONFIG/nuclei/keys目录`中的两个文件中，其中`$CONFIG`是系统特定的配置目录。私钥存储在nuclei-user-private-key.pem中，如果提供了密码短语，则加密。公钥存储在nuclei-user.crt中，其中包含公钥和标识符(例如，用户/组织名称)的自签名证书。
 
 ```bash
 $ la ~/.config/nuclei/keys 
 total 16
--rw-------  1 tarun  staff   251B Oct  4 21:45 nuclei-user-private-key.pem # encrypted private key with passphrase
--rw-------  1 tarun  staff   572B Oct  4 21:45 nuclei-user.crt # self signed certificate which includes public key and identifier (i.e user/org name)
+-rw-------  1 tarun  staff   251B Oct  4 21:45 nuclei-user-private-key.pem # 使用密码短语加密的私钥
+-rw-------  1 tarun  staff   572B Oct  4 21:45 nuclei-user.crt # 包含公钥和标识符(即用户/组织名称)的自签名证书
 ```
 
-To use the public key for verification, you can either copy it to the `$CONFIG/nuclei/keys` directory on another user's machine, or set the `NUCLEI_USER_CERTIFICATE` environment variable to the path or content of the public key.
+要使用公钥进行验证，您可以将其复制到另一用户机器上的`$CONFIG/nuclei/keys`目录，或设置`NUCLEI_USER_CERTIFICATE`环境变量为公钥的路径或内容。
 
-To use the private key, you can copy it to the `$CONFIG/nuclei/keys` directory on another user's machine, or set the `NUCLEI_USER_PRIVATE_KEY` environment variable to the path or content of the private key.
+要使用私钥，您可以将其复制到另一用户机器上的`$CONFIG/nuclei/keys`目录，或设置`NUCLEI_USER_PRIVATE_KEY`环境变量为私钥的路径或内容。
 
 ```console
 $ export NUCLEI_USER_CERTIFICATE=$(cat path/to/nuclei-user.crt)
 $ export NUCLEI_USER_PRIVATE_KEY=$(cat path/to/nuclei-user-private-key.pem)
 ```
 
-It's important to note that you are responsible for securing and managing the private key, and Nuclei has no accountability for any loss of the private key.
+需要注意的是，您负责保护和管理私钥，Nuclei对私钥的任何丢失不承担责任。
 
-By default, Nuclei loads the user certificate (public key) from the default locations mentioned above and uses it to verify templates. When running Nuclei, it will execute signed templates and warn about executing unsigned custom templates and block unsigned code templates. You can disable this warning by setting the `HIDE_TEMPLATE_SIG_WARNING` environment variable to `true`.
+默认情况下，Nuclei从上述默认位置加载用户证书(公钥)并使用它来验证模板。运行Nuclei时，它将执行已签名的模板，警告执行未签名的自定义模板，并阻止未签名的代码模板。您可以通过将`HIDE_TEMPLATE_SIG_WARNING`环境变量设置为`true`来禁用此警告。
 
-## FAQ
+## 常见问题
 
-**Found X unsigned or tampered code template?**
+**发现X个未签名或被篡改的代码模板？**
 
 ```bash
 ./nuclei -u scanme.sh -t simple-code.yaml 
@@ -114,10 +114,10 @@ By default, Nuclei loads the user certificate (public key) from the default loca
 [FTL] Could not run nuclei: no templates provided for scan
 ```
 
-Here `simple-code.yaml` is a code protocol template which is not signed or content of template has been modified after signing which indicates loss of integrity of template.
-If you are template writer then you can go ahead and sign the template using `-sign` flag and if you are template consumer then you should carefully examine the template before signing it.
+这里的`simple-code.yaml`是一个未签名或签名后内容已被修改的代码协议模板，这表明模板的完整性已丢失。
+如果您是模板编写者，那么您可以继续使用`-sign`标志签署模板；如果您是模板使用者，那么您应该在签署前仔细检查模板。
 
-**Re-signing code templates are not allowed for security reasons?**
+**出于安全原因不允许重新签署代码模板？**
 
 ```bash
 nuclei -u scanme.sh -t simple-code.yaml -sign
@@ -126,18 +126,18 @@ nuclei -u scanme.sh -t simple-code.yaml -sign
 [INF] All templates signatures were elaborated success=0 failed=1
 ```
 
-The error message `re-signing code templates are not allowed for security reasons` comes from the Nuclei engine. This error indicates that a code template initially signed by another user and someone is trying to re-sign it.
+错误消息`re-signing code templates are not allowed for security reasons`来自Nuclei引擎。此错误表明最初由另一个用户签名的代码模板有人试图重新签名。
 
-This measure was implemented to prevent running untrusted templates unknowingly, which might lead to potential security issues.
-When you encounter this error, it suggests that you're dealing with a template that has been signed by another user Likely, the original signer is not you or the team from projectdiscovery.
+这一措施的实施是为了防止在不知情的情况下运行不受信任的模板，这可能导致潜在的安全问题。
+当您遇到此错误时，它表明您正在处理的模板已由另一个用户签名，可能原始签名者不是您或projectdiscovery团队。
 
-By default, Nuclei disallows executing code templates that are signed by anyone other than you or from the public templates provided by projectdiscovery/nuclei-templates.
+默认情况下，Nuclei不允许执行由您或projectdiscovery/nuclei-templates提供的公共模板以外的任何人签名的代码模板。
 
-This is done to prevent potential security abuse using code templates.
+这样做是为了防止使用代码模板进行潜在的安全滥用。
 
-To resolve this error:
-  1.  Open and thoroughly examine the code template for any modifications.
-  2.  Manually remove the existing digest signature from the template.
-  3.  Sign the template again.
+要解决此错误：
+  1.  打开并彻底检查代码模板是否有任何修改。
+  2.  手动从模板中删除现有的摘要签名。
+  3.  重新签署模板。
 
-This way, you can ensure that only templates verified and trusted by you (or projectdiscovery) are run, thus maintaining a secure environment.
+通过这种方式，您可以确保只有经过您(或projectdiscovery)验证和信任的模板才会运行，从而维护安全的环境。

@@ -1,22 +1,22 @@
 ---
-title: Notify Provider Config
-description: "Learn how to set up Notify's provider configuration"
-sidebarTitle: Provider Config
+title: Notify 提供商配置
+description: "了解如何设置 Notify 的提供商配置"
+sidebarTitle: 提供商配置
 ---
 
-The default provider config file can be created at `$HOME/.config/notify/provider-config.yaml`.
+默认的提供商配置文件可以在 `$HOME/.config/notify/provider-config.yaml` 创建。
 
-Each provider (`slack`, `discord`, etc.) is specified at the top level by name, and then can have 1 to many configurations for that provider identifed by a unique `id` field.
+每个提供商（`slack`、`discord` 等）在顶层按名称指定，然后可以为该提供商设置 1 到多个配置，每个配置由唯一的 `id` 字段标识。
 
 ## Slack
-**Fields:**
+**字段：**
 
-- `slack_channel`: The Slack channel to post to
-- `slack_username`: The name of the bot to post as
-- `slack_format`: By default just `{{data}}` but you can specify more formattiong details
-- `slack_webhook_url`: The URL for the Slack integration webhook (See [Slack help for more information](https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack))
+- `slack_channel`：要发布到的 Slack 频道
+- `slack_username`：发布消息的机器人名称
+- `slack_format`：默认为 `{{data}}`，但你可以指定更多格式化细节
+- `slack_webhook_url`：Slack 集成 webhook 的 URL（更多信息参见 [Slack 帮助文档](https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack)）
 
-**Example:**
+**示例：**
 
 ```yaml
 slack:
@@ -70,7 +70,7 @@ pushover:
       - "iphone"
 ```
 
-## Email (SMTP)
+## 电子邮件 (SMTP)
 ```yaml
 smtp:
   - id: email
@@ -116,7 +116,7 @@ gotify:
     gotify_title: "recon"
 ```
 
-## Custom Webhook
+## 自定义 Webhook
 ```yaml
 custom:
   - id: webhook

@@ -1,8 +1,8 @@
-# Namespace: redis
+# 命名空间: redis
 
-## Table of contents
+## 目录
 
-### Functions
+### 函数
 
 - [Connect](/templates/protocols/javascript/modules/redis#connect)
 - [GetServerInfo](/templates/protocols/javascript/modules/redis#getserverinfo)
@@ -10,34 +10,34 @@
 - [IsAuthenticated](/templates/protocols/javascript/modules/redis#isauthenticated)
 - [RunLuaScript](/templates/protocols/javascript/modules/redis#runluascript)
 
-## Functions
+## 函数
 
 ### Connect
 
 ▸ **Connect**(`host`, `port`, `password`): `boolean` \| ``null``
 
-Connect tries to connect redis server with password
+Connect 尝试使用密码连接到 redis 服务器
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `password` | `string` |
 
-#### Returns
+#### 返回值
 
 `boolean` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const redis = require('nuclei/redis');
 const connected = redis.Connect('acme.com', 6379, 'password');
 ```
 
-#### Defined in
+#### 定义于
 
 redis.ts:11
 
@@ -47,27 +47,27 @@ ___
 
 ▸ **GetServerInfo**(`host`, `port`): `string` \| ``null``
 
-GetServerInfo returns the server info for a redis server
+GetServerInfo 返回 redis 服务器的信息
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const redis = require('nuclei/redis');
 const info = redis.GetServerInfo('acme.com', 6379);
 ```
 
-#### Defined in
+#### 定义于
 
 redis.ts:25
 
@@ -77,28 +77,28 @@ ___
 
 ▸ **GetServerInfoAuth**(`host`, `port`, `password`): `string` \| ``null``
 
-GetServerInfoAuth returns the server info for a redis server
+GetServerInfoAuth 返回 redis 服务器的信息
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `password` | `string` |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const redis = require('nuclei/redis');
 const info = redis.GetServerInfoAuth('acme.com', 6379, 'password');
 ```
 
-#### Defined in
+#### 定义于
 
 redis.ts:39
 
@@ -108,27 +108,27 @@ ___
 
 ▸ **IsAuthenticated**(`host`, `port`): `boolean` \| ``null``
 
-IsAuthenticated checks if the redis server requires authentication
+IsAuthenticated 检查 redis 服务器是否需要身份验证
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回值
 
 `boolean` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const redis = require('nuclei/redis');
 const isAuthenticated = redis.IsAuthenticated('acme.com', 6379);
 ```
 
-#### Defined in
+#### 定义于
 
 redis.ts:53
 
@@ -138,28 +138,28 @@ ___
 
 ▸ **RunLuaScript**(`host`, `port`, `password`, `script`): `any` \| ``null``
 
-RunLuaScript runs a lua script on the redis server
+RunLuaScript 在 redis 服务器上运行 Lua 脚本
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 | `password` | `string` |
 | `script` | `string` |
 
-#### Returns
+#### 返回值
 
 `any` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const redis = require('nuclei/redis');
 const result = redis.RunLuaScript('acme.com', 6379, 'password', 'return redis.call("get", KEYS[1])');
 ```
 
-#### Defined in
+#### 定义于
 
 redis.ts:67

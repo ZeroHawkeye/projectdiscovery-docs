@@ -1,60 +1,60 @@
-# Class: Pop3Client
+# 类: Pop3Client
 
 [pop3](/templates/protocols/javascript/modules/pop3).Pop3Client
 
-Pop3Client is a minimal POP3 client for nuclei scripts.
+Pop3Client 是一个用于 nuclei 脚本的简易 POP3 客户端。
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const pop3 = require('nuclei/pop3');
 const client = new pop3.Client();
 ```
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/pop3.Pop3Client#constructor)
 
-### Methods
+### 方法
 
 - [IsPOP3](/templates/protocols/javascript/modules/pop3.Pop3Client#ispop3)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new Pop3Client**(): [`Pop3Client`](/templates/protocols/javascript/modules/pop3.Pop3Client)
 
-#### Returns
+#### 返回
 
 [`Pop3Client`](/templates/protocols/javascript/modules/pop3.Pop3Client)
 
-#### Defined in
+#### 定义于
 
 pop3.ts:15
 
-## Methods
+## 方法
 
 ### IsPOP3
 
 ▸ **IsPOP3**(`host`, `port`): [`IsPOP3Response`](/templates/protocols/javascript/modules/pop3.IsPOP3Response)
 
-IsPOP3 checks if a host is running a POP3 server.
+IsPOP3 检查主机是否运行 POP3 服务器。
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `host` | `string` |
 | `port` | `number` |
 
-#### Returns
+#### 返回
 
 [`IsPOP3Response`](/templates/protocols/javascript/modules/pop3.IsPOP3Response)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const pop3 = require('nuclei/pop3');
@@ -62,6 +62,6 @@ const isPOP3 = pop3.IsPOP3('acme.com', 110);
 log(toJSON(isPOP3));
 ```
 
-#### Defined in
+#### 定义于
 
 pop3.ts:25

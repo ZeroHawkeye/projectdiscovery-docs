@@ -1,11 +1,11 @@
-# Interface: IKENonce
+# 接口: IKENonce
 
 [ikev2](/templates/protocols/javascript/modules/ikev2).IKENonce
 
-IKENonce is the IKEv2 Nonce payload
-this implements the IKEPayload interface
+IKENonce 是 IKEv2 Nonce 有效载荷
+这实现了 IKEPayload 接口
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ikev2 = require('nuclei/ikev2');
@@ -13,18 +13,18 @@ const nonce = new ikev2.IKENonce();
 nonce.NonceData = [1, 2, 3];
 ```
 
-## Table of contents
+## 目录
 
-### Properties
+### 属性
 
 - [NonceData](/templates/protocols/javascript/modules/ikev2.IKENonce#noncedata)
 
-## Properties
+## 属性
 
 ### NonceData
 
 • `Optional` **NonceData**: `Uint8Array`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:103

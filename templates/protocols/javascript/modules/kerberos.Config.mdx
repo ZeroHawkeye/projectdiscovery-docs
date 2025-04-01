@@ -1,46 +1,46 @@
-# Class: Config
+# 类: Config
 
 [kerberos](/templates/protocols/javascript/modules/kerberos).Config
 
-Config is extra configuration for the kerberos client
+Config 是 kerberos 客户端的额外配置
 
-## Table of contents
+## 目录
 
-### Constructors
+### 构造函数
 
 - [constructor](/templates/protocols/javascript/modules/kerberos.Config#constructor)
 
-### Properties
+### 属性
 
 - [LibDefaults](/templates/protocols/javascript/modules/kerberos.Config#libdefaults)
 - [Realms](/templates/protocols/javascript/modules/kerberos.Config#realms)
 
-### Methods
+### 方法
 
 - [SetIPAddress](/templates/protocols/javascript/modules/kerberos.Config#setipaddress)
 - [SetTimeout](/templates/protocols/javascript/modules/kerberos.Config#settimeout)
 
-## Constructors
+## 构造函数
 
 ### constructor
 
 • **new Config**(): [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-#### Returns
+#### 返回值
 
 [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:153
 
-## Properties
+## 属性
 
 ### LibDefaults
 
 • `Optional` **LibDefaults**: [`LibDefaults`](/templates/protocols/javascript/modules/kerberos.LibDefaults)
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:227
 
@@ -50,29 +50,29 @@ ___
 
 • `Optional` **Realms**: [`Realm`](/templates/protocols/javascript/modules/kerberos.Realm)
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:229
 
-## Methods
+## 方法
 
 ### SetIPAddress
 
 ▸ **SetIPAddress**(`ip`): [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-SetIPAddress sets the IP address for the kerberos client
+SetIPAddress 设置 kerberos 客户端的 IP 地址
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `ip` | `string` |
 
-#### Returns
+#### 返回值
 
 [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -80,7 +80,7 @@ const cfg = new kerberos.Config();
 cfg.SetIPAddress('10.10.10.1');
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:163
 
@@ -90,19 +90,19 @@ ___
 
 ▸ **SetTimeout**(`timeout`): [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-SetTimeout sets the RW timeout for the kerberos client
+SetTimeout 设置 kerberos 客户端的读写超时
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `timeout` | `number` |
 
-#### Returns
+#### 返回值
 
 [`Config`](/templates/protocols/javascript/modules/kerberos.Config)
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const kerberos = require('nuclei/kerberos');
@@ -110,6 +110,6 @@ const cfg = new kerberos.Config();
 cfg.SetTimeout(5);
 ```
 
-#### Defined in
+#### 定义于
 
 kerberos.ts:177

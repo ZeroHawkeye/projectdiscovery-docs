@@ -1,22 +1,22 @@
 ---
-title: "Preprocessors"
-description: "Review details on pre-processors for Nuclei"
+title: "预处理器"
+description: "查看Nuclei的预处理器详情"
 icon: "microchip"
 iconType: "solid"
 ---
 
-Certain pre-processors can be specified globally anywhere in the template that run as soon as the template is loaded to achieve things like random ids generated for each template run.
+某些预处理器可以在模板的任何位置全局指定，它们在模板加载后立即运行，用于实现诸如为每次模板运行生成随机ID等功能。
 
 
 ### randstr
 
 <Note>
-Generates a [random ID](https://github.com/rs/xid) for a template on each nuclei run. This can be used anywhere in the template and will always contain the same value. `randstr` can be suffixed by a number, and new random ids will be created for those names too. Ex. `{{randstr_1}}` which 	will remain same across the template.
+为每次nuclei运行的模板生成一个[随机ID](https://github.com/rs/xid)。这可以在模板的任何位置使用，并且始终包含相同的值。`randstr`可以通过数字后缀进行区分，这些名称也会创建新的随机ID。例如：`{{randstr_1}}`在整个模板中将保持相同。
 
-`randstr` is also supported within matchers and can be used to match the inputs.
+`randstr`在匹配器中也受支持，可用于匹配输入。
 </Note>
 
-For example:-
+例如：
 
 ```yaml
 http:

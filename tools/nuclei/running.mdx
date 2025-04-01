@@ -1,35 +1,35 @@
 ---
-title: 'Running Nuclei'
-description: "Learn about how to run Nuclei and produce results"
-sidebarTitle: 'Running'
+title: '运行 Nuclei'
+description: "了解如何运行 Nuclei 并生成结果"
+sidebarTitle: '运行'
 ---
 
 <iframe src="https://www.youtube.com/embed/b5qMyQvL1ZA" width="640" height="360"></iframe>
 
 
-## How to Run Nuclei
+## 如何运行 Nuclei
 
-Nuclei templates offer two primary execution methods:
+Nuclei 模板提供两种主要的执行方法：
 
 
-### Supported Input Formats
+### 支持的输入格式
 
-Nuclei supports various input formats to run template against, including urls, hosts, ips, cidrs, asn, openapi, swagger, proxify, burpsuite exported data and more. To learn more on using input specify options, you can refer [nuclei input formats](/tools/nuclei/input-formats).
+Nuclei 支持各种输入格式来运行模板，包括 urls、hosts、ips、cidrs、asn、openapi、swagger、proxify、burpsuite 导出数据等。要了解更多关于使用输入指定选项的信息，可以参考 [nuclei 输入格式](/tools/nuclei/input-formats)。
 
-These inputs can be given to nuclei using `-l` and `-input-mode` flags.
+这些输入可以使用 `-l` 和 `-input-mode` 标志提供给 nuclei。
 
 ```console
-  -l, -list string              path to file containing a list of target URLs/hosts to scan (one per line)
-  -im, -input-mode string       mode of input file (list, burp, jsonl, yaml, openapi, swagger) (default "list")
+  -l, -list string              包含要扫描的目标 URL/主机列表的文件路径（每行一个）
+  -im, -input-mode string       输入文件模式 (list, burp, jsonl, yaml, openapi, swagger)（默认为 "list"）
 ```
 
-  Executing nuclei against a list of inputs (urls, hosts, ips, cidrs, asn) is as simple as running the following command:
+  对一组输入（urls、hosts、ips、cidrs、asn）执行 nuclei 就像运行以下命令一样简单：
 
 ```bash
   nuclei -l targets.txt
 ```
 
-  For running other input formats (burp, jsonl, yaml, openapi, swagger), you can use the `-im` flag to specify the input mode.
+  对于运行其他输入格式（burp、jsonl、yaml、openapi、swagger），你可以使用 `-im` 标志来指定输入模式。
 
 ```bash
   nuclei -l targets.burp -im burp
@@ -39,111 +39,111 @@ These inputs can be given to nuclei using `-l` and `-input-mode` flags.
   nuclei -l openapi.yaml -im openapi
 ```
 
-and so on.
+等等。
 
 
-### Executing Nuclei Templates
+### 执行 Nuclei 模板
 `-t/templates`
 
-**Default Templates**
+**默认模板**
 
-Most community templates from our [nuclei-template repository](https://github.com/projectdiscovery/nuclei-templates) are executed by default, directly from the standard installation path. The typical command is as follows:
+来自我们 [nuclei-template 仓库](https://github.com/projectdiscovery/nuclei-templates) 的大多数社区模板默认情况下都会执行，直接从标准安装路径执行。典型的命令如下：
 
 ```sh
 nuclei -u https://example.com
 ```
 
-However, there are some exceptions regarding the templates that run by default:
+然而，关于默认运行的模板有一些例外情况：
 
-- Certain tags and templates listed in the [default `.nuclei-ignore` file](https://github.com/projectdiscovery/nuclei-templates/blob/main/.nuclei-ignore) are not included.
-- [Code Templates](/templates/protocols/code) require the `-code` flag to execute.
-- [Headless Templates](/templates/protocols/headless) will not run unless you pass the `-headless` flag.
-- [Fuzzing Templates](/template/protocols/http/fuzzing-overview) will not run unless you pass the `-fuzz` flag.
+- [默认 `.nuclei-ignore` 文件](https://github.com/projectdiscovery/nuclei-templates/blob/main/.nuclei-ignore) 中列出的某些标签和模板不包括在内。
+- [代码模板](/templates/protocols/code) 需要 `-code` 标志才能执行。
+- [无头模板](/templates/protocols/headless) 除非传递 `-headless` 标志，否则不会运行。
+- [模糊测试模板](/template/protocols/http/fuzzing-overview) 除非传递 `-fuzz` 标志，否则不会运行。
 
-You can also run templates against a list of URLs:
+你也可以对 URL 列表运行模板：
 
 ```sh
 nuclei -list http_urls.txt
 ```
 
-**Custom Templates**
+**自定义模板**
 
-To run a custom template directory or multiple directories, use the following command structure:
+要运行自定义模板目录或多个目录，请使用以下命令结构：
 
 ```sh
 nuclei -u https://example.com -t cves/ -t exposures/
 ```
 
-Templates from custom GitHub repositories, stored under the github directory, can be executed with this command:
+存储在 github 目录下的自定义 GitHub 仓库中的模板可以用这个命令执行：
 
 ```sh
 nuclei -u https://example.com -t github/private-repo
 ```
 
-You can also directly run a template from any ProjectDiscovery Cloud Platform URL like this:
+你也可以直接从任何 ProjectDiscovery Cloud Platform URL 运行模板，如下所示：
 
 ```sh
 nuclei -u https://example.com -t https://cloud.projectdiscovery.io/public/tech-detect
 ```
 
-### Executing Template Workflows
+### 执行模板工作流
 `-w/workflows`
 
-[Workflows](/templates/workflows/overview) can be executed using the following command:
+[工作流](/templates/workflows/overview) 可以使用以下命令执行：
 
 ```sh
 nuclei -u https://example.com -w workflows/
 ```
 
-Similarly, Workflows can be executed against a list of URLs.
+同样，工作流可以针对 URL 列表执行。
 
 ```sh
 nuclei -list http_urls.txt -w workflows/wordpress-workflow.yaml
 ```
 
-## Types of Templates
+## 模板类型
 
-### Template **Filters**
+### 模板**过滤器**
 
-Nuclei engine supports three basic filters to customize template execution.
+Nuclei 引擎支持三种基本过滤器来自定义模板执行。
 
-1. Tags (`-tags`)
+1. 标签 (`-tags`)
 
-   Filter based on tags field available in the template.
+   基于模板中可用的标签字段进行过滤。
 
-2. Severity (`-severity`)
+2. 严重性 (`-severity`)
 
-   Filter based on severity field available in the template.
+   基于模板中可用的严重性字段进行过滤。
 
-3. Author (`-author`)
+3. 作者 (`-author`)
 
-   Filter based on author field available in the template.
+   基于模板中可用的作者字段进行过滤。
 
-As default, Filters are applied on installed path of templates and can be customized with manual template path input.
+默认情况下，过滤器应用于模板的安装路径，可以通过手动模板路径输入自定义。
 
-For example, below command will run all the templates installed at `~/nuclei-templates/` directory and has `cve` tags in it.
+例如，下面的命令将运行安装在 `~/nuclei-templates/` 目录中的所有带有 `cve` 标签的模板。
 
 ```sh
 nuclei -u https://example.com -tags cve
 ```
 
-And this example will run all the templates available under `~/nuclei-templates/exposures/` directory and has `config` tag in it.
+这个例子将运行 `~/nuclei-templates/exposures/` 目录下所有带有 `config` 标签的模板。
 
 ```sh
 nuclei -u https://example.com -tags config -t exposures/
 ```
 
-Multiple filters works together with AND condition,
-below example runs all templates with `cve` tags
-AND has `critical` OR `high` severity AND `geeknik` as author of template.
+多个过滤器一起工作时使用 AND 条件，
+下面的例子运行所有带有 `cve` 标签
+AND 具有 `critical` 或 `high` 严重性 AND `geeknik` 作为模板作者的模板。
 
 ```sh
 nuclei -u https://example.com -tags cve -severity critical,high -author geeknik
 ```
 
-### Advanced Filters
+### 高级过滤器
 
-Multiple filters can also be combined using the template condition flag (`-tc`) that allows complex expressions like the following ones:
+多个过滤器也可以使用模板条件标志 (`-tc`) 组合，允许复杂表达式，如下所示：
 
 ```sh
 nuclei -tc "contains(id,'xss') || contains(tags,'xss')"
@@ -151,24 +151,24 @@ nuclei -tc "contains(tags,'cve') && contains(tags,'ssrf')"
 nuclei -tc "contains(name, 'Local File Inclusion')"
 ```
 
-The supported fields are:
+支持的字段有：
 
-- `id` string
-- `name` string
-- `description` string
-- `tags` slice of strings
-- `authors` slice of strings
-- `severity` string
-- `protocol` string
-- `http_method` slice of strings
-- `body` string (containing all request bodies if any)
-- `matcher_type` slice of string
-- `extractor_type` slice of string
-- `description` string
+- `id` 字符串
+- `name` 字符串
+- `description` 字符串
+- `tags` 字符串切片
+- `authors` 字符串切片
+- `severity` 字符串
+- `protocol` 字符串
+- `http_method` 字符串切片
+- `body` 字符串（包含所有请求体，如果有的话）
+- `matcher_type` 字符串切片
+- `extractor_type` 字符串切片
+- `description` 字符串
 
-Also, every key-value pair from the template metadata section is accessible. All fields can be combined with logical operators (`||` and `&&`) and used with DSL helper functions.
+另外，模板元数据部分的每个键值对都是可访问的。所有字段都可以与逻辑操作符（`||` 和 `&&`）组合，并与 DSL 辅助函数一起使用。
 
-Similarly, all filters are supported in workflows as well.
+同样，所有过滤器也支持工作流。
 
 ```sh
 nuclei -w workflows/wordpress-workflow.yaml -severity critical,high -list http_urls.txt
@@ -176,43 +176,43 @@ nuclei -w workflows/wordpress-workflow.yaml -severity critical,high -list http_u
 
 <Note>
 
-**Workflows**
+**工作流**
 
-In Workflows, Nuclei filters are applied on templates or sub-templates running via workflows, not on the workflows itself.
+在工作流中，Nuclei 过滤器应用于通过工作流运行的模板或子模板，而不是工作流本身。
 
 </Note>
 
-### Public Templates
+### 公共模板
 
-Nuclei has built-in support for automatic template download/update from [**nuclei templates**](https://github.com/projectdiscovery/nuclei-templates) project which provides [community-contributed](https://github.com/projectdiscovery/nuclei-templates#-community) list of ready-to-use templates that is constantly updated.
+Nuclei 内置支持从 [**nuclei templates**](https://github.com/projectdiscovery/nuclei-templates) 项目自动下载/更新模板，该项目提供了 [社区贡献](https://github.com/projectdiscovery/nuclei-templates#-community) 的随时可用模板列表，这些模板会不断更新。
 
-Nuclei checks for new community template releases upon each execution and automatically downloads the latest version when available. optionally, this feature can be disabled using the `-duc` cli flag or the configuration file.
+Nuclei 在每次执行时都会检查新的社区模板发布，并在可用时自动下载最新版本。可选择使用 `-duc` CLI 标志或配置文件禁用此功能。
 
-### Custom Templates
+### 自定义模板
 
-Users can create custom templates on a personal public / private GitHub / AWS Bucket that they wish to run / update while using nuclei from any environment without manually downloading the GitHub repository everywhere.
+用户可以在个人公共/私有 GitHub/AWS Bucket 上创建自定义模板，他们希望在任何环境中使用 nuclei 运行/更新这些模板，而无需在各处手动下载 GitHub 仓库。
 
-To use this feature, users need to set the following environment variables:
+要使用此功能，用户需要设置以下环境变量：
 
 <AccordionGroup>
-  <Accordion title="For GitHub Project" icon="pencil">
+  <Accordion title="GitHub 项目" icon="pencil">
     ```bash
     export GITHUB_TOKEN=gh_XXX
     export GITHUB_TEMPLATE_REPO=my_nuclei_template
     ```
 
   </Accordion>
-  <Accordion title="For GitLab Project" icon="pencil">
+  <Accordion title="GitLab 项目" icon="pencil">
     ```bash
     export GITLAB_SERVER_URL=https://gitlab.com
-    # The GitLab token must have the read_api and read_repository scope
+    # GitLab token 必须具有 read_api 和 read_repository 权限
     export GITLAB_TOKEN=XXXXXXXXXX
-    # Comma separated list of repository IDs (not names)
+    # 逗号分隔的仓库 ID 列表（不是名称）
     export GITLAB_REPOSITORY_IDS=12345,67890
     ```
   </Accordion>
 
-<Accordion title="For AWS Bucket" icon="pencil">
+<Accordion title="AWS Bucket" icon="pencil">
 
 ```bash
 export AWS_ACCESS_KEY=AKIAXXXXXXXX
@@ -222,7 +222,7 @@ export AWS_TEMPLATE_BUCKET=aws_bucket_name
 ```
 
 </Accordion>
-<Accordion title="For Azure Blob Storage" icon="pencil">
+<Accordion title="Azure Blob Storage" icon="pencil">
 
 ```bash
 export AZURE_TENANT_ID=00000000-0000-0000-0000-000000000000
@@ -236,352 +236,350 @@ export AZURE_CONTAINER_NAME=templates
 
 </AccordionGroup>
 
-Environment variables can also be provided to disable download from default and custom template locations:
+也可以提供环境变量以禁用从默认和自定义模板位置下载：
 
 ```bash
-# Disable download from the default nuclei-templates project
+# 禁用从默认 nuclei-templates 项目下载
 export DISABLE_NUCLEI_TEMPLATES_PUBLIC_DOWNLOAD=true
 
-# Disable download from public / private GitHub project(s)
+# 禁用从公共/私有 GitHub 项目下载
 export DISABLE_NUCLEI_TEMPLATES_GITHUB_DOWNLOAD=true
 
-# Disable download from public / private GitLab project(s)
+# 禁用从公共/私有 GitLab 项目下载
 export DISABLE_NUCLEI_TEMPLATES_GITLAB_DOWNLOAD=true
 
-# Disable download from public / private AWS Bucket(s)
+# 禁用从公共/私有 AWS Bucket 下载
 export DISABLE_NUCLEI_TEMPLATES_AWS_DOWNLOAD=true
 
-# Disable download from public / private Azure Blob Storage
+# 禁用从公共/私有 Azure Blob Storage 下载
 export DISABLE_NUCLEI_TEMPLATES_AZURE_DOWNLOAD=true
 ```
 
-Once the environment variables are set, following command to download the custom templates:
+一旦设置了环境变量，执行以下命令下载自定义模板：
 
 ```bash
 nuclei -update-templates
 ```
 
-This command will clone the repository containing the custom templates to the default nuclei templates directory (`$HOME/nuclei-templates/github/`).
+此命令将克隆包含自定义模板的仓库到默认的 nuclei 模板目录（`$HOME/nuclei-templates/github/`）。
 
-The directory structure of the custom templates looks as follows:
+自定义模板的目录结构如下所示：
 
 ```bash
 tree $HOME/nuclei-templates/
 
 nuclei-templates/
-└── github/$GH_REPO_NAME # Custom templates downloaded from public / private GitHub project
-└── gitlab/$GL_REPO_NAME # Custom templates downloaded from public / private GitLab project
-└── s3/$BUCKET_NAME # Custom templates downloaded from public / private AWS Bucket
-└── azure/$CONTAINER_NAME # Custom templates downloaded from public / private Azure Blob Storage
+└── github/$GH_REPO_NAME # 从公共/私有 GitHub 项目下载的自定义模板
+└── gitlab/$GL_REPO_NAME # 从公共/私有 GitLab 项目下载的自定义模板
+└── s3/$BUCKET_NAME # 从公共/私有 AWS Bucket 下载的自定义模板
+└── azure/$CONTAINER_NAME # 从公共/私有 Azure Blob Storage 下载的自定义模板
 ```
 
-Users can then use the custom templates with the `-t` flag as follows:
+然后用户可以使用 `-t` 标志使用自定义模板，如下所示：
 
 ```
 nuclei -t github/my_custom_template -u https://example.com
 ```
 
-The nuclei engine can be updated to latest version by using the `-update` flag.
+nuclei 引擎可以使用 `-update` 标志更新到最新版本。
 
 <Tip>
-  Writing your own unique templates will always keep you one step ahead of
-  others.
+  编写自己的独特模板将使你始终领先于他人。
 </Tip>
 
-### AI-Powered Template Generation
+### AI 驱动的模板生成
 `-ai`
 
-Nuclei supports generating and running templates on-the-fly using AI capabilities powered by the ProjectDiscovery API. This feature allows you to perform quick, targeted scans without needing pre-written templates by describing what you want to detect in natural language.
+Nuclei 支持使用由 ProjectDiscovery API 提供的 AI 功能即时生成和运行模板。此功能允许你通过自然语言描述你想要检测的内容，执行快速、有针对性的扫描，而无需预先编写的模板。
 
-**Prerequisites:**
+**前提条件：**
 
-1. A ProjectDiscovery API key (Get one at [cloud.projectdiscovery.io](https://cloud.projectdiscovery.io))
-2. Configure your API key using one of these methods:
+1. ProjectDiscovery API 密钥（在 [cloud.projectdiscovery.io](https://cloud.projectdiscovery.io) 获取）
+2. 使用以下方法之一配置 API 密钥：
    
-   **Method 1: Using CLI (Recommended)**
+   **方法 1：使用 CLI（推荐）**
    ```bash
    nuclei -auth
-   # Enter your API key when prompted
+   # 在提示时输入你的 API 密钥
    ```
 
-   **Method 2: Environment Variable**
+   **方法 2：环境变量**
    ```bash
    export PDCP_API_KEY=your_api_key_here
    ```
 
-**Basic Usage:**
+**基本用法：**
 
-1. **Finding Sensitive Information Leaks:**
+1. **查找敏感信息泄露：**
 ```bash
 nuclei -list targets.txt -ai "Find admin_api_key in response"
 ```
 
-2. **Detecting Debug Information:**
+2. **检测调试信息：**
 ```bash
 nuclei -list targets.txt -ai "Detect exposed stack traces in error messages"
 ```
 
-3. **Discovering Admin Interfaces:**
+3. **发现管理员接口：**
 ```bash
 nuclei -list targets.txt -ai "Find admin login endpoints"
 ```
 
-4. **Identifying Exposed Secrets:**
+4. **识别暴露的密钥：**
 ```bash
 nuclei -list urls.txt -ai "Detect secrets in response"
 ```
 
-5. **Extract Page Titles**
+5. **提取页面标题**
 ```bash
 nuclei -list targets.txt -ai "Extract page titles"
 ```
 
 <Note>
-The `-ai` flag requires an active internet connection to communicate with the ProjectDiscovery API. Generated templates are stored both locally on your computer and in your ProjectDiscovery cloud account for future reference. For privacy, your prompts and generated templates are not used for AI training.
+`-ai` 标志需要活跃的互联网连接以与 ProjectDiscovery API 通信。生成的模板会同时存储在你的计算机本地和你的 ProjectDiscovery 云账户中以供将来参考。为了保护隐私，你的提示和生成的模板不会用于 AI 训练。
 
-Currently, each user is limited to 100 AI template generation queries per day. This limit is subject to change based on usage patterns and to prevent abuse.
+目前，每个用户每天限制 100 个 AI 模板生成查询。这个限制可能会根据使用模式和防止滥用而变化。
 </Note>
 
-### Nuclei Flags
+### Nuclei 标志
 
 ```
 nuclei -h
 ```
 
-This will display help for the tool. Here are all the switches it supports.
+这将显示工具的帮助信息。以下是它支持的所有开关。
 
 ```console
-Nuclei is a fast, template based vulnerability scanner focusing
-on extensive configurability, massive extensibility and ease of use.
+Nuclei 是一个快速的、基于模板的漏洞扫描器，专注于
+广泛的可配置性、大规模的可扩展性和易用性。
 
-Usage:
+用法：
   nuclei [flags]
 
-Flags:
-TARGET:
-   -u, -target string[]          target URLs/hosts to scan
-   -l, -list string              path to file containing a list of target URLs/hosts to scan (one per line)
-   -eh, -exclude-hosts string[]  hosts to exclude to scan from the input list (ip, cidr, hostname)
-   -resume string                resume scan using resume.cfg (clustering will be disabled)
-   -sa, -scan-all-ips            scan all the IP's associated with dns record
-   -iv, -ip-version string[]     IP version to scan of hostname (4,6) - (default 4)
+标志：
+TARGET：
+   -u, -target string[]          要扫描的目标 URL/主机
+   -l, -list string              包含要扫描的目标 URL/主机列表的文件路径（每行一个）
+   -eh, -exclude-hosts string[]  从输入列表中排除扫描的主机（ip、cidr、主机名）
+   -resume string                使用 resume.cfg 恢复扫描（将禁用聚类）
+   -sa, -scan-all-ips            扫描与 dns 记录关联的所有 IP
+   -iv, -ip-version string[]     要扫描的主机名的 IP 版本（4,6）-（默认为 4）
 
-TARGET-FORMAT:
-   -im, -input-mode string        mode of input file (list, burp, jsonl, yaml, openapi, swagger) (default "list")
-   -ro, -required-only            use only required fields in input format when generating requests
-   -sfv, -skip-format-validation  skip format validation (like missing vars) when parsing input file
+TARGET-FORMAT：
+   -im, -input-mode string        输入文件模式（list、burp、jsonl、yaml、openapi、swagger）（默认为 "list"）
+   -ro, -required-only            生成请求时仅使用输入格式中的必需字段
+   -sfv, -skip-format-validation  解析输入文件时跳过格式验证（如缺少变量）
 
-TEMPLATES:
-   -nt, -new-templates                    run only new templates added in latest nuclei-templates release
-   -ntv, -new-templates-version string[]  run new templates added in specific version
-   -as, -automatic-scan                   automatic web scan using wappalyzer technology detection to tags mapping
-   -t, -templates string[]                list of template or template directory to run (comma-separated, file)
-   -turl, -template-url string[]          template url or list containing template urls to run (comma-separated, file)
-   -w, -workflows string[]                list of workflow or workflow directory to run (comma-separated, file)
-   -wurl, -workflow-url string[]          workflow url or list containing workflow urls to run (comma-separated, file)
-   -validate                              validate the passed templates to nuclei
-   -nss, -no-strict-syntax                disable strict syntax check on templates
-   -td, -template-display                 displays the templates content
-   -tl                                    list all available templates
-   -sign                                  signs the templates with the private key defined in NUCLEI_SIGNATURE_PRIVATE_KEY env variable
-   -code                                  enable loading code protocol-based templates
-   -dut, -disable-unsigned-templates      disable running unsigned templates or templates with mismatched signature
+TEMPLATES：
+   -nt, -new-templates                    仅运行最新的 nuclei-templates 版本中添加的新模板
+   -ntv, -new-templates-version string[]  运行在特定版本中添加的新模板
+   -as, -automatic-scan                   使用 wappalyzer 技术检测到标签映射的自动 web 扫描
+   -t, -templates string[]                要运行的模板或模板目录列表（逗号分隔、文件）
+   -turl, -template-url string[]          模板 url 或包含模板 url 的列表（逗号分隔、文件）
+   -w, -workflows string[]                要运行的工作流或工作流目录列表（逗号分隔、文件）
+   -wurl, -workflow-url string[]          工作流 url 或包含工作流 url 的列表（逗号分隔、文件）
+   -validate                              验证传递给 nuclei 的模板
+   -nss, -no-strict-syntax                禁用模板上的严格语法检查
+   -td, -template-display                 显示模板内容
+   -tl                                    列出所有可用模板
+   -sign                                  使用 NUCLEI_SIGNATURE_PRIVATE_KEY 环境变量中定义的私钥签署模板
+   -code                                  启用加载基于代码协议的模板
+   -dut, -disable-unsigned-templates      禁止运行未签名的模板或签名不匹配的模板
 
-FILTERING:
-   -a, -author string[]               templates to run based on authors (comma-separated, file)
-   -tags string[]                     templates to run based on tags (comma-separated, file)
-   -etags, -exclude-tags string[]     templates to exclude based on tags (comma-separated, file)
-   -itags, -include-tags string[]     tags to be executed even if they are excluded either by default or configuration
-   -id, -template-id string[]         templates to run based on template ids (comma-separated, file, allow-wildcard)
-   -eid, -exclude-id string[]         templates to exclude based on template ids (comma-separated, file)
-   -it, -include-templates string[]   path to template file or directory to be executed even if they are excluded either by default or configuration
-   -et, -exclude-templates string[]   path to template file or directory to exclude (comma-separated, file)
-   -em, -exclude-matchers string[]    template matchers to exclude in result
-   -s, -severity value[]              templates to run based on severity. Possible values: info, low, medium, high, critical, unknown
-   -es, -exclude-severity value[]     templates to exclude based on severity. Possible values: info, low, medium, high, critical, unknown
-   -pt, -type value[]                 templates to run based on protocol type. Possible values: dns, file, http, headless, tcp, workflow, ssl, websocket, whois, code, javascript
-   -ept, -exclude-type value[]        templates to exclude based on protocol type. Possible values: dns, file, http, headless, tcp, workflow, ssl, websocket, whois, code, javascript
-   -tc, -template-condition string[]  templates to run based on expression condition
+FILTERING：
+   -a, -author string[]               基于作者运行模板（逗号分隔、文件）
+   -tags string[]                     基于标签运行模板（逗号分隔、文件）
+   -etags, -exclude-tags string[]     基于标签排除模板（逗号分隔、文件）
+   -itags, -include-tags string[]     即使默认或配置中排除的标签也要执行
+   -id, -template-id string[]         基于模板 ID 运行模板（逗号分隔、文件、允许通配符）
+   -eid, -exclude-id string[]         基于模板 ID 排除模板（逗号分隔、文件）
+   -it, -include-templates string[]   要执行的模板文件或目录路径，即使默认或配置中排除
+   -et, -exclude-templates string[]   要排除的模板文件或目录路径（逗号分隔、文件）
+   -em, -exclude-matchers string[]    结果中排除的模板匹配器
+   -s, -severity value[]              基于严重性运行模板。可能的值：info、low、medium、high、critical、unknown
+   -es, -exclude-severity value[]     基于严重性排除模板。可能的值：info、low、medium、high、critical、unknown
+   -pt, -type value[]                 基于协议类型运行模板。可能的值：dns、file、http、headless、tcp、workflow、ssl、websocket、whois、code、javascript
+   -ept, -exclude-type value[]        基于协议类型排除模板。可能的值：dns、file、http、headless、tcp、workflow、ssl、websocket、whois、code、javascript
+   -tc, -template-condition string[]  基于表达条件运行模板
 
-OUTPUT:
-   -o, -output string            output file to write found issues/vulnerabilities
-   -sresp, -store-resp           store all request/response passed through nuclei to output directory
-   -srd, -store-resp-dir string  store all request/response passed through nuclei to custom directory (default "output")
-   -silent                       display findings only
-   -nc, -no-color                disable output content coloring (ANSI escape codes)
-   -j, -jsonl                    write output in JSONL(ines) format
-   -irr, -include-rr -omit-raw   include request/response pairs in the JSON, JSONL, and Markdown outputs (for findings only) [DEPRECATED use -omit-raw] (default true)
-   -or, -omit-raw                omit request/response pairs in the JSON, JSONL, and Markdown outputs (for findings only)
-   -ot, -omit-template           omit encoded template in the JSON, JSONL output
-   -nm, -no-meta                 disable printing result metadata in cli output
-   -ts, -timestamp               enables printing timestamp in cli output
-   -rdb, -report-db string       nuclei reporting database (always use this to persist report data)
-   -ms, -matcher-status          display match failure status
-   -me, -markdown-export string  directory to export results in markdown format
-   -se, -sarif-export string     file to export results in SARIF format
-   -je, -json-export string      file to export results in JSON format
-   -jle, -jsonl-export string    file to export results in JSONL(ine) format
+OUTPUT：
+   -o, -output string           要写入已发现问题/漏洞的输出文件
+   -sresp, -store-resp          将通过 nuclei 传递的所有请求/响应存储到输出目录
+   -srd, -store-resp-dir string 将通过 nuclei 传递的所有请求/响应存储到自定义目录（默认为 "output"）
+   -silent                      仅显示发现
+   -nc, -no-color               禁用输出内容着色（ANSI 转义码）
+   -j, -jsonl                   以 JSONL(ines) 格式写入输出
+   -irr, -include-rr -omit-raw  包括请求/响应对在 JSON、JSONL 和 Markdown 输出中（仅限发现）[已弃用使用 -omit-raw]（默认 true）
+   -or, -omit-raw               在 JSON、JSONL 和 Markdown 输出中省略请求/响应对（仅限发现）
+   -ot, -omit-template          在 JSON、JSONL 输出中省略编码模板
+   -nm, -no-meta                禁用打印结果元数据在 cli 输出中
+   -ts, -timestamp              在 cli 输出中启用打印时间戳
+   -rdb, -report-db string       nuclei 报告数据库（始终使用此持久报告数据）
+   -ms, -matcher-status         显示匹配失败状态
+   -me, -markdown-export string  目录导出结果在 markdown 格式中
+   -se, -sarif-export string     文件导出结果在 SARIF 格式中
+   -je, -json-export string      文件导出结果在 JSON 格式中
+   -jle, -jsonl-export string    文件导出结果在 JSONL(ine) 格式中
 
-CONFIGURATIONS:
-   -config string                        path to the nuclei configuration file
-   -fr, -follow-redirects                enable following redirects for http templates
-   -fhr, -follow-host-redirects          follow redirects on the same host
-   -mr, -max-redirects int               max number of redirects to follow for http templates (default 10)
-   -dr, -disable-redirects               disable redirects for http templates
-   -rc, -report-config string            nuclei reporting module configuration file
-   -H, -header string[]                  custom header/cookie to include in all http request in header:value format (cli, file)
-   -V, -var value                        custom vars in key=value format
-   -r, -resolvers string                 file containing resolver list for nuclei
-   -sr, -system-resolvers                use system DNS resolving as error fallback
-   -dc, -disable-clustering              disable clustering of requests
-   -passive                              enable passive HTTP response processing mode
-   -fh2, -force-http2                    force http2 connection on requests
-   -ev, -env-vars                        enable environment variables to be used in template
-   -cc, -client-cert string              client certificate file (PEM-encoded) used for authenticating against scanned hosts
-   -ck, -client-key string               client key file (PEM-encoded) used for authenticating against scanned hosts
-   -ca, -client-ca string                client certificate authority file (PEM-encoded) used for authenticating against scanned hosts
-   -sml, -show-match-line                show match lines for file templates, works with extractors only
-   -ztls                                 use ztls library with autofallback to standard one for tls13 [Deprecated] autofallback to ztls is enabled by default
-   -sni string                           tls sni hostname to use (default: input domain name)
-   -dt, -dialer-timeout value            timeout for network requests.
-   -dka, -dialer-keep-alive value        keep-alive duration for network requests.
-   -lfa, -allow-local-file-access        allows file (payload) access anywhere on the system
-   -lna, -restrict-local-network-access  blocks connections to the local / private network
-   -i, -interface string                 network interface to use for network scan
-   -at, -attack-type string              type of payload combinations to perform (batteringram,pitchfork,clusterbomb)
-   -sip, -source-ip string               source ip address to use for network scan
-   -rsr, -response-size-read int         max response size to read in bytes (default 10485760)
-   -rss, -response-size-save int         max response size to read in bytes (default 1048576)
-   -reset                                reset removes all nuclei configuration and data files (including nuclei-templates)
-   -tlsi, -tls-impersonate               enable experimental client hello (ja3) tls randomization
+CONFIGURATIONS：
+   -config string                       路径到 nuclei 配置文件
+   -fr, -follow-redirects               启用 http 模板跟随重定向
+   -fhr, -follow-host-redirects         在同一主机上跟随重定向
+   -mr, -max-redirects int              最大 http 模板跟随重定向数（默认 10）
+   -dr, -disable-redirects              禁用 http 模板重定向
+   -rc, -report-config string            nuclei 报告模块配置文件
+   -H, -header string[]                 要包含在所有 http 请求中的自定义头/cookie（cli、文件）
+   -V, -var value                       自定义 vars 在 key=value 格式中
+   -r, -resolvers string                包含 nuclei 解析器的解析器列表文件
+   -sr, -system-resolvers               使用系统 DNS 解析作为错误回退
+   -dc, -disable-clustering             禁用请求聚类
+   -passive                             启用被动 HTTP 响应处理模式
+   -fh2, -force-http2                   强制 http2 连接请求
+   -ev, -env-vars                       启用环境变量以在模板中使用
+   -cc, -client-cert string             客户端证书文件（PEM 编码）用于验证扫描的主机
+   -ck, -client-key string              客户端密钥文件（PEM 编码）用于验证扫描的主机
+   -ca, -client-ca string               客户端证书颁发机构文件（PEM 编码）用于验证扫描的主机
+   -sml, -show-match-line               显示文件模板匹配行，仅适用于提取器
+   -ztls                                使用 ztls 库与自动回退到标准库进行 tls13 [已弃用] 默认启用 ztls
+   -sni string                           tls sni 主机名以使用（默认：输入域名）
+   -dt, -dialer-timeout value           网络请求超时时间。
+   -dka, -dialer-keep-alive value       网络请求保持活动时间。
+   -lfa, -allow-local-file-access       允许文件（有效载荷）访问系统上的任何位置
+   -lna, -restrict-local-network-access  阻止连接到本地 / 私有网络
+   -i, -interface string                要用于网络扫描的网络接口
+   -at, -attack-type string             要执行的有效载荷组合类型（batteringram、pitchfork、clusterbomb）
+   -sip, -source-ip string              要用于网络扫描的源 ip 地址
+   -rsr, -response-size-read int        最大响应大小读取字节数（默认 10485760）
+   -rss, -response-size-save int        最大响应大小读取字节数（默认 1048576）
+   -reset                               重置删除所有 nuclei 配置和数据文件（包括 nuclei-templates）
+   -tlsi, -tls-impersonate              启用实验客户端 hello（ja3）tls 随机化
 
-INTERACTSH:
-   -iserver, -interactsh-server string  interactsh server url for self-hosted instance (default: oast.pro,oast.live,oast.site,oast.online,oast.fun,oast.me)
-   -itoken, -interactsh-token string    authentication token for self-hosted interactsh server
-   -interactions-cache-size int         number of requests to keep in the interactions cache (default 5000)
-   -interactions-eviction int           number of seconds to wait before evicting requests from cache (default 60)
-   -interactions-poll-duration int      number of seconds to wait before each interaction poll request (default 5)
-   -interactions-cooldown-period int    extra time for interaction polling before exiting (default 5)
-   -ni, -no-interactsh                  disable interactsh server for OAST testing, exclude OAST based templates
+INTERACTSH：
+   -iserver, -interactsh-server string  interactsh 服务器 url 用于自托管实例（默认：oast.pro,oast.live,oast.site,oast.online,oast.fun,oast.me）
+   -itoken, -interactsh-token string    interactsh 服务器认证令牌用于自托管 interactsh 服务器
+   -interactions-cache-size int        要保留在交互缓存中的请求数（默认 5000）
+   -interactions-eviction int          要等待从缓存中逐出请求的秒数（默认 60）
+   -interactions-poll-duration int     要等待每次交互轮询请求的秒数（默认 5）
+   -interactions-cooldown-period int   交互轮询退出前的额外时间（默认 5）
+   -ni, -no-interactsh                 禁用 interactsh 服务器用于 OAST 测试，排除 OAST 基于模板
 
-FUZZING:
-   -ft, -fuzzing-type string  overrides fuzzing type set in template (replace, prefix, postfix, infix)
-   -fm, -fuzzing-mode string  overrides fuzzing mode set in template (multiple, single)
-   -fuzz                      enable loading fuzzing templates
+FUZZING：
+   -ft, -fuzzing-type string  覆盖模板设置的模糊类型（replace, prefix, postfix, infix）
+   -fm, -fuzzing-mode string  覆盖模板设置的模糊模式（multiple, single）
+   -fuzz                     启用加载模糊模板
 
-UNCOVER:
-   -uc, -uncover                  enable uncover engine
-   -uq, -uncover-query string[]   uncover search query
-   -ue, -uncover-engine string[]  uncover search engine (shodan,censys,fofa,shodan-idb,quake,hunter,zoomeye,netlas,criminalip,publicwww,hunterhow) (default shodan)
-   -uf, -uncover-field string     uncover fields to return (ip,port,host) (default "ip:port")
-   -ul, -uncover-limit int        uncover results to return (default 100)
-   -ur, -uncover-ratelimit int    override ratelimit of engines with unknown ratelimit (default 60 req/min) (default 60)
+UNCOVER：
+   -uc, -uncover                 启用 uncover 引擎
+   -uq, -uncover-query string[]   uncover 搜索查询
+   -ue, -uncover-engine string[]  uncover 搜索引擎（shodan,censys,fofa,shodan-idb,quake,hunter,zoomeye,netlas,criminalip,publicwww,hunterhow）（默认 shodan）
+   -uf, -uncover-field string     uncover 要返回的字段（ip,port,host）（默认 "ip:port")
+   -ul, -uncover-limit int        uncover 结果返回（默认 100）
+   -ur, -uncover-ratelimit int   覆盖未知 ratelimit 的引擎 ratelimit（默认 60 req/min）（默认 60）
 
-RATE-LIMIT:
-   -rl, -rate-limit int               maximum number of requests to send per second (default 150)
-   -rlm, -rate-limit-minute int       maximum number of requests to send per minute
-   -bs, -bulk-size int                maximum number of hosts to be analyzed in parallel per template (default 25)
-   -c, -concurrency int               maximum number of templates to be executed in parallel (default 25)
-   -hbs, -headless-bulk-size int      maximum number of headless hosts to be analyzed in parallel per template (default 10)
-   -headc, -headless-concurrency int  maximum number of headless templates to be executed in parallel (default 10)
-   -jsc, -js-concurrency int          maximum number of javascript runtimes to be executed in parallel (default 120)
-   -pc, -payload-concurrency int      max payload concurrency for each template (default 25)
+RATE-LIMIT：
+   -rl, -rate-limit int              要发送的请求总数每秒（默认 150）
+   -rlm, -rate-limit-minute int      每分钟要发送的请求数
+   -bs, -bulk-size int               每个模板要并行分析的最大主机数（默认 25）
+   -c, -concurrency int              要并行执行的最大模板数（默认 25）
+   -hbs, -headless-bulk-size int     每个模板要并行分析的最大无头主机数（默认 10）
+   -headc, -headless-concurrency int 要并行执行的最大无头模板数（默认 10）
+   -jsc, -js-concurrency int         要并行执行的最大 javascript 运行时数（默认 120）
+   -pc, -payload-concurrency int     每个模板的最大有效载荷并发数（默认 25）
 
-OPTIMIZATIONS:
-   -timeout int                     time to wait in seconds before timeout (default 10)
-   -retries int                     number of times to retry a failed request (default 1)
-   -ldp, -leave-default-ports       leave default HTTP/HTTPS ports (eg. host:80,host:443)
-   -mhe, -max-host-error int        max errors for a host before skipping from scan (default 30)
-   -te, -track-error string[]       adds given error to max-host-error watchlist (standard, file)
-   -nmhe, -no-mhe                   disable skipping host from scan based on errors
-   -project                         use a project folder to avoid sending same request multiple times
-   -project-path string             set a specific project path 
-   -spm, -stop-at-first-match       stop processing HTTP requests after the first match (may break template/workflow logic)
-   -stream                          stream mode - start elaborating without sorting the input
-   -ss, -scan-strategy value        strategy to use while scanning(auto/host-spray/template-spray) (default auto)
-   -irt, -input-read-timeout value  timeout on input read (default 3m0s)
-   -nh, -no-httpx                   disable httpx probing for non-url input
-   -no-stdin                        disable stdin processing
+OPTIMIZATIONS：
+   -timeout int                    等待秒数在超时之前（默认 10）
+   -retries int                    要重试失败的请求次数（默认 1）
+   -ldp, -leave-default-ports      离开默认 HTTP/HTTPS 端口（例如：host:80,host:443）
+   -mhe, -max-host-error int       主机扫描前最大错误数（默认 30）
+   -te, -track-error string[]      将给定错误添加到 max-host-error 监视列表中（标准、文件）
+   -nmhe, -no-mhe                  禁用从扫描中跳过主机基于错误
+   -project                        使用项目文件夹以避免多次发送相同请求
+   -project-path string            设置特定项目路径 
+   -spm, -stop-at-first-match      停止处理 HTTP 请求，在第一次匹配后（可能会破坏模板/工作流逻辑）
+   -stream                         流模式 - 开始不排序输入
+   -ss, -scan-strategy value        扫描时要使用的策略（auto/host-spray/template-spray）（默认 auto）
+   -irt, -input-read-timeout value  输入读取超时（默认 3m0s）
+   -nh, -no-httpx                  禁用 httpx 探测非 url 输入
+   -no-stdin                       禁用 stdin 处理
 
-HEADLESS:
-   -headless                        enable templates that require headless browser support (root user on Linux will disable sandbox)
-   -page-timeout int                seconds to wait for each page in headless mode (default 20)
-   -sb, -show-browser               show the browser on the screen when running templates with headless mode
-   -ho, -headless-options string[]  start headless chrome with additional options
-   -sc, -system-chrome              use local installed Chrome browser instead of nuclei installed
-   -lha, -list-headless-action      list available headless actions
+HEADLESS：
+   -headless                       启用需要无头浏览器支持的模板（root 用户在 Linux 上将禁用沙盒）
+   -page-timeout int               无头模式下等待每页秒数（默认 20）
+   -sb, -show-browser              在运行带有无头模式的模板时显示浏览器
+   -ho, -headless-options string[]  启动带有附加选项的无头 chrome
+   -sc, -system-chrome             使用本地安装的 Chrome 浏览器而不是 nuclei 安装的
+   -lha, -list-headless-action     列出可用无头操作
 
-DEBUG:
-   -debug                    show all requests and responses
-   -dreq, -debug-req         show all sent requests
-   -dresp, -debug-resp       show all received responses
-   -p, -proxy string[]       list of http/socks5 proxy to use (comma separated or file input)
-   -pi, -proxy-internal      proxy all internal requests
-   -ldf, -list-dsl-function  list all supported DSL function signatures
-   -tlog, -trace-log string  file to write sent requests trace log
-   -elog, -error-log string  file to write sent requests error log
-   -version                  show nuclei version
-   -hm, -hang-monitor        enable nuclei hang monitoring
-   -v, -verbose              show verbose output
-   -profile-mem string       optional nuclei memory profile dump file
-   -vv                       display templates loaded for scan
-   -svd, -show-var-dump      show variables dump for debugging
-   -ep, -enable-pprof        enable pprof debugging server
-   -tv, -templates-version   shows the version of the installed nuclei-templates
-   -hc, -health-check        run diagnostic check up
+DEBUG：
+   -debug                   显示所有请求和响应
+   -dreq, -debug-req        显示所有发送的请求
+   -dresp, -debug-resp      显示所有接收到的响应
+   -p, -proxy string[]      要使用的 http/socks5 代理列表（逗号分隔或文件输入）
+   -pi, -proxy-internal     代理所有内部请求
+   -ldf, -list-dsl-function  列出所有支持的 DSL 函数签名
+   -tlog, -trace-log string  要写入发送请求跟踪日志的文件
+   -elog, -error-log string  要写入发送请求错误日志的文件
+   -version                 显示 nuclei 版本
+   -hm, -hang-monitor       启用 nuclei 挂起监控
+   -v, -verbose             显示详细输出
+   -profile-mem string      可选 nuclei 内存配置文件转储
+   -vv                      显示扫描加载的模板
+   -svd, -show-var-dump     显示调试变量转储
+   -ep, -enable-pprof       启用 pprof 调试服务器
+   -tv, -templates-version  显示已安装 nuclei-templates 的版本
+   -hc, -health-check       运行诊断检查
 
-UPDATE:
-   -up, -update                      update nuclei engine to the latest released version
-   -ut, -update-templates            update nuclei-templates to latest released version
-   -ud, -update-template-dir string  custom directory to install / update nuclei-templates
-   -duc, -disable-update-check       disable automatic nuclei/templates update check
+UPDATE：
+   -up, -update                     更新 nuclei 引擎到最新发布的版本
+   -ut, -update-templates           更新 nuclei-templates 到最新发布的版本
+   -ud, -update-template-dir string  自定义目录安装 / 更新 nuclei-templates
+   -duc, -disable-update-check       禁用自动 nuclei/templates 更新检查
 
-STATISTICS:
-   -stats                    display statistics about the running scan
-   -sj, -stats-json          display statistics in JSONL(ines) format
-   -si, -stats-interval int  number of seconds to wait between showing a statistics update (default 5)
-   -mp, -metrics-port int    port to expose nuclei metrics on (default 9092)
+STATISTICS：
+   -stats                   显示扫描运行统计信息
+   -sj, -stats-json         以 JSONL(ines) 格式显示统计信息
+   -si, -stats-interval int  显示统计更新之间等待的秒数（默认 5）
+   -mp, -metrics-port int    暴露 nuclei 指标的端口（默认 9092）
 
-CLOUD:
-   -auth                  configure projectdiscovery cloud (pdcp) api key (default true)
-   -cup, -cloud-upload    upload scan results to pdcp dashboard
-   -sid, -scan-id string  upload scan results to given scan id
+CLOUD：
+   -auth                 配置 projectdiscovery cloud（pdcp）api 密钥（默认 true）
+   -cup, -cloud-upload   上传扫描结果到 pdcp 仪表板
+   -sid, -scan-id string  上传扫描结果到给定扫描 id
 
-AUTHENTICATION:
-   -sf, -secret-file string[]  path to config file containing secrets for nuclei authenticated scan
-   -ps, -prefetch-secrets      prefetch secrets from the secrets file
+AUTHENTICATION：
+   -sf, -secret-file string[]  路径到包含 nuclei 认证扫描秘密的配置文件
+   -ps, -prefetch-secrets      从秘密文件中预取秘密
 ```
 
 <Tip>
-  From Nuclei v3.0.0 `-metrics` port has been removed and merged with `-stats`
-  when using `-stats` flag metrics will be by default available at `localhost:9092/metrics`
-  and metrics-port can be configured by `-metrics-port` flag
+  从 Nuclei v3.0.0 `-metrics` 端口已删除并合并到 `-stats`
+  当使用 `-stats` 标志时，默认情况下可用 metrics 可用 localhost:9092/metrics
+  和 metrics-port 可以配置使用 `-metrics-port` 标志
 </Tip>
 
-### Rate **Limits**
+### 速率**限制**
 
-Nuclei have multiple rate limit controls for multiple factors, including a number of templates to execute in parallel, a number of hosts to be scanned in parallel for each template, and the global number of request / per second you wanted to make/limit using nuclei, here is an example of each flag with description.
+Nuclei 有多个速率限制控制多个因素，包括要并行执行的模板数量、每个模板要并行扫描的主机数量以及你想使用 nuclei 发送/限制的全局请求数量/每秒，这里是每个标志的示例描述。
 
-| Flag       | Description                                                          |
-| ---------- | -------------------------------------------------------------------- |
-| rate-limit | Control the total number of request to send per seconds              |
-| bulk-size  | Control the number of hosts to process in parallel for each template |
-| c          | Control the number of templates to process in parallel               |
+| 标志       | 描述                                                         |
+| ---------- | ------------------------------------------------------------ |
+| rate-limit | 控制要每秒发送的总请求数              |
+| bulk-size  | 控制每个模板要并行处理的主机数量 |
+| c          | 控制要并行处理的模板数量               |
 
-Feel free to play with these flags to tune your nuclei scan speed and accuracy. For more details on tuning these flag, you can refer [mass-scanning-cli](/tools/nuclei/mass-scanning-cli)
+随意调整这些标志以调整你的 nuclei 扫描速度和准确性。有关调整这些标志的更多详细信息，可以参考 [mass-scanning-cli](/tools/nuclei/mass-scanning-cli)
 
 <Tip>
-  `rate-limit` flag takes precedence over the other two flags, the number of
-  requests/seconds can't go beyond the value defined for `rate-limit` flag
-  regardless the value of `c` and `bulk-size` flag.
+  `rate-limit` 标志优先于其他两个标志，无论 `c` 和 `bulk-size` 标志的值如何，
+  请求/秒数量不能超过为 `rate-limit` 标志定义的值。
 </Tip>
 
-### Traffic **Tagging**
+### 流量**标记**
 
-Many BugBounty platform/programs requires you to identify the HTTP traffic you make, this can be achieved by setting custom header using config file at `$HOME/.config/nuclei/config.yaml` or CLI flag `-H / header`
+许多 BugBounty 平台/项目要求你标识你发送的 HTTP 流量，这可以通过在 `$HOME/.config/nuclei/config.yaml` 配置文件或 CLI 标志 `-H / header` 中设置自定义头来实现
 
 <Note>
-Setting custom header using config file
+使用配置文件设置自定义头
 
 ```yaml
 # Headers to include with each request.
@@ -594,7 +592,7 @@ header:
 
 <Note>
 
-Setting custom header using CLI flag
+使用 CLI 标志设置自定义头
 
 ```yaml
 nuclei -header 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) / nuclei' -list urls.txt -tags cves
@@ -602,22 +600,22 @@ nuclei -header 'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) / nuclei' -list
 
 </Note>
 
-### Template **Exclusion**
+### 模板**排除**
 
-Nuclei supports a variety of methods for excluding / blocking templates from execution. By default, **nuclei** excludes the tags/templates listed below from execution to avoid unexpected fuzz based scans and some that are not supposed to run for mass scan, and these can be easily overwritten with nuclei configuration file / flags.
+Nuclei 支持各种方法来排除/阻止模板执行。默认情况下，**nuclei** 排除下面列出的标签/模板，以避免意外的基于模糊的扫描和一些不应进行大规模扫描的模板，这些可以通过 nuclei 配置文件/标志轻松覆盖。
 
-Nuclei engine supports two ways to manually exclude templates from scan,
+Nuclei 引擎支持两种手动从扫描中排除模板的方法，
 
-1. Exclude Templates (`-exclude-templates/exclude`)
+1. 排除模板 (`-exclude-templates/exclude`)
 
-   **exclude-templates** flag is used to exclude single or multiple templates and directory, multiple `-exclude-templates` flag can be used to provide multiple values.
+   **exclude-templates** 标志用于排除单个或多个模板和目录，可以使用多个 `-exclude-templates` 标志提供多个值。
 
-2. Exclude Tags (`-exclude-tags/etags`)
+2. 排除标签 (`-exclude-tags/etags`)
 
-   **exclude-tags** flag is used to exclude templates based in defined tags, single or multiple can be used to exclude templates.
+   **exclude-tags** 标志用于基于定义的标签排除模板，可以使用单个或多个来排除模板。
 
 <Note>
-Example of excluding single template
+排除单个模板的示例
 
 ```
 nuclei -list urls.txt -t cves/ -exclude-templates cves/2020/CVE-2020-XXXX.yaml
@@ -626,7 +624,7 @@ nuclei -list urls.txt -t cves/ -exclude-templates cves/2020/CVE-2020-XXXX.yaml
 </Note>
 
 <Note>
-Example of multiple template exclusion
+多个模板排除的示例
 
 ```
 nuclei -list urls.txt -exclude-templates exposed-panels/ -exclude-templates technologies/
@@ -635,7 +633,7 @@ nuclei -list urls.txt -exclude-templates exposed-panels/ -exclude-templates tech
 </Note>
 
 <Note>
-Example of excluding templates with single tag
+排除带有单个标签的模板的示例
 
 ```
 nuclei -l urls.txt -t cves/ -etags xss
@@ -644,25 +642,24 @@ nuclei -l urls.txt -t cves/ -etags xss
 </Note>
 
 <Note>
-Example of excluding templates with multiple tags
+排除带有多个标签的模板的示例
 
 ```
 nuclei -l urls.txt -t cves/ -etags sqli,rce
 ```
 </Note>
 
-- [.nuclei-ignore](https://github.com/projectdiscovery/nuclei-templates/blob/main/.nuclei-ignore) list - default list of tags and templates excluded from nuclei scan as default.
+- [.nuclei-ignore](https://github.com/projectdiscovery/nuclei-templates/blob/main/.nuclei-ignore) 列表 - 默认情况下从 nuclei 扫描中排除的标签和模板的默认列表。
 
 <Warning>
-  **.nuclei-ignore** file is not supposed to be modified by
-  user, as it gets used by nuclei internally, to overwrite ignore list, utilize [nuclei
-  configuration](/tools/nuclei/running#nuclei-config) file.
+  **.nuclei-ignore** 文件不应由用户修改，因为它由 nuclei 内部使用，要覆盖忽略列表，请使用 [nuclei
+  配置](/tools/nuclei/running#nuclei-config) 文件。
 </Warning>
 
-To prioritize certain templates or tags over the [.nuclei-ignore](https://github.com/projectdiscovery/nuclei-templates/blob/master/.nuclei-ignore) file or denylist, you must use the `-include-templates` or `-include-tags` flags. This will ensure that the specified templates or tags take precedence over any `.nuclei-ignore` or denylist entries.
+要优先考虑某些模板或标签，你必须使用 `-include-templates` 或 `-include-tags` 标志。这将确保指定的模板或标签优先于任何 `.nuclei-ignore` 或 denylist 条目。
 
 <Note>
-Example of running blocked templates
+运行被阻止模板的示例
 
 ```bash
 nuclei -l urls.txt -include-tags iot,misc,fuzz
@@ -671,9 +668,9 @@ nuclei -l urls.txt -include-tags iot,misc,fuzz
 </Note>
 
 <Note>
-Example of executing a specific template that is in the denylist
+执行 denylist 中特定模板的示例
 
-Say that you have custom templates globbed (`*`) in the denylist on the Nuclei configuration file.
+假设你在 Nuclei 配置文件的 denylist 中有全局匹配 (`*`) 的自定义模板。
 
 ```yaml
 # ...
@@ -682,7 +679,7 @@ exclude-templates:
   - 'custom/**/*.yaml'
 ```
 
-But you just want to execute a specific template.
+但你只想执行一个特定的模板。
 
 ```bash
 nuclei -l urls.txt -include-templates custom/specific-template.yaml
@@ -691,34 +688,34 @@ nuclei -l urls.txt -include-templates custom/specific-template.yaml
 </Note>
 
 
-### List Template Path
+### 列出模板路径
 
-`-tl` option in Nuclei is used to list the paths of templates, rather than executing them. This can help you inspect which templates would be used for scan given your current template filter.
+Nuclei 中的 `-tl` 选项用于列出模板的路径，而不是执行它们。这可以帮助你检查给定当前模板过滤器的情况下，将使用哪些模板进行扫描。
 
 ```sh
-# Command to list templates (-tl)
+# 列出模板的命令 (-tl)
 nuclei -tags cve -severity critical,high -author geeknik -tl
 ```
 
-### Scan on internet database
+### 在互联网数据库上扫描
 
-Nuclei supports integration with [uncover module](https://github.com/projectdiscovery/uncover) that supports services like Shodan, Censys, Hunter, Zoomeye, many more to execute Nuclei on these databases.
+Nuclei 支持与 [uncover 模块](https://github.com/projectdiscovery/uncover) 集成，该模块支持 Shodan、Censys、Hunter、Zoomeye 等服务，以在这些数据库上执行 Nuclei。
 
-Here are uncover options to use -
+以下是 uncover 选项的使用方法 -
 
 ```console
 nuclei -h uncover
 
 UNCOVER:
-   -uc, -uncover                  enable uncover engine
-   -uq, -uncover-query string[]   uncover search query
-   -ue, -uncover-engine string[]  uncover search engine (shodan,shodan-idb,fofa,censys,quake,hunter,zoomeye,netlas,criminalip) (default shodan)
-   -uf, -uncover-field string     uncover fields to return (ip,port,host) (default "ip:port")
-   -ul, -uncover-limit int        uncover results to return (default 100)
-   -ucd, -uncover-delay int       delay between uncover query requests in seconds (0 to disable) (default 1)
+   -uc, -uncover                  启用 uncover 引擎
+   -uq, -uncover-query string[]   uncover 搜索查询
+   -ue, -uncover-engine string[]  uncover 搜索引擎 (shodan,shodan-idb,fofa,censys,quake,hunter,zoomeye,netlas,criminalip) (默认 shodan)
+   -uf, -uncover-field string     uncover 返回字段 (ip,port,host) (默认 "ip:port")
+   -ul, -uncover-limit int        uncover 返回结果数量 (默认 100)
+   -ucd, -uncover-delay int       uncover 查询请求之间的延迟（秒）(0 表示禁用) (默认 1)
 ```
 
-You need to set the API key of the engine you are using as an environment variable in your shell.
+你需要在 shell 中将使用的引擎的 API 密钥设置为环境变量。
 
 ```
 export SHODAN_API_KEY=xxx
@@ -731,20 +728,20 @@ export HUNTER_API_KEY=xxx
 export ZOOMEYE_API_KEY=xxx
 ```
 
-Required API keys can be obtained by signing up on following platform [Shodan](https://account.shodan.io/register), [Censys](https://censys.io/register), [Fofa](https://fofa.info/toLogin), [Quake](https://quake.360.net/quake/#/index), [Hunter](https://user.skyeye.qianxin.com/user/register?next=https%3A//hunter.qianxin.com/api/uLogin&fromLogin=1) and [ZoomEye](https://www.zoomeye.org/login) .
+所需的 API 密钥可以通过在以下平台注册获取 [Shodan](https://account.shodan.io/register)、[Censys](https://censys.io/register)、[Fofa](https://fofa.info/toLogin)、[Quake](https://quake.360.net/quake/#/index)、[Hunter](https://user.skyeye.qianxin.com/user/register?next=https%3A//hunter.qianxin.com/api/uLogin&fromLogin=1) 和 [ZoomEye](https://www.zoomeye.org/login)。
 
-Example of template execution using a search query.
+使用搜索查询执行模板的示例。
 
 ```
 export SHODAN_API_KEY=xxx
 nuclei -id 'CVE-2021-26855' -uq 'vuln:CVE-2021-26855' -ue shodan
 ```
 
-It can also read queries from templates metadata and execute template against hosts returned by uncover for that query.
+它还可以从模板元数据读取查询并针对 uncover 返回的主机执行模板。
 
-Example of template execution using template-defined search queries.
+使用模板定义的搜索查询执行模板的示例。
 
-Template snippet of [CVE-2021-26855](https://github.com/projectdiscovery/nuclei-templates/blob/master/cves/2021/CVE-2021-26855.yaml)
+[CVE-2021-26855](https://github.com/projectdiscovery/nuclei-templates/blob/master/cves/2021/CVE-2021-26855.yaml) 模板片段
 
 ```yaml
 metadata:
@@ -756,17 +753,17 @@ nuclei -t cves/2021/CVE-2021-26855.yaml -uncover
 nuclei -tags cve -uncover
 ```
 
-We can update the nuclei configuration file to include these tags for all scans.
+我们可以更新 nuclei 配置文件，为所有扫描包含这些标签。
 
-## Nuclei **Config**
+## Nuclei **配置**
 
-> Since release of [v2.3.2](https://blog.projectdiscovery.io/nuclei-v2-3-0-release/) nuclei uses [goflags](https://github.com/projectdiscovery/goflags) for clean CLI experience and long/short formatted flags.
+> 自 [v2.3.2](https://blog.projectdiscovery.io/nuclei-v2-3-0-release/) 发布以来，nuclei 使用 [goflags](https://github.com/projectdiscovery/goflags) 提供干净的 CLI 体验和长/短格式标志。
 >
-> [goflags](https://github.com/projectdiscovery/goflags) comes with auto-generated config file support that coverts all available CLI flags into config file, basically you can define all CLI flags into config file to avoid repetitive CLI flags that loads as default for every scan of nuclei.
+> [goflags](https://github.com/projectdiscovery/goflags) 带有自动生成的配置文件支持，可以将所有可用的 CLI 标志转换为配置文件，基本上你可以将所有 CLI 标志定义在配置文件中，以避免每次扫描 nuclei 时重复使用 CLI 标志。
 >
-> Default path of nuclei config file is `$HOME/.config/nuclei/config.yaml`, uncomment and configure the flags you wish to run as default.
+> nuclei 配置文件的默认路径是 `$HOME/.config/nuclei/config.yaml`，取消注释并配置你希望作为默认运行的标志。
 
-Here is an example config file:
+这是一个示例配置文件：
 
 ```yaml
 # Headers to include with all HTTP request
@@ -808,10 +805,10 @@ bulk-size: 50
 concurrency: 50
 ```
 
-Once configured, **config file be used as default**, additionally custom config file can be also provided using `-config` flag.
+一旦配置，**config 文件可以作为默认值**，此外可以提供自定义 config 文件使用 `-config` 标志。
 
 <Note>
-**Running nuclei with custom config file**
+**运行 nuclei 与自定义 config 文件**
 
     ```
     nuclei -config project.yaml -list urls.txt
@@ -821,22 +818,22 @@ Once configured, **config file be used as default**, additionally custom config 
 
 ## Nuclei Result Dashboard
 
-Nuclei now allows seamless integration with the ProjectDiscovery Cloud Platform to simplify the visualization of Nuclei results and generate swift reports. This highly requested feature from the community enables easier handling of scan results with minimal effort.
+Nuclei 现在允许与 ProjectDiscovery Cloud Platform 无缝集成，以简化 Nuclei 结果的可视化并生成快速报告。此高度请求的功能从社区中启用，以简化结果处理，只需最少努力。
 
-Follow the steps below to set up your PDCP Result Dashboard:
+按照以下步骤设置你的 PDCP Result Dashboard：
 
-    1.  Visit https://cloud.projectdiscovery.io to create free PDCP API key.
+    1.  访问 https://cloud.projectdiscovery.io 以创建免费 PDCP API 密钥。
     <img class="block" src="/images/pdcp-api-key.png" alt="PDCP API Key" />
-    2.  Use the `nuclei -auth` command, enter your API key when prompted.
-    3.  To perform a scan and upload the results straight to the cloud, use the `-cloud-upload` option while running a nuclei scan.
+    2.  使用 `nuclei -auth` 命令，在提示时输入你的 API 密钥。
+    3.  要执行扫描并直接上传结果到云端，请在运行 nuclei 扫描时使用 `-cloud-upload` 选项。
 
-An example command might look like this:
+一个示例命令可能如下所示：
 
 ```bash
 nuclei -target http://honey.scanme.sh -cloud-upload
 ```
 
-And the output would be like this:
+并且输出将如下所示：
 
 ```console
                      __     _
@@ -869,54 +866,54 @@ And the output would be like this:
 [INF] Scan results uploaded! View them at https://cloud.projectdiscovery.io/scans/clk37krsr14s73afc3ag
 ```
 
-After the scan, a URL will be displayed on the command line interface. Visit this URL to check your results on the Cloud Dashboard.
+扫描后，命令行界面将显示一个 URL。访问此 URL 以在云仪表板上检查结果。
 
 <img src="/images/pdcp-result-dashboard.png" alt="PDCP Result Dashboard"/>
 
-### Advanced Integration Options
+### 高级集成选项
 
-**Setting API key via environment variable**
+**通过环境变量设置 API 密钥**
 
-Avoid entering your API key via interactive prompt by setting it via environment variable.
+避免通过交互提示输入 API 密钥，通过环境变量设置它。
 
 ```sh
 export PDCP_API_KEY=XXXX-XXXX
 ```
 
-**Enabling result upload by default**
+**启用默认结果上传**
 
-If you want all your scans to automatically upload results to the cloud, enable the `ENABLE_CLOUD_UPLOAD` environment variable.
+如果你希望所有扫描自动上传结果到云端，请启用 `ENABLE_CLOUD_UPLOAD` 环境变量。
 
 ```sh
 export ENABLE_CLOUD_UPLOAD=true
 ```
 
-**Disabling cloud upload warnings**
+**禁用云上传警告**
 
-To suppress warnings about result uploads, disable the `DISABLE_CLOUD_UPLOAD_WRN` environment variable.
+要抑制结果上传警告，请禁用 `DISABLE_CLOUD_UPLOAD_WRN` 环境变量。
 
 ```sh
 export DISABLE_CLOUD_UPLOAD_WRN=true
 ```
 
-Your configured PDCP API key stored in `$HOME/.pdcp/credentials.yaml`
+你的配置 PDCP API 密钥存储在 `$HOME/.pdcp/credentials.yaml`
 
 <Warning>
-Nuclei OSS results uploaded to the cloud platform are scheduled for automatic cleanup after 30 days, although this duration is subject to change as we gauge user feedback and requirement.
+Nuclei OSS 结果上传到云平台是自动清理的，尽管此持续时间可能会根据用户反馈和要求而变化。
 </Warning>
 
 ## Nuclei Reporting
 
-Nuclei comes with reporting module support with the release of v2.3.0 supporting GitHub, GitLab, and Jira integration, this allows nuclei engine to create automatic tickets on the supported platform based on found results.
+Nuclei 随 v2.3.0 发布，支持 GitHub、GitLab 和 Jira 集成，这允许 nuclei 引擎基于找到的结果在支持的平台自动创建票证。
 
-| Platform    | GitHub | GitLab | Jira | Markdown | SARIF | Elasticsearch | Splunk HEC | MongoDB |
+| 平台    | GitHub | GitLab | Jira | Markdown | SARIF | Elasticsearch | Splunk HEC | MongoDB |
 |-------------|:------:|:------:|:----:|:--------:|:-----:|:-------------:|:----------:|:-------:|
 | Support     |   ✔    |   ✔    |  ✔   |    ✔     |   ✔   |       ✔       |     ✔      |     ✔   |
 
 
-`-rc, -report-config` flag can be used to provide a config file to read configuration details of the platform to integrate. Here is an [example config file](https://github.com/projectdiscovery/nuclei/blob/main/cmd/nuclei/issue-tracker-config.yaml) for all supported platforms.
+`-rc, -report-config` 标志可以用于提供配置文件以读取要集成的平台配置详细信息。以下是 [example config file](https://github.com/projectdiscovery/nuclei/blob/main/cmd/nuclei/issue-tracker-config.yaml) 所有支持平台。
 
-For example, to create tickets on GitHub, create a config file with the following content and replace the appropriate values:
+例如，要在 GitHub 上创建票证，请创建一个配置文件，如下所示并替换适当的值：
 
 ```yaml
 # GitHub contains configuration options for GitHub issue tracker
@@ -930,7 +927,7 @@ github:
   duplicate-issue-check: true
 ```
 
-Alternatively if you use GitLab, create a config file following content and replace the appropriate values:
+或者如果你使用 GitLab，请创建一个配置文件，如下所示并替换适当的值：
 
 ```yaml
 # GitLab contains configuration options for GitLab issue tracker
@@ -945,7 +942,7 @@ gitlab:
   duplicate-issue-check: true
 ```
 
-To store results in Elasticsearch, create a config file with the following content and replace the appropriate values:
+要在 Elasticsearch 中存储结果，请创建一个配置文件，如下所示并替换适当的值：
 
 ```yaml
 # elasticsearch contains configuration options for elasticsearch exporter
@@ -958,7 +955,7 @@ elasticsearch:
   index-name: nuclei
 ```
 
-To forward results to Splunk HEC, create a config file with the following content and replace the appropriate values:
+要在 Splunk HEC 中转发结果，请创建一个配置文件，如下所示并替换适当的值：
 
 ```yaml
 # splunkhec contains configuration options for splunkhec exporter
@@ -977,19 +974,19 @@ splunkhec:
   token: '$hec_token'
 ```
 
-To forward results to Jira, create a config file with the following content and replace the appropriate values:
+要在 Jira 中转发结果，请创建一个配置文件，如下所示并替换适当的值：
 
-The Jira reporting options allows for custom fields, as well as using variables from the Nuclei templates in those custom fields.
-The supported variables currently are: `$CVSSMetrics`, `$CVEID`, `$CWEID`, `$Host`, `$Severity`, `$CVSSScore`, `$Name`
+Jira 报告选项允许自定义字段，以及使用变量从 Nuclei 模板在那些自定义字段中。
+当前支持的变量是： `$CVSSMetrics`, `$CVEID`, `$CWEID`, `$Host`, `$Severity`, `$CVSSScore`, `$Name`
 
-In addition, Jira is strict when it comes to custom field entry. If the field is a dropdown, Jira accepts only the case sensitive specific string and the API call is slightly different. To support this, there are three types of customfields.
+此外，Jira 在自定义字段输入方面非常严格。如果字段是下拉菜单，Jira 只接受大小写敏感的特定字符串，并且 API 调用略有不同。为了支持这一点，有三种类型的自定义字段。
 
-- `name` is the dropdown value
-- `id` is the ID value of the dropdown
-- `freeform` is if the customfield the entry of any value
+- `name` 是下拉值
+- `id` 是下拉的 ID 值
+- `freeform` 如果自定义字段是文本输入，则为 true
 
-To avoid duplication, the JQL query run can be slightly modified by the config file.
-The `CLOSED_STATUS` can be changed in the Jira template file using the `status-not` variable.
+为了避免重复，JQL 查询可以稍微修改配置文件。
+JQL 查询中 `CLOSED_STATUS` 可以使用 `status-not` 变量在 Jira 模板文件中。
 `summary ~ TEMPLATE_NAME AND summary ~ HOSTNAME AND status != CLOSED_STATUS`
 
 ```yaml
@@ -1009,8 +1006,6 @@ jira:
   #project-name is the name of the project.
   project-name: test-project-name
   #issue-type is the name of the created issue type (case sensitive)
-  issue-type: Bug
-  # SeverityAsLabel (optional) sends the severity as the label of the created issue
   # User custom fields for Jira Cloud instead
   severity-as-label: true
   # Whatever your final status is that you want to use as a closed ticket - Closed, Done, Remediated, etc
@@ -1030,7 +1025,7 @@ jira:
       freeform: $CVSSScore
 ```
 
-To write results to a MongoDB database collection, update the config file with the connection information.
+要在 MongoDB 数据库集合中写入结果，请更新配置文件以连接信息。
 
 ```yaml
 mongodb:
@@ -1046,22 +1041,22 @@ mongodb:
   batch-size: 0
 ```
 
-**Running nuclei with reporting module:**
+**运行 nuclei 与报告模块：**
 
 ```bash
 nuclei -l urls.txt -t cves/ -rc issue-tracker.yaml
 ```
 
-Similarly, other platforms can be configured. Reporting module also supports basic filtering and duplicate checks to avoid duplicate ticket creation.
+同样，其他平台可以配置。报告模块还支持基本过滤和重复检查以避免重复票证创建。
 
 ```yaml
 allow-list:
   severity: high,critical
 ```
 
-This will ensure to only creating tickets for issues identified with **high** and **critical** severity; similarly, `deny-list` can be used to exclude issues with a specific severity.
+这将确保仅创建票证以解决 **high** 和 **critical** 严重性问题；同样，`deny-list` 可以用于排除特定严重性问题。
 
-If you are running periodic scans on the same assets, you might want to consider `-rdb, -report-db` flag that creates a local copy of the valid findings in the given directory utilized by reporting module to compare and **create tickets for unique issues only**.
+如果你在同一资产上运行定期扫描，你可能想要考虑 `-rdb, -report-db` 标志，该标志创建给定目录中有效发现的本地副本，用于报告模块以比较并 **为唯一问题创建票证**。
 
 ```bash
 nuclei -l urls.txt -t cves/ -rc issue-tracker.yaml -rdb prod
@@ -1069,9 +1064,9 @@ nuclei -l urls.txt -t cves/ -rc issue-tracker.yaml -rdb prod
 
 **<ins>Markdown Export</ins>**
 
-Nuclei supports markdown export of valid findings with `-me, -markdown-export` flag, this flag takes directory as input to store markdown formatted reports.
+Nuclei 支持有效发现的有效发现导出到 markdown 格式，使用 `-me, -markdown-export` 标志，此标志采用目录作为输入以存储 markdown 格式报告。
 
-Including request/response in the markdown report is optional, and included when `-irr, -include-rr` flag is used along with `-me`.
+包括请求/响应在 markdown 报告中是可选的，并且当与 `-irr, -include-rr` 标志一起使用时包括在内。
 
 ```bash
 nuclei -l urls.txt -t cves/ -irr -markdown-export reports
@@ -1079,31 +1074,29 @@ nuclei -l urls.txt -t cves/ -irr -markdown-export reports
 
 **<ins>SARIF Export</ins>**
 
-Nuclei supports SARIF export of valid findings with `-se, -sarif-export` flag. This flag takes a file as input to store SARIF formatted report.
+Nuclei 支持有效发现的有效发现导出到 SARIF 格式，使用 `-se, -sarif-export` 标志。此标志采用文件作为输入以存储 SARIF 格式报告。
 
 ```bash
 nuclei -l urls.txt -t cves/ -sarif-export report.sarif
 ```
 
-It is also possible to visualize Nuclei results using **SARIF** files.
+也可以使用 **SARIF** 文件可视化 Nuclei 结果。
 
-1. By uploading a SARIF file to [SARIF Viewer](https://microsoft.github.io/sarif-web-component/)
+1. 通过将 SARIF 文件上传到 [SARIF Viewer](https://microsoft.github.io/sarif-web-component/)
 
-2. By uploading a SARIF file to [Github Actions](https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github)
+2. 通过将 SARIF 文件上传到 [Github Actions](https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github)
 
-More info on the SARIF output is documented [here](https://github.com/projectdiscovery/nuclei/pull/2925).
+更多关于 SARIF 输出的信息记录在 [这里](https://github.com/projectdiscovery/nuclei/pull/2925)。
 
 <Note>
-  These are **not official** viewers of Nuclei and `Nuclei` has no liability
-  towards any of these options to visualize **Nuclei** results. These are just
-  some publicly available options to visualize SARIF files.
+  这些是 **不是** 官方的 Nuclei 查看器，`Nuclei` 对这些选项可视化 **Nuclei** 结果没有责任。这些只是一些公开可用的选项来可视化 SARIF 文件。
 </Note>
 
-## Scan **Metrics**
+## 扫描 **Metrics**
 
-Nuclei expose running scan metrics on a local port `9092` when `-metrics` flag is used and can be accessed at **localhost:9092/metrics**, default port to expose scan information is configurable using `-metrics-port` flag.
+Nuclei 暴露运行扫描指标在本地端口 `9092` 当使用 `-metrics` 标志和可以访问 localhost:9092/metrics，默认端口暴露扫描信息是可配置使用 `-metrics-port` 标志。
 
-Here is an example to query `metrics` while running nuclei as following `nuclei -t cves/ -l urls.txt -metrics`
+这是一个示例查询 `metrics` 同时运行 nuclei 如下 `nuclei -t cves/ -l urls.txt -metrics`
 
 ```bash
 curl -s localhost:9092/metrics | jq .
@@ -1124,9 +1117,9 @@ curl -s localhost:9092/metrics | jq .
 }
 ```
 
-## Passive Scan
+## 被动扫描
 
-Nuclei engine supports passive mode scanning for HTTP based template utilizing file support, with this support we can run HTTP based templates against locally stored HTTP response data collected from any other tool.
+Nuclei 引擎支持被动模式扫描 HTTP 模板利用文件支持，使用此支持我们可以运行 HTTP 模板针对本地存储的 HTTP 响应数据收集自其他工具。
 
 ```sh
 nuclei -passive -target http_data
@@ -1134,22 +1127,22 @@ nuclei -passive -target http_data
 
 <Note>Passive mode support is limited for templates having `{{BasedURL}}` or `{{BasedURL/}}` as base path.</Note>
 
-## Running With Docker
-If Nuclei was installed within a Docker container based on the [installation instructions](./install),
-the executable does not have the context of the host machine. This means that the executable will not be able to access
-local files such as those used for input lists or templates. To resolve this, the container should be run with volumes
-mapped to the local filesystem to allow access to these files.
+## 运行 Docker
+如果 Nuclei 安装在基于 [installation instructions](./install) 的 Docker 容器中，
+可执行文件没有主机机器的上下文。这意味着可执行文件将无法访问
+本地文件，例如用于输入列表或模板。要解决此问题，容器应使用卷
+映射到本地文件系统以允许访问这些文件。
 
-### Basic Usage
-This example runs a Nuclei container against `google.com`, prints the results to JSON and removes the container once it
-has completed:
+### 基本用法
+此示例运行 Nuclei 容器针对 `google.com`，将结果打印到 JSON 并删除容器一旦
+它已经完成：
 ```sh
 docker run --rm projectdiscovery/nuclei -u google.com -jsonl
 ```
 
-### Using Volumes
-This example runs a Nuclei container against a list of URLs, writes the results to a `.jsonl` file and removes the
-container once it has completed.
+### 使用卷
+此示例运行 Nuclei 容器针对 URL 列表，将结果写入 `.jsonl` 文件并删除
+容器一旦它已经完成。
 ```sh
 # This assumes there's a file called `urls.txt` in the current directory
 docker run --rm -v ./:/app/ projectdiscovery/nuclei -l /app/urls.txt -jsonl /app/results.jsonl

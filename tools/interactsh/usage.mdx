@@ -1,52 +1,52 @@
 ---
-title: Interactsh Usage
-description: "Learn Interact usage including flags and filters"
-sidebarTitle: Usage
+title: Interactsh 使用方法
+description: "学习 Interactsh 的使用方法，包括标志和过滤器"
+sidebarTitle: 使用方法
 ---
 
-## Access help
+## 获取帮助
 
-Use `interactsh-client -h` to display all of the help options.
+使用 `interactsh-client -h` 显示所有帮助选项。
 
-## Interactsh options
+## Interactsh 选项
 
 ```yaml
-Usage:
+用法:
   ./interactsh-client [flags]
 
-Flags:
-INPUT:
-   -s, -server string  interactsh server(s) to use (default "oast.pro,oast.live,oast.site,oast.online,oast.fun,oast.me")
+标志:
+输入:
+   -s, -server string  要使用的 interactsh 服务器 (默认值 "oast.pro,oast.live,oast.site,oast.online,oast.fun,oast.me")
 
-CONFIG:
-   -config string                           flag configuration file (default "$HOME/.config/interactsh-client/config.yaml")
-   -n, -number int                          number of interactsh payload to generate (default 1)
-   -t, -token string                        authentication token to connect protected interactsh server
-   -pi, -poll-interval int                  poll interval in seconds to pull interaction data (default 5)
-   -nf, -no-http-fallback                   disable http fallback registration
-   -cidl, -correlation-id-length int        length of the correlation id preamble (default 20)
-   -cidn, -correlation-id-nonce-length int  length of the correlation id nonce (default 13)
-   -sf, -session-file string                store/read from session file
+配置:
+   -config string                           标志配置文件 (默认值 "$HOME/.config/interactsh-client/config.yaml")
+   -n, -number int                          要生成的 interactsh payload 数量 (默认值 1)
+   -t, -token string                        连接受保护的 interactsh 服务器的认证令牌
+   -pi, -poll-interval int                  拉取交互数据的轮询间隔(秒) (默认值 5)
+   -nf, -no-http-fallback                   禁用 http 回退注册
+   -cidl, -correlation-id-length int        相关 ID 前导部分的长度 (默认值 20)
+   -cidn, -correlation-id-nonce-length int  相关 ID nonce 的长度 (默认值 13)
+   -sf, -session-file string                存储/读取会话文件
 
-FILTER:
-   -m, -match string[]   match interaction based on the specified pattern
-   -f, -filter string[]  filter interaction based on the specified pattern
-   -dns-only             display only dns interaction in CLI output
-   -http-only            display only http interaction in CLI output
-   -smtp-only            display only smtp interactions in CLI output
+过滤:
+   -m, -match string[]   基于指定模式匹配交互
+   -f, -filter string[]  基于指定模式过滤交互
+   -dns-only             在 CLI 输出中仅显示 dns 交互
+   -http-only            在 CLI 输出中仅显示 http 交互
+   -smtp-only            在 CLI 输出中仅显示 smtp 交互
 
-UPDATE:
-   -up, -update                 update interactsh-client to latest version
-   -duc, -disable-update-check  disable automatic interactsh-client update check
+更新:
+   -up, -update                 更新 interactsh-client 到最新版本
+   -duc, -disable-update-check  禁用自动 interactsh-client 更新检查
    
-OUTPUT:
-   -o string                         output file to write interaction data
-   -json                             write output in JSONL(ines) format
-   -ps, -payload-store               enable storing generated interactsh payload to file
-   -psf, -payload-store-file string  store generated interactsh payloads to given file (default "interactsh_payload.txt")
-   -v                                display verbose interaction
+输出:
+   -o string                         用于写入交互数据的输出文件
+   -json                             以 JSONL(ines) 格式写入输出
+   -ps, -payload-store               启用将生成的 interactsh payload 存储到文件
+   -psf, -payload-store-file string  将生成的 interactsh payload 存储到指定文件 (默认值 "interactsh_payload.txt")
+   -v                                显示详细交互信息
 
-DEBUG:
-   -version            show version of the project
-   -health-check, -hc  run diagnostic check up
+调试:
+   -version            显示项目版本
+   -health-check, -hc  运行诊断检查
 ```

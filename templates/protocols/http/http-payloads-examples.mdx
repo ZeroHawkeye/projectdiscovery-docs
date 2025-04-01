@@ -1,12 +1,12 @@
 ---
-title: "HTTP Payloads Examples"
-description: "Review some HTTP payload examples for Nuclei"
-sidebarTitle: "Payloads Examples"
+title: "HTTP 有效载荷示例"
+description: "查看一些适用于Nuclei的HTTP有效载荷示例"
+sidebarTitle: "有效载荷示例"
 ---
 
-## HTTP Intruder Bruteforcing
+## HTTP Intruder暴力破解
 
-This template makes a defined POST request in RAW format along with in template defined payloads running `clusterbomb` intruder and checking for string match against response.
+此模板使用RAW格式发送定义的POST请求，结合模板中定义的有效载荷运行`clusterbomb` intruder，并对响应进行字符串匹配检查。
 
 
 ```yaml
@@ -16,7 +16,7 @@ info:
   author: pdteam
   severity: info
 
-# HTTP Intruder bruteforcing with in template payload support. 
+# 支持模板内有效载荷的HTTP Intruder暴力破解。
 
 http:
 
@@ -42,7 +42,7 @@ http:
         - 12345
         - 123456
 
-    attack: clusterbomb # Available: batteringram,pitchfork,clusterbomb
+    attack: clusterbomb # 可用选项: batteringram,pitchfork,clusterbomb
 
     matchers:
       - type: word
@@ -50,9 +50,9 @@ http:
           - "Test is test matcher text"
 ```
 
-## BruteForcing multiple requests 
+## 多请求暴力破解
 
-This template makes a defined POST request in RAW format along with wordlist based payloads running `clusterbomb` intruder and checking for string match against response.
+此模板使用RAW格式发送定义的POST请求，结合基于词表的有效载荷运行`clusterbomb` intruder，并对响应进行字符串匹配检查。
 
 ```yaml
 id: multiple-raw-example
@@ -86,7 +86,7 @@ http:
 
         {{html_escape('§param_a§')}} + {{hex_encode('§param_b§')}}
 
-    attack: clusterbomb # Available types: batteringram,pitchfork,clusterbomb
+    attack: clusterbomb # 可用类型: batteringram,pitchfork,clusterbomb
     payloads:
       param_a: payloads/prams.txt
       param_b: payloads/paths.txt
@@ -97,9 +97,9 @@ http:
           - "Test is test matcher text"
 ```
 
-## Authenticated Bruteforcing
+## 认证暴力破解
 
-This template makes a subsequent HTTP requests with defined requests maintaining sessions between each request and checking for string match against response.
+此模板发送多个后续HTTP请求，每个请求之间保持会话状态，并对响应进行字符串匹配检查。
 
 ```yaml
 id: multiple-raw-example
@@ -122,7 +122,7 @@ http:
 
         testing=parameter
 
-    cookie-reuse: true # Cookie-reuse maintain the session between all request like browser. 
+    cookie-reuse: true # Cookie-reuse像浏览器一样在所有请求之间维持会话状态。
     matchers:
       - type: word
         words:

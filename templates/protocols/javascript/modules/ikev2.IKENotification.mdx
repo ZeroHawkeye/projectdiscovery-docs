@@ -1,11 +1,11 @@
-# Interface: IKENotification
+# 接口: IKENotification
 
 [ikev2](/templates/protocols/javascript/modules/ikev2).IKENotification
 
-IKEv2Notify is the IKEv2 Notification payload
-this implements the IKEPayload interface
+IKEv2Notify 是 IKEv2 通知有效载荷
+这实现了 IKEPayload 接口
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const ikev2 = require('nuclei/ikev2');
@@ -14,20 +14,20 @@ notify.NotifyMessageType = ikev2.IKE_NOTIFY_NO_PROPOSAL_CHOSEN;
 notify.NotificationData = [1, 2, 3];
 ```
 
-## Table of contents
+## 目录
 
-### Properties
+### 属性
 
 - [NotificationData](/templates/protocols/javascript/modules/ikev2.IKENotification#notificationdata)
 - [NotifyMessageType](/templates/protocols/javascript/modules/ikev2.IKENotification#notifymessagetype)
 
-## Properties
+## 属性
 
 ### NotificationData
 
 • `Optional` **NotificationData**: `Uint8Array`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:123
 
@@ -37,6 +37,6 @@ ___
 
 • `Optional` **NotifyMessageType**: `number`
 
-#### Defined in
+#### 定义于
 
 ikev2.ts:121

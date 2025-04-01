@@ -1,15 +1,15 @@
 ---
-title: "Race Conditions"
-description: "Learn about using race conditions with Nuclei"
+title: "竞争条件"
+description: "了解如何在Nuclei中使用竞争条件"
 ---
 
-Race Conditions are another class of bugs not easily automated via traditional tooling. Burp Suite introduced a Gate mechanism to Turbo Intruder where all the bytes for all the requests are sent expect the last one at once which is only sent together for all requests synchronizing the send event.
+竞争条件是另一类难以通过传统工具自动化检测的漏洞。Burp Suite在Turbo Intruder中引入了Gate机制，该机制会同时发送所有请求的所有字节，除了最后一个字节将同时为所有请求发送，从而同步发送事件。
 
-We have implemented **Gate** mechanism in nuclei engine and allow them run via templates which makes the testing for this specific bug class simple and portable.
+我们在nuclei引擎中实现了**Gate**机制，并允许通过模板运行它们，这使得测试这种特定类型的漏洞变得简单和可移植。
 
-To enable race condition check within template, `race` attribute can be set to `true` and `race_count` defines the number of simultaneous request you want to initiate.
+要在模板中启用竞争条件检查，可以将`race`属性设置为`true`，并使用`race_count`定义你想要发起的同时请求数量。
 
-Below is an example template where the same request is repeated for 10 times using the gate logic.
+以下是一个示例模板，其中使用gate逻辑重复相同的请求10次。
 
 ```yaml
 id: race-condition-testing
@@ -37,25 +37,24 @@ http:
           - 200
 ```
 
-You can simply replace the `POST` request with any suspected vulnerable request and change the `race_count` as per your need, and it's ready to run.
+你可以简单地将`POST`请求替换为任何可疑的易受攻击的请求，并根据需要更改`race_count`，就可以运行了。
 
 ```bash
 nuclei -t race.yaml -target https://api.target.com
 ```
 
-**Multi request race condition testing**
+**多请求竞争条件测试**
 
-For the scenario when multiple requests needs to be sent in order to exploit the race condition, we can make use of threads.
+对于需要发送多个请求才能利用竞争条件的场景，我们可以使用线程。
 
 ```yaml
     threads: 5
     race: true
 ```
 
-`threads` is a total number of request you wanted make with the template to perform race condition testing.
+`threads`是你想要使用模板进行竞争条件测试的请求总数。
 
-
-Below is an example template where multiple (5) unique request will be sent at the same time using the gate logic.
+以下是一个示例模板，其中将同时使用gate逻辑发送多个(5个)唯一请求。
 
 ```yaml
 id: multi-request-race
@@ -117,5 +116,5 @@ http:
 ```
 
 <Tip>
-More complete examples are provided [here](/templates/protocols/http/http-race-condition-examples)
+更完整的示例请参见[这里](/templates/protocols/http/http-race-condition-examples)
 </Tip>

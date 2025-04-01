@@ -1,26 +1,26 @@
 ---
-title: "Variables"
-description: "Review details on variables for Nuclei"
+title: "变量"
+description: "查看 Nuclei 变量的详细信息"
 icon: "brackets-curly"
 iconType: "solid"
 ---
 
-Variables can be used to declare some values which remain constant throughout the template. The value of the variable once calculated does not change. Variables can be either simple strings or DSL helper functions. If the variable is a helper function, it is enclosed in double-curly brackets `{{<expression>}}`. Variables are declared at template level.
+变量可用于声明在整个模板中保持不变的值。变量一旦计算，其值就不会改变。变量可以是简单的字符串或 DSL 辅助函数。如果变量是辅助函数，它将被包含在双大括号 `{{<expression>}}` 中。变量在模板级别声明。
 
-Example variables - 
+变量示例 - 
 
 ```yaml
 variables:
-  a1: "test" # A string variable
-  a2: "{{to_lower(rand_base(5))}}" # A DSL function variable
+  a1: "test" # 字符串变量
+  a2: "{{to_lower(rand_base(5))}}" # DSL 函数变量
 ```
 
-Currently, `dns`, `http`, `headless` and `network` protocols support variables.
+目前，`dns`、`http`、`headless` 和 `network` 协议支持变量。
 
-Example of templates with variables - 
+使用变量的模板示例 - 
 
 ```yaml
-# Variable example using HTTP requests
+# 使用 HTTP 请求的变量示例
 id: variables-example
 
 info:
@@ -49,7 +49,7 @@ http:
 ```
 
 ```yaml
-# Variable example for network requests
+# 网络请求的变量示例
 id: variables-example
 
 info:

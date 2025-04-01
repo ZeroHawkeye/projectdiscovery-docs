@@ -1,60 +1,59 @@
-# Namespace: fs
+# 命名空间: fs
 
-## Table of contents
+## 目录
 
-### Functions
+### 函数
 
 - [ListDir](/templates/protocols/javascript/modules/fs#listdir)
 - [ReadFile](/templates/protocols/javascript/modules/fs#readfile)
 - [ReadFileAsString](/templates/protocols/javascript/modules/fs#readfileasstring)
 - [ReadFilesFromDir](/templates/protocols/javascript/modules/fs#readfilesfromdir)
 
-## Functions
+## 函数
 
 ### ListDir
 
 ▸ **ListDir**(`path`, `itemType`): `string`[] \| ``null``
 
-ListDir lists itemType values within a directory
-depending on the itemType provided
-itemType can be any one of ['file','dir',”]
+ListDir 根据提供的 itemType 列出目录中的 itemType 值
+itemType 可以是 ['file','dir',"] 中的任意一个
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `path` | `string` |
 | `itemType` | `string` |
 
-#### Returns
+#### 返回值
 
 `string`[] \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const fs = require('nuclei/fs');
-// this will only return files in /tmp directory
+// 这将仅返回 /tmp 目录中的文件
 const files = fs.ListDir('/tmp', 'file');
 ```
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const fs = require('nuclei/fs');
-// this will only return directories in /tmp directory
+// 这将仅返回 /tmp 目录中的目录
 const dirs = fs.ListDir('/tmp', 'dir');
 ```
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const fs = require('nuclei/fs');
-// when no itemType is provided, it will return both files and directories
+// 当没有提供 itemType 时，它将返回文件和目录
 const items = fs.ListDir('/tmp');
 ```
 
-#### Defined in
+#### 定义于
 
 fs.ts:26
 
@@ -64,28 +63,28 @@ ___
 
 ▸ **ReadFile**(`path`): `Uint8Array` \| ``null``
 
-ReadFile reads file contents within permitted paths
-and returns content as byte array
+ReadFile 读取允许路径内的文件内容
+并以 byte 数组形式返回内容
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `path` | `string` |
 
-#### Returns
+#### 返回值
 
 `Uint8Array` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const fs = require('nuclei/fs');
-// here permitted directories are $HOME/nuclei-templates/*
+// 这里允许的目录是 $HOME/nuclei-templates/*
 const content = fs.ReadFile('helpers/usernames.txt');
 ```
 
-#### Defined in
+#### 定义于
 
 fs.ts:42
 
@@ -95,28 +94,28 @@ ___
 
 ▸ **ReadFileAsString**(`path`): `string` \| ``null``
 
-ReadFileAsString reads file contents within permitted paths
-and returns content as string
+ReadFileAsString 读取允许路径内的文件内容
+并以字符串形式返回内容
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `path` | `string` |
 
-#### Returns
+#### 返回值
 
 `string` \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const fs = require('nuclei/fs');
-// here permitted directories are $HOME/nuclei-templates/*
+// 这里允许的目录是 $HOME/nuclei-templates/*
 const content = fs.ReadFileAsString('helpers/usernames.txt');
 ```
 
-#### Defined in
+#### 定义于
 
 fs.ts:58
 
@@ -126,28 +125,28 @@ ___
 
 ▸ **ReadFilesFromDir**(`dir`): `string`[] \| ``null``
 
-ReadFilesFromDir reads all files from a directory
-and returns a string array with file contents of all files
+ReadFilesFromDir 从目录中读取所有文件
+并返回包含所有文件内容的字符串数组
 
-#### Parameters
+#### 参数
 
-| Name | Type |
+| 名称 | 类型 |
 | :------ | :------ |
 | `dir` | `string` |
 
-#### Returns
+#### 返回值
 
 `string`[] \| ``null``
 
-**`Example`**
+**`示例`**
 
 ```javascript
 const fs = require('nuclei/fs');
-// here permitted directories are $HOME/nuclei-templates/*
+// 这里允许的目录是 $HOME/nuclei-templates/*
 const contents = fs.ReadFilesFromDir('helpers/ssh-keys');
 log(contents);
 ```
 
-#### Defined in
+#### 定义于
 
 fs.ts:75

@@ -1,11 +1,11 @@
 ---
-title: "Fuzzing Examples"
-description: "Review some examples of fuzzing with Nuclei"
+title: "模糊测试示例"
+description: "查看一些使用Nuclei进行模糊测试的示例"
 ---
 
-## Basic SSTI Template
+## 基础SSTI模板
 
-A simple template to discover `{{<number>*<number>}}` type SSTI vulnerabilities.
+一个简单的模板，用于发现`{{<number>*<number>}}`类型的SSTI漏洞。
 
 ```yaml
 id: fuzz-reflection-ssti
@@ -24,7 +24,7 @@ http:
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "GET"'       # only run on GET URLs
+          - 'method == "GET"'       # 仅在GET URL上运行
 
     payloads:
       reflection:
@@ -44,9 +44,9 @@ http:
           - "{{result}}"
 ```
 
-## Blind Time Based SQLi Template
+## 盲时间型SQLi模板
 
-A template to detect blind time based SQLi with a time delay analyzer.
+一个用于检测盲时间型SQLi的模板，使用时间延迟分析器。
 
 ```yaml
 id: mysql-blind-time-based-sqli
@@ -83,7 +83,7 @@ http:
       name: time_delay
         
     fuzzing:
-      - part: request # fuzz all the request parts.
+      - part: request # 模糊测试所有请求部分
         type: postfix
         mode: single
         fuzz:
@@ -98,9 +98,9 @@ http:
           - "true"
 ```
 
-## Basic XSS Template
+## 基础XSS模板
 
-A simple template to discover XSS probe reflection in HTML pages.
+一个简单的模板，用于发现HTML页面中的XSS探针反射。
 
 ```yaml
 id: fuzz-reflection-xss
@@ -114,7 +114,7 @@ http:
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "GET"'       # only run on GET URLs
+          - 'method == "GET"'       # 仅在GET URL上运行
 
     payloads:
       reflection:
@@ -141,9 +141,9 @@ http:
           - "text/html"
 ```
 
-## Basic OpenRedirect Template
+## 基础开放重定向模板
 
-A simple template to discover open-redirects issues.
+一个简单的模板，用于发现开放重定向问题。
 
 ```yaml
 id: fuzz-open-redirect
@@ -157,7 +157,7 @@ http:
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "GET"'       # only run on GET URLs
+          - 'method == "GET"'       # 仅在GET URL上运行
 
     payloads:
       redirect:
@@ -186,27 +186,27 @@ http:
           - 307
 ```
 
-## Basic Path Based SQLi
+## 基础路径型SQLi
 
-A example template to discover path-based SQLi issues.
+一个用于发现路径型SQLi问题的示例模板。
 
 ```yaml
 http:
-    # pre-condition to determine if the template should be executed
+    # 确定是否应执行模板的预条件
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "POST"'       # only run if method is POST
-          - 'contains(path,"reset")' # only run if path contains reset word
+          - 'method == "POST"'       # 仅在方法为POST时运行
+          - 'contains(path,"reset")' # 仅在路径包含reset字样时运行
         condition: and
 
-    # fuzzing rules
+    # 模糊测试规则
     fuzzing:
-      - part: header # This rule will be applied to the header
-        type: replace # replace the type of rule (i.e., existing values will be replaced with payload)
-        mode: multiple # multiple mode (i.e., all existing values will be replaced/used at once)
+      - part: header # 此规则将应用于header
+        type: replace # replace类型规则（即现有值将被payload替换）
+        mode: multiple # multiple模式（即所有现有值将同时被替换/使用）
         fuzz:
-          X-Forwarded-For: "{{domain}}"  # here {{domain}} is attacker-controlled server
+          X-Forwarded-For: "{{domain}}"  # 这里{{domain}}是攻击者控制的服务器
           X-Forwarded-Host: "{{domain}}"
           Forwarded: "{{domain}}"
           X-Real-IP: "{{domain}}"
@@ -216,27 +216,27 @@ http:
 ```
 
 
-## Basic Host Header Injection
+## 基础Host Header注入
 
-A simple template to discover host header injection issues.
+一个简单的模板，用于发现Host Header注入问题。
 
 ```yaml
 http:
-    # pre-condition to determine if the template should be executed
+    # 确定是否应执行模板的预条件
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "POST"'       # only run if method is POST
-          - 'contains(path,"reset")' # only run if path contains reset word
+          - 'method == "POST"'       # 仅在方法为POST时运行
+          - 'contains(path,"reset")' # 仅在路径包含reset字样时运行
         condition: and
 
-    # fuzzing rules
+    # 模糊测试规则
     fuzzing:
-      - part: header # This rule will be applied to the header
-        type: replace # replace the type of rule (i.e., existing values will be replaced with payload)
-        mode: multiple # multiple mode (i.e., all existing values will be replaced/used at once)
+      - part: header # 此规则将应用于header
+        type: replace # replace类型规则（即现有值将被payload替换）
+        mode: multiple # multiple模式（即所有现有值将同时被替换/使用）
         fuzz:
-          X-Forwarded-For: "{{domain}}"  # here {{domain}} is attacker-controlled server
+          X-Forwarded-For: "{{domain}}"  # 这里{{domain}}是攻击者控制的服务器
           X-Forwarded-Host: "{{domain}}"
           Forwarded: "{{domain}}"
           X-Real-IP: "{{domain}}"
@@ -246,9 +246,9 @@ http:
 ```
 
 
-## Blind SSRF OOB Detection
+## 盲SSRF OOB检测
 
-A simple template to detect Blind SSRF in known-parameters using interactsh with HTTP fuzzing.
+一个简单的模板，使用interactsh和HTTP模糊测试在已知参数中检测盲SSRF。
 
 ```yaml
 id: fuzz-ssrf
@@ -262,7 +262,7 @@ http:
   - pre-condition:
       - type: dsl
         dsl:
-          - 'method == "GET"'       # only run on GET URLs
+          - 'method == "GET"'       # 仅在GET URL上运行
 
     payloads:
       redirect:
@@ -306,14 +306,14 @@ http:
 
     matchers:
       - type: word
-        part: interactsh_protocol  # Confirms the DNS Interaction
+        part: interactsh_protocol  # 确认DNS交互
         words:
           - "http"
 ```
 
-## Blind CMDi OOB based detection
+## 盲CMDi基于OOB的检测
 
-A simple template to detect blind CMDI using interactsh
+一个简单的模板，使用interactsh检测盲命令注入
 
 ```yaml
 id: fuzz-cmdi
@@ -335,7 +335,7 @@ http:
           - "nslookup {{redirect}}"
     matchers:
       - type: word
-        part: interactsh_protocol  # Confirms the DNS Interaction
+        part: interactsh_protocol  # 确认DNS交互
         words:
           - "dns"
 ```
