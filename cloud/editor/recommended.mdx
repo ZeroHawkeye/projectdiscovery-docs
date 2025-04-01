@@ -1,0 +1,37 @@
+---
+title: "Recommended"
+description: "Learn more about using recommended templates with ProjectDiscovery"
+---
+
+<Info>
+  The functionality described on this page is **only** available on
+  [ProjectDiscovery team account](https://projectdiscovery.io/pricing).
+</Info>
+
+## Overview
+
+When setting up a scan in our cloud platform you have the option to build your scan using custom templates, [all templates](https://github.com/projectdiscovery/nuclei-templates), or recommended templates.
+
+**Recommended templates are a curated subset of the full template library designed for efficiently scanning your attack surface.**
+
+This subset of templates, nearly 4000 in total, focuses on relevant and exploitable vulnerabilities, excluding informational templates and templates with the potential to generate false positives.
+
+The curated set of recommended templates is available as a config file and can be viewed in the Nuclei repository - [recommended templates](https://github.com/projectdiscovery/nuclei-templates/blob/main/config/recommended.yml), or withing the application.
+
+Rather than a list, recommended templates are curated through defined filters.
+
+_This approach ensures that the curated list remains up-to-date as new templates are added._
+
+Filtering for recommended templates includes:
+
+- All template severities except info
+
+- Type: http, tcp, or javascript
+
+- Exclusion of the tags: tech, dos, fuzz, creds-stuffing, token-spray, osint
+
+- Exclusion of specific templates the list is available for review here --> [recommended templates](https://github.com/projectdiscovery/nuclei-templates/blob/main/config/recommended.yml)
+
+<Note>
+  If you have questions, reach out to us through support@projectdiscovery.io.
+</Note>

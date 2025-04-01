@@ -1,0 +1,449 @@
+---
+title: "Headless 协议"
+description: "了解如何将无头浏览器与 Nuclei 配合使用"
+icon: "browser"
+iconType: "solid"
+sidebarTitle: "Headless"
+---
+
+Nuclei 支持使用简单的 DSL 来自动化浏览器操作。无头浏览器引擎可以完全自定义，用户操作可以通过脚本执行，从而实现对浏览器的完全控制。这允许各种独特和自定义的工作流程。
+
+```yaml
+# 在此处开始模板的请求
+headless:
+```
+
+## 操作（Actions）
+
+操作是 Nuclei 无头引擎的单个任务片段。每个操作以某种方式操作浏览器状态，最终导向我们感兴趣的捕获状态。
+
+Nuclei 支持多种操作。以下是这些操作及其参数的列表：
+
+### navigate
+
+Navigate 访问给定的 URL。url 字段支持像 `{{BaseURL}}`、`{{Hostname}}` 这样的变量，以完全自定义请求。
+
+```yaml
+action: navigate
+args: 
+  url: "{{BaseURL}}
+```
+
+### script
+
+Script 在当前浏览器页面上运行 JS 代码。最简单的用法是，你只需提供一个带有 JS 片段的 `code` 参数，它将在页面上运行。
+
+```yaml
+action: script
+args:
+  code: alert(document.domain)
+```
+
+假设你想对 JS 对象运行匹配器来检查其值。这种类型的数据提取用例也由 nuclei headless 支持。例如，假设应用程序设置了一个名为 `window.random-object` 的对象并赋予了一个值，你想匹配该值。
+
+```yaml
+- action: script
+  args:
+    code: window.random-object
+  name: script-name
+...
+matchers:
+  - type: word
+    part: script-name
+    words:
+      - "some-value"
+```
+
+Nuclei 支持在页面加载前运行一些自定义的 Javascript，通过 `hook` 参数实现。这将在任何页面加载之前始终运行提供的 Javascript。
+
+提供的示例挂钩了 `window.alert`，这样应用程序生成的警告不会停止爬虫。
+
+```yaml
+- action: script
+  args:
+    code: (function() { window.alert=function(){} })()
+    hook: true
+```
+
+这只是一个用例，函数挂钩还有许多其他用例，如 DOM XSS 检测和基于 Javascript 注入的测试技术。更多示例在示例页面中提供。
+
+### click
+
+Click 模拟使用鼠标左键点击由选择器指定的元素。
+
+```yaml
+action: click
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+```
+
+Nuclei 支持各种选择器类型，包括但不限于 XPath、正则表达式、CSS 等。有关选择器的更多信息，请参见[此处](#selectors)。
+
+### rightclick
+
+RightClick 模拟使用鼠标右键点击由选择器指定的元素。
+
+```yaml
+action: rightclick
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+```
+
+### text
+
+Text 模拟使用键盘在输入框中输入内容。可以使用选择器来指定要输入的元素。
+
+```yaml
+action: text
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+  value: username
+```
+
+### screenshot
+
+Screenshots 对页面进行截图并将其写入磁盘。它支持全页面和普通截图。
+
+```yaml
+action: screenshot
+args: 
+  to: /root/test/screenshot-web
+```
+
+如果需要全页面截图，可以在 args 中使用 `fullpage: true` 选项实现。
+
+```yaml
+action: screenshot
+args: 
+  to: /root/test/screenshot-web
+  fullpage: true
+```
+
+### time
+
+Time 在页面上的时间输入字段中以 RFC3339 格式输入值。
+
+```yaml
+action: time
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+  value: 2006-01-02T15:04:05Z07:00
+```
+
+### select
+
+Select 通过选择器对 HTML 输入执行选择操作。
+
+```yaml
+action: select
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+  selected: true
+  value: option[value=two]
+  selector: regex
+```
+
+### files
+
+Files 处理网页上的文件上传输入。
+
+```yaml
+action: files
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+  value: /root/test/payload.txt
+```
+
+### waitfcp
+
+WaitFCP 等待第一个有意义的内容出现，如文本或图像，表明页面正在变得有用。
+
+```yaml
+action: waitfcp
+```
+
+### waitfmp
+
+WaitFMP 等待首次有意义的绘制事件，允许用户在内容视觉上准备好时继续。
+
+```yaml
+action: waitfmp
+```
+
+### waitdom
+
+WaitDOM 等待 `DOMContentLoaded` 事件，表明 HTML 已加载并解析，但不等待样式表、图像和子框架完成加载。
+
+```yaml
+action: waitdom
+```
+
+### waitload
+
+WaitLoad 等待整个页面，包括样式表和图像等依赖资源，完全加载。
+
+```yaml
+action: waitload
+```
+
+### waitidle
+
+WaitIdle 等待页面完全停止进行网络请求并达到网络空闲状态，表明所有资源已加载。
+
+```yaml
+action: waitidle
+```
+
+### waitstable
+
+WaitStable 等待页面在 *N* 时长内保持稳定 *(默认为 `1s`)*。
+
+```yaml
+action: waitstable
+args:
+  duration: 5s
+```
+
+### waitdialog
+
+WaitDialog 将等待 JavaScript 对话框（`alert`、`confirm`、`prompt` 或 `onbeforeunload`）初始化，然后自动接受它。
+
+```yaml
+action: waitdialog
+name: alert
+args:
+  max-duration: 5s # (可选。默认 10s。)
+```
+
+此操作对于检测触发的 XSS 有效载荷非常有用，具有高准确性和低误报率。
+
+<Note>
+  必须明确定义 `name` 属性，以确保输出变量可供模板中的 `matchers` 或 `extractors` 后续使用。请参见[此处](/templates/protocols/headless-examples#xss-detection)的示例。
+</Note>
+
+**输出变量：**
+
+* **NAME** _(布尔值)_，表示 JavaScript 对话框是否已触发。
+* **NAME_type** _(字符串)_，对话框类型（`alert`、`confirm`、`prompt` 或 `onbeforeunload`）。
+* **NAME_message** _(字符串)_，显示的消息对话框内容。
+
+### getresource
+
+GetResource 返回元素的 src 属性。
+
+```yaml
+action: getresource
+name: extracted-value-src
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+```
+
+### extract
+
+Extract 提取 HTML 节点的文本或用户指定的属性。
+
+以下代码将提取给定 XPath 选择器元素的文本，然后也可以通过匹配器和提取器使用名称 `extracted-value` 进行匹配。
+
+```yaml
+action: extract
+name: extracted-value
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+```
+
+也可以提取元素的属性。例如 - 
+
+```yaml
+action: extract
+name: extracted-value-href
+args: 
+  by: xpath
+  xpath: /html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input
+  target: attribute
+  attribute: href
+```
+
+### setmethod
+
+SetMethod 覆盖请求的方法。
+
+```yaml
+action: setmethod
+args: 
+  part: request
+  method: DELETE
+```
+
+### addheader
+
+AddHeader 向请求/响应添加头部。这不会覆盖任何预先存在的头部。
+
+```yaml
+action: addheader
+args: 
+  part: response # 也可以是 request
+  key: Content-Security-Policy
+  value: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
+```
+
+### setheader
+
+SetHeader 在请求/响应中设置头部。
+
+```yaml
+action: setheader
+args: 
+  part: response # 也可以是 request
+  key: Content-Security-Policy
+  value: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
+```
+
+### deleteheader
+
+DeleteHeader 从请求/响应中删除头部。
+
+```yaml
+action: deleteheader
+args: 
+  part: response # 也可以是 request
+  key: Content-Security-Policy
+```
+
+### setbody
+
+SetBody 为请求/响应设置正文。
+
+```yaml
+action: setbody
+args: 
+  part: response # 也可以是 request
+  body: '{"success":"ok"}'
+```
+
+### waitevent
+
+WaitEvent 等待页面上触发的事件。
+
+```yaml
+action: waitevent
+args: 
+  event: 'Page.loadEventFired'
+```
+
+支持的事件列表在[这里](https://github.com/go-rod/rod/blob/master/lib/proto/definitions.go)列出。
+
+### keyboard
+
+Keyboard 模拟键盘上的单个按键操作。
+
+```yaml
+action: keyboard
+args: 
+  keys: '\r' # 这模拟在键盘上按下回车键
+```
+
+`keys` 参数接受键码。
+
+### debug
+
+Debug 在每个无头操作之间添加 5 秒的延迟，并显示浏览器中发生的所有无头事件的跟踪。
+
+> 注意：仅将此用于调试目的，不要在生产模板中使用。
+
+```yaml
+action: debug
+```
+
+### sleep
+
+Sleep 使浏览器等待指定的秒数。这也对调试目的有用。
+
+```yaml
+action: sleep
+args:
+  duration: 5
+```
+
+## 选择器（Selectors）
+
+选择器是 nuclei 无头引擎识别要对哪个元素执行操作的方式。Nuclei 支持通过包含各种选项来获取选择器 - 
+
+| 选择器              | 描述                                     |
+|----------------------|-----------------------------------------------------|
+| `r` / `regex`        | 元素匹配 CSS 选择器且文本匹配正则表达式 |
+| `x` / `xpath`        | 元素匹配 XPath 选择器                   |
+| `js`                 | 从 JS 函数返回元素                      |
+| `search`             | 搜索查询（可以是文本、XPATH、CSS）      |
+| `selector` (默认)    | 元素匹配 CSS 选择器                     |
+
+## 匹配器/提取器部分
+
+**Headless** 协议支持的匹配器/提取器的有效 `part` 值 - 
+    
+| 值                | 描述                             |
+|-------------------|---------------------------------|
+| request           | 无头请求                         |
+| `<out_names>`     | 具有存储值的操作名称             |
+| raw / body / data | 来自浏览器的最终 DOM 响应        |
+
+## 无头模板示例
+
+以下是自动登录到 DVWA 的无头模板示例 - 
+
+```yaml
+id: dvwa-headless-automatic-login
+
+info:
+  name: DVWA 无头自动登录
+  author: pdteam
+  severity: high
+
+headless:
+  - steps:
+      - args:
+          url: "{{BaseURL}}/login.php"
+        action: navigate
+      - action: waitload
+      - args:
+          by: xpath
+          xpath: /html/body/div/div[2]/form/fieldset/input
+        action: click
+      - action: waitload
+      - args:
+          by: xpath
+          value: admin
+          xpath: /html/body/div/div[2]/form/fieldset/input
+        action: text
+      - args:
+          by: xpath
+          xpath: /html/body/div/div[2]/form/fieldset/input[2]
+        action: click
+      - action: waitload
+      - args:
+          by: xpath
+          value: password
+          xpath: /html/body/div/div[2]/form/fieldset/input[2]
+        action: text
+      - args:
+          by: xpath
+          xpath: /html/body/div/div[2]/form/fieldset/p/input
+        action: click
+      - action: waitload
+    matchers:
+      - part: resp
+        type: word
+        words:
+          - "You have logged in as"
+```
+
+<Tip>
+更完整的示例在[这里](/templates/protocols/headless-examples)提供。
+</Tip>

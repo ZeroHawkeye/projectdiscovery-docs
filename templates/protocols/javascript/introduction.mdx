@@ -1,0 +1,54 @@
+---
+title: "JavaScript Protocol Introduction"
+description: "Learn more about using JavaScript with Nuclei v3"
+sidebarTitle: "Introduction"
+---
+
+## Introduction
+
+Nuclei and the ProjectDiscovery community thrive on the ability to write exploits/checks in a fast and simple YAML format. We work consistently to improve our **Nuclei templates** to encourage those as the standard for writing security checks. We understand the limitations and are always working to address those, while we work on expanding our capabilities. 
+
+ Nuclei currently supports writing templates for complex HTTP, DNS, SSL protocol exploits/checks through a powerful and easy to use DSL in the Nuclei engine. However, we understand the current support may not be enough for addressing vulnerabilities across all protocols and in non-remote domains of security like local privilege escalation checks, kernel etc.
+
+To address this, Nuclei v3 includes an embedded runtime for JavaScript that is tailored for **Nuclei** with the help of **[Goja](https://github.com/dop251/goja)**.
+
+
+## Features
+
+**Support for provider or driver-specific exploits**
+
+Some vulnerabilities are specific to software or a driver. For example, a Redis buffer overflow exploit, an exploit of specific VPN software, or exploits that are not part of the Internet Engineering Task Force (IETF) standard protocols.
+
+Since these are not standard protocols they are not typically added to Nuclei. Detection for these types of exploits cannot be written using a 'network' protocol. 
+They are often very complex to write and detection for these exploits can be written by exposing the required library in Nuclei (if not already present). We now provide support for writing detection of these types of exploits with JavaScript.
+
+**Non-network checks**
+
+Security is not limited to network exploits. Nuclei provides support for security beyond network issues like:
+ - Local privilege escalation checks
+ - Kernel exploits
+ - Account misconfigurations
+ - System misconfigurations
+
+**Complex network protocol exploits**
+
+Some network exploits are very complex to write due to nature of the protocol or exploit itself. For example [CVE-2020-0796](https://nvd.nist.gov/vuln/detail/cve-2020-0796) requires you to manually construct a packet. 
+Detection for these exploits is usually written in Python but now can be written in JavaScript. 
+
+**Multi-step exploits**
+
+LDAP or Kerberos exploits usually involve a multi-step process of authentication and are difficult to write in YAML-based DSL. JavaScript support makes this easier. 
+
+**Scalable and maintainable exploits**
+
+One off exploit detection written in code are not scalable and maintainable due to nature of language, boilerplate code, and other factors. Our goal is to provide the tools to allow you to write the **minimum** code required to run detection of the exploit and let Nuclei do the rest. 
+
+
+**Leveraging Turing complete language**
+
+While YAML-based DSL is powerful and easy to use it is not Turing complete and has its own limitations. Javascript is Turing complete thus users who are already familiar with JavaScript can write network and other detection of exploits without learning new DSL or hacking around existing DSL.
+
+## Requirements
+
+- A basic knowledge of JavaScript (loops, functions, arrays) is required to write a JavaScript protocol template
+- Nuclei v3.0.0 or above

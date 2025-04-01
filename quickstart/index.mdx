@@ -1,0 +1,281 @@
+---
+title: 'ProjectDiscovery 快速入门指南'
+description: '开始使用 ProjectDiscovery 进行资产发现、漏洞扫描和暴露监控'
+sidebarTitle: '概述'
+---
+
+ProjectDiscovery 帮助安全和工程团队持续监控并保护他们部署在互联网上的资产。现代开发节奏快速，很容易在不知情的情况下暴露资产——无论是被认为是内部的开放端口（例如，9092）还是被公开访问的云资源。我们的平台自动化发现过程，提供对您面向互联网基础设施的实时可见性，让您在攻击者发现之前确切地知道哪些资产被暴露。
+
+除了发现外，ProjectDiscovery 还主动识别并验证您整个攻击面上的可利用漏洞。通过使用真实世界的攻击技术，我们模拟攻击者如何发现和利用安全漏洞——但以受控且安全的方式进行。这消除了误报并帮助团队专注于实际风险。该平台完全可定制，允许您使用自己的安全规则扩展检测能力，这些规则可以根据渗透测试、漏洞赏金计划或内部策略的发现来定制。
+
+在由超过 100,000 名专业人士使用的经过实战检验的开源安全工具支持下，ProjectDiscovery 将真实世界的攻击检测与全面的漏洞管理相结合。而传统工具依赖于 CVE 数据库和版本检查，我们采取攻击者的视角——帮助组织实时理解、优先处理和保护其最关键的暴露点。
+
+## 安全暴露的实际影响
+
+最近的高调安全事件展示了为什么持续的安全监控至关重要：
+
+- **Capital One (2019)**: 攻击者利用配置错误的 Web 应用防火墙和 SSRF 漏洞访问了暴露的 AWS S3 存储桶，窃取了敏感的客户数据。
+
+- **Uber (2016/2017)**: 黑客发现了意外提交到 GitHub 仓库的云访问凭证，用它们访问 AWS 并提取了数百万用户和司机记录。
+
+- **Equifax (2017)**: 一个公开 Web 应用中未修补的 Apache Struts 漏洞(CVE-2017-5638)允许远程代码执行，泄露了约 1.43 亿人的个人数据。
+
+- **Colonial Pipeline (2021)**: 一个没有多因素认证的遗留 VPN 账户被使用窃取的凭证利用，使攻击者能够访问网络并触发勒索软件攻击。
+
+- **Panera Bread (2018)**: 一个不安全的 API 端点以明文形式暴露客户数据，使攻击者能够通过顺序 ID 枚举记录并抓取数百万用户资料。
+
+这些事件凸显了为何组织需要强大的安全监控和漏洞管理。ProjectDiscovery 的平台通过持续监控您的攻击面和验证安全控制来帮助防止此类漏洞。
+
+## 平台概述
+
+**ProjectDiscovery** 是一个安全平台，它结合了强大的**开源工具**和**基于云的服务**来帮助您保护基础设施。它提供了一种混合方法，您可以使用用户友好的云界面或命令行工具(CLI)——或两者结合——以适应您的工作流程。使用 ProjectDiscovery，您可以：
+
+- **发现您的资产** – 识别所有面向外部的系统、域名、云资源等
+- **扫描漏洞** – 使用自动化的、最新的漏洞检查来查找可利用的问题
+- **持续监控暴露** – 实时关注您的外部和内部风险
+- **自动化安全任务** – 与 API 和工作流程集成，在发现问题时提醒您的团队
+
+无论您是初学者还是经验丰富的安全专业人士，ProjectDiscovery 的云平台和 CLI 工具协同工作，为您的攻击面提供即时洞察。以下指南将引导您完成**云平台和 CLI**上的基本工作流程，以便您可以快速体验 ProjectDiscovery 在现实安全用例中的价值。
+
+<CardGroup cols={2}>
+  <Card
+    title="云平台"
+    icon="cloud"
+    href="/cloud/introduction"
+  >
+    开始使用我们的云平台进行即时资产发现和持续监控
+  </Card>
+  <Card
+    title="开源工具"
+    icon="code"
+    href="/tools/index"
+  >
+    探索我们强大的 CLI 工具进行安全测试和自动化
+  </Card>
+</CardGroup>
+
+<Note>
+ProjectDiscovery 新手？[免费注册](https://cloud.projectdiscovery.io)开始保护您的基础设施。
+</Note>
+
+## 快速导航
+
+<CardGroup cols={2}>
+  <Card
+    title="资产发现"
+    icon="radar"
+    href="/cloud/assets/overview"
+  >
+    了解如何发现和管理您的外部攻击面
+  </Card>
+  <Card
+    title="漏洞扫描"
+    icon="shield-check"
+    href="/cloud/scanning/overview"
+  >
+    设置自动化漏洞扫描和持续监控
+  </Card>
+  <Card
+    title="模板创建"
+    icon="code-branch"
+    href="/templates/introduction"
+  >
+    使用我们的模板框架创建自定义安全检查
+  </Card>
+  <Card
+    title="云集成"
+    icon="cloud-arrow-up"
+    href="/cloud/integrations"
+  >
+    连接云提供商和第三方服务
+  </Card>
+</CardGroup>
+
+## 云平台入门
+
+ProjectDiscovery Cloud 使发现和扫描资产变得简单，无需管理任何基础设施。按照以下步骤快速入门：
+
+1. **注册和登录:** 在 ProjectDiscovery Cloud 平台上创建一个免费账户（访问 **cloud.projectdiscovery.io** 并注册）。验证您的电子邮件后，登录访问云控制面板。
+
+2. **添加资产:** 登录控制面板后，通过添加**根域名**或组织名称开始资产发现。例如，添加 **`yourcompany.com`** 作为根域名。平台将自动枚举与该域名关联的子域名、IP 地址和相关资产。您可以免费添加一定数量的域名——例如您公司的主要域名。ProjectDiscovery 将在后台使用其扫描器，为您提供外部资产的即时清单。
+
+3. **启动漏洞扫描:** 发现资产后，在云平台中启动自动漏洞扫描。您可以导航到**扫描**部分，选择您的资产或资产组，然后启动 **Nuclei 扫描**（Nuclei 是运行漏洞模板的引擎）。使用默认模板集扫描各种常见问题。扫描在云中运行，测试您的资产是否存在可利用漏洞（如配置错误、过时软件和已知的 CVE）。
+
+4. **持续监控:** ProjectDiscovery Cloud 将**持续监控**您的资产，无需进一步输入。这意味着如果明天出现新的子域名或模板源中出现新的关键漏洞，平台可以自动发现并扫描它。您还可以安排定期扫描（例如每日或每周）以持续覆盖。本质上，一旦添加了资产，云平台就会持续关注它们并实时更新发现结果。
+
+5. **审查发现和警报:** 查看**仪表板**或**报告**部分以审查结果。您将看到发现的任何漏洞，按严重程度分类，并附有每个发现的详细信息。例如，如果检测到暴露的管理面板或已知 CVE，将列出受影响资产的相关信息。从这里，您可以确定首先修复什么。ProjectDiscovery Cloud 还允许您设置实时警报 – 例如，您可以配置通过电子邮件、Slack 或 Microsoft Teams 的通知，在发现高严重性问题的那一刻收到警报。这确保您的团队能立即了解关键风险。
+
+**主要云功能:** *即时资产发现、自动扫描和持续监控*是内置的。一旦添加域名，平台就能让您快速了解技术栈（域名、云实例等）。它使用最新的社区驱动模板持续扫描**可利用漏洞**，使您始终了解新兴威胁。所有这些都无需您管理基础设施 – 云平台处理繁重工作，而您获得可操作的结果。
+
+## CLI 入门
+
+如果您喜欢在终端中工作或想将扫描集成到自己的环境中，ProjectDiscovery 的 CLI 工具是为您准备的。本节将帮助您安装基本工具并运行基本扫描以进行资产发现和安全测试。
+
+**1. 安装 CLI 工具:** ProjectDiscovery 的开源工具是用 Go 编写的，因此您需要在系统上安装 Go（建议 v1.20+）。安装工具有两种便捷方式：
+
+- *使用工具管理器 (PDTM):* **ProjectDiscovery 工具管理器 (PDTM)** 是一个实用程序，可轻松安装和更新所有工具。如果您已安装 Go，可以通过运行以下命令安装 PDTM：
+  ```bash
+  go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
+  ```
+  安装后，运行 `pdtm -ia`（安装全部）自动下载并设置所有 ProjectDiscovery CLI 工具。这一个命令就能让您一次性访问 **Nuclei**、**Subfinder**、**HTTPx** 和更多工具。
+
+- *单独安装:* 或者，您可以单独安装工具。例如：
+  ```bash
+  go install -v github.com/projectdiscovery/subfinder/cmd/subfinder@latest
+  go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+  go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+  ```
+  这将获取最新的 Subfinder、HTTPx 和 Nuclei 二进制文件到您的 `$GOPATH/bin`。（您也可以在 ProjectDiscovery GitHub 上找到预构建的二进制文件，或者在 macOS 上使用 Homebrew 等包管理器。）
+
+*注意:* 确保您的 Go `bin` 路径在您的 `PATH` 环境变量中，这样您就可以从任何目录运行工具。安装完成后，您可以通过运行 `subfinder -h`、`httpx -h` 和 `nuclei -h` 来查看帮助输出，验证安装是否成功。
+
+**2. 使用 Subfinder 进行资产发现:** 要立即从 CLI 获得价值，请先进行资产发现。例如，要查找目标域名的子域名：
+```bash
+subfinder -d example.com -o subdomains.txt
+```
+此命令使用被动源来枚举 **example.com** 的子域名，并将结果保存到 `subdomains.txt`。几秒钟内，您将获得目标攻击面的域名列表。（您也可以运行 `subfinder -d example.com` 不带 `-o` 标志，仅将结果打印到屏幕上。）
+
+**3. 使用 HTTPx 探测资产:** 通常，您想知道这些发现的域名中哪些是活跃的，以及它们运行的 Web 技术是什么。**HTTPx** 可以接收主机名列表并探测活跃的 Web 服务：
+```bash
+httpx -l subdomains.txt -o live_hosts.txt -title -status-code -silent
+```
+这里，`-title` 和 `-status-code` 标志告诉 HTTPx 获取每个主机的页面标题和 HTTP 状态码，`-silent` 则移除详细的头信息以获得清晰的输出。保存在 `live_hosts.txt` 中的结果将显示哪些子域名处于活跃状态，并提示每个子域名的内容（例如，状态 200 和标题"登录门户"可能表示一个登录页面）。这有助于您专注于活跃的目标。
+
+**4. 使用 Nuclei 进行漏洞扫描:** 现在是真正的价值所在 – 发现漏洞。**Nuclei** 是一款快速的漏洞扫描器，使用模板文件检查目标是否存在数百种已知问题。您可以针对单个 URL 或列表运行 Nuclei：
+```bash
+nuclei -l live_hosts.txt -o findings.txt
+```
+这将扫描 `live_hosts.txt` 中的所有主机，查找各种漏洞。Nuclei 将任何发现输出到控制台，并保存到 `findings.txt`。每个发现将包括 URL、检测到的漏洞名称（基于匹配的模板）和严重性级别。对于快速测试，您也可以直接在单个 URL 上运行 nuclei，例如，`nuclei -u https://example.com`，查看是否存在任何常见问题。
+
+运行这些工具后，您应该拥有：资产列表（子域名）、活跃系统列表和发现的任何潜在漏洞。即使作为初学者，在几分钟内您也已经使用 CLI 绘制了目标地图并识别了可能的安全问题 – 展示了 ProjectDiscovery 工具的即时价值。
+
+*（提示：所有 ProjectDiscovery 工具都有各种选项。例如，您可以用 `nuclei -update-templates` 更新 Nuclei 模板，或按严重性限制扫描范围。随着您越来越熟悉，可以为更具针对性的结果自定义这些工具。）*
+
+## 关键工作流程和用例
+
+<CardGroup cols={2}>
+  <Card
+    title="资产发现和管理"
+    icon="magnifying-glass"
+    href="/cloud/assets/overview"
+  >
+    自动发现和跟踪整个基础设施中的资产
+  </Card>
+  <Card
+    title="实时漏洞扫描"
+    icon="bolt"
+    href="/cloud/scanning/overview"
+  >
+    持续扫描和检测安全漏洞
+  </Card>
+  <Card
+    title="暴露管理"
+    icon="shield"
+    href="/cloud/scanning/external-scan"
+  >
+    实时监控和管理安全暴露
+  </Card>
+  <Card
+    title="基础设施安全"
+    icon="server"
+    href="/cloud/scanning/internal-scan"
+  >
+    保护云和本地基础设施
+  </Card>
+</CardGroup>
+
+### 资产发现
+保护攻击面的第一步是了解您拥有哪些资产。ProjectDiscovery 通过自动查找和清点域名和云环境中的资产来简化**资产发现**。在云平台中，您可以从几个**根域名**开始，系统将持续发现所有子域名、相关主机，甚至与这些域名相关的云基础设施。这为您提供了最新的面向外部的资产清单（网站、API、服务器等），无需手动操作。在 CLI 方面，像 Subfinder（用于子域名）和 Cloudlist（用于云资源）等工具也允许您脚本化资产发现。通过快速构建全面的资产列表，您可以确保不会忽略外部基础设施的任何部分。
+
+### 实时漏洞扫描
+一旦拥有资产清单，下一个工作流程是在这些资产上查找**可利用漏洞** – 理想情况下在攻击者之前完成。ProjectDiscovery 的方法专注于*实时、模板驱动的扫描*。云平台使用由社区和 ProjectDiscovery 研究人员贡献的最新 **Nuclei 模板**持续运行漏洞扫描，所以它可以快速捕获新披露的问题。您可以执行按需扫描（例如，在新部署后）或计划对所有资产的定期扫描。实际上，这意味着如果一个关键漏洞（比如流行软件中的新 RCE）被添加到模板中，ProjectDiscovery 可以在其披露后几分钟内在您的系统上检测到它。使用 CLI，您可以将 Nuclei 集成到 CI/CD 或脚本中以扫描特定目标（例如，在发布前扫描应用程序的每个新版本）。结果是一个主动的漏洞管理过程 – 您*实时*发现并修复弱点，而不是在事件发生后才做出反应。
+
+### 暴露管理
+安全不是一次性工作。**暴露管理**是关于持续监控环境中的变化或新风险，包括外部和内部，并迅速响应。ProjectDiscovery Cloud 通过提供对攻击面的持续监控而在此方面表现出色。一旦添加了资产，它将继续检查诸如新子域名出现、服务变化或新漏洞出现等情况。如果发现暴露 – 例如，一个开放的数据库变得可见或内部服务器开始暴露端口 – 平台可以立即发送警报。您可以为各种事件配置通过首选渠道（电子邮件、Slack、Microsoft Teams 或自定义 webhook）的实时通知。这种实时意识对于在重大事件发生前捕获错误配置或影子 IT（未知资产）至关重要。此外，ProjectDiscovery 支持内部暴露监控：您可以运行内部网络扫描（使用 Nuclei 或 Naabu 检查端口）并将结果输入平台，确保即使防火墙后的资产也被跟踪。简而言之，使用 ProjectDiscovery 进行暴露管理意味着您始终关注安全状况，并能够在新威胁或变化发生时做出反应。
+
+### 基础设施安全
+现代组织运行在复杂的基础设施上 – 多个云提供商、容器、本地网络等。ProjectDiscovery 通过扫描云和网络环境中的错误配置和风险来帮助**基础设施安全**。通过其集成（和 Cloudlist 等工具），ProjectDiscovery Cloud 可以枚举来自 **AWS、GCP、Azure 和其他**的资产，识别诸如配置错误的 S3 存储桶、面向公众的虚拟机或开放的网络端口等问题。例如，您可以连接 AWS 账户并自动检索您拥有的 IP、主机名和服务列表，然后让 Nuclei 扫描它们是否存在已知的云特定漏洞。平台内置的端口扫描器（由 Naabu 提供支持）可以检查所有资产 IP 的开放端口（1-65535），发现您可能不知道暴露的服务。在 CLI 方面，您同样可以使用 Naabu 进行端口扫描，并将这些结果输入 Nuclei 或其他工具进行更深入的分析。重要的是，ProjectDiscovery 还支持通过让您在网络内运行扫描并将结果上传到云平台来扫描内部基础设施。这意味着即使某些系统无法从外部访问，您仍然可以将它们包含在安全评估中。**基础设施安全**用例包括检查云账户是否有开放的管理端口，确保没有开发数据库无意中对互联网开放，并验证所有关键服务都安全配置。ProjectDiscovery 提供了工具来自动化整个技术栈的这些检查。
+
+## 自动化和集成
+
+<CardGroup cols={2}>
+  <Card
+    title="API 文档"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    使用我们的 REST API 将 ProjectDiscovery 集成到您的工作流程中
+  </Card>
+  <Card
+    title="平台集成"
+    icon="plug"
+    href="/cloud/integrations"
+  >
+    连接工单系统、警报和云服务
+  </Card>
+</CardGroup>
+
+## 其他资源
+
+<CardGroup cols={3}>
+  <Card
+    title="社区"
+    icon="discord"
+    href="https://discord.gg/projectdiscovery"
+  >
+    加入我们活跃的社区获取支持和讨论
+  </Card>
+  <Card
+    title="GitHub"
+    icon="github"
+    href="https://github.com/projectdiscovery"
+  >
+    探索我们的开源工具并做出贡献
+  </Card>
+  <Card
+    title="博客"
+    icon="newspaper"
+    href="https://blog.projectdiscovery.io"
+  >
+    阅读安全研究和工具更新
+  </Card>
+</CardGroup>
+
+## 后续步骤和资源
+
+您刚刚了解了 ProjectDiscovery 能做什么的皮毛。以下是一些后续步骤和资源，帮助您继续探索：
+
+- **官方文档:**
+  - 浏览全面的文档：**[docs.projectdiscovery.io](https://docs.projectdiscovery.io)**
+  - [云平台概述](/cloud/introduction)
+  - [资产发现指南](/cloud/assets/overview)
+  - [漏洞扫描指南](/cloud/scanning/overview)
+  - [API 文档](/api-reference/introduction)
+
+- **社区支持:**
+  - 加入 [ProjectDiscovery Discord](https://discord.gg/projectdiscovery) 进行实时讨论
+  - 访问我们的 [GitHub 讨论](https://github.com/projectdiscovery/nuclei/discussions) 提出技术问题
+  - 在 [Twitter](https://twitter.com/pdiscoveryio) 上关注我们获取更新
+  - 在 [GitHub](https://github.com/projectdiscovery) 上报告问题
+
+- **教程和示例:**
+  - 观看我们的 ["30 分钟内了解所有 ProjectDiscovery 工具"](https://www.youtube.com/watch?v=cBkfk0VbvLw) 视频
+  - 了解 [模板创建](/templates/introduction)
+  - 探索 [云集成](/cloud/integrations)
+  - 阅读我们的 [技术博客](https://blog.projectdiscovery.io)
+  - 查看 [模板示例](/templates/structure)
+
+- **Nuclei 模板和开源:**
+  - 浏览 [Nuclei 模板仓库](https://github.com/projectdiscovery/nuclei-templates)
+  - 了解 [贡献模板](/templates/introduction#contributing)
+  - 使用 [模板编辑器](https://cloud.projectdiscovery.io/templates/editor)
+  - 探索 [模板语法](/templates/protocols/http/basic-http)
+
+- **集成指南:**
+  - 设置 [云提供商集成](/cloud/integrations#cloud-asset-discovery)
+  - 配置 [通知系统](/cloud/integrations#notification-integrations)
+  - 实施 [工单系统集成](/cloud/integrations#ticketing-integrations)
+  - 使用 [自定义 Webhook](/cloud/integrations#webhook)
+  - 了解 [API 集成](/api-reference/introduction)
+
+通过遵循本快速入门指南，您已经迈出了主动安全监控的第一步。有了 ProjectDiscovery 的云平台和 CLI 工具，您拥有了一种可扩展的方式来发现您拥有的资产，了解它们何时存在漏洞，并更快地做出响应。继续尝试这些工具，利用社区的知识，很快您将能够充分利用 ProjectDiscovery 来保护组织的攻击面。祝扫描愉快！ 

@@ -1,0 +1,61 @@
+---
+title: 'Nuclei 模板介绍'
+description: '基于 YAML 的通用漏洞描述语言'
+sidebarTitle: '介绍'
+icon: 'star'
+---
+
+<div className="p-4 border border-blue-100 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/50 rounded-lg mb-4">
+  使用我们的[模板编辑器](https://cloud.projectdiscovery.io/templates/editor)直接在浏览器中编写和测试 Nuclei 模板。编辑器支持 AI 辅助模板生成、实时验证以及对目标的即时扫描。需要自动化？查看我们的[模板生成 API](/api-reference/templates/generate-ai-template)。
+</div>
+
+## 什么是 Nuclei 模板？
+Nuclei 模板是 Nuclei 扫描引擎的基石。Nuclei 模板能够在 TCP、DNS、HTTP 等各种协议上进行精确快速的扫描。它们旨在基于特定的漏洞检查发送有针对性的请求，确保在大型网络上进行高效扫描时几乎零误报。
+
+## YAML
+Nuclei 模板基于 `YAML` 格式的模板文件，这些文件定义了请求将如何发送和处理。这为 nuclei 提供了简便的扩展能力。模板使用 `YAML` 编写，这是一种简单的人类可读格式，可以快速定义执行过程。
+
+## 漏洞的通用语言
+Nuclei 模板提供了一种简化的方式来识别和传达漏洞，结合了严重性评级和检测方法等基本细节。这个开源的、社区开发的工具加速了威胁响应，并在网络安全领域得到广泛认可。
+
+<Tip>
+在[我们的博客](https://projectdiscovery.io/blog/the-power-of-nuclei-templates-a-universal-language-of-vulnerabilities/)上了解更多关于 nuclei 模板作为可利用漏洞通用语言的信息。
+</Tip>
+
+## 了解更多
+让我们深入探索 Nuclei 模板的世界！使用左侧或下方的链接了解更多。
+
+<CardGroup cols={2}>
+  <Card
+    title="结构"
+    icon="table-tree"
+    iconType="regular"
+   href="/templates/structure"
+  >
+    了解 nuclei 模板的组成结构
+  </Card>
+  <Card
+    title="基础 HTTP"
+    icon="globe"
+    iconType="solid"
+    href="/templates/protocols/http/basic-http"
+  >
+    开始使用 Nuclei 发送简单的 HTTP 请求
+  </Card>
+  <Card
+    title="编写你的第一个模板"
+    icon="video"
+    iconType="solid"
+    href="https://www.youtube.com/watch?v=nFXygQdtjyw"
+  >
+    观看关于编写第一个 nuclei 模板的视频！
+  </Card>
+  <Card
+    title="贡献"
+    icon="github"
+    iconType="solid"
+    href="https://github.com/projectdiscovery"
+  >
+    Nuclei 因社区贡献而蓬勃发展。提交你的模板，让安全专家们使用！
+  </Card>
+</CardGroup>

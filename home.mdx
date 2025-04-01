@@ -1,0 +1,152 @@
+---
+title: ''
+description: 'ProjectDiscovery 文档'
+mode: custom
+searchable: false
+---
+
+<div className="min-h-screen bg-gradient-radial">
+  {/* 主要部分 */}
+  <div className="flex flex-col items-center justify-center min-h-[50vh] relative">
+    <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+    
+    <h1 className="hero-title text-12xl font-bold text-center bg-gradient-to-r from-[#FF7F57] to-[#9563FF] text-transparent bg-clip-text leading-tight max-w-5xl">
+      大规模安全
+    </h1>
+    
+    <p className="hero-subtitle text-center mt-16 mb-3 max-w-2xl text-gray-800 dark:text-gray-300">
+      探索安全工作流程的未来
+    </p>
+
+    <p className="text-sm text-center mb-8 max-w-2xl text-gray-500 dark:text-gray-400">
+      了解并阅读有关我们的开源技术、云平台和API的所有信息
+    </p>
+
+    <button 
+      onClick={() => {
+        // 模拟Command+K键盘快捷键
+        const event = new KeyboardEvent('keydown', {
+          key: 'k',
+          code: 'KeyK',
+          metaKey: true, // Mac上的Command键
+          ctrlKey: true, // Windows上的Ctrl键
+          bubbles: true
+        });
+        document.dispatchEvent(event);
+      }} 
+      className="search-button flex items-center justify-between px-4 py-2 mb-12 text-sm text-gray-500 bg-white border rounded-lg shadow-sm dark:bg-zinc-800 dark:text-gray-300 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-700"
+    >
+      <div className="flex items-center">
+        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        搜索或询问任何内容...
+      </div>
+      <span className="text-xs text-gray-400">⌘K</span>
+    </button>
+
+    <p className="section-title text-s text-center mb-5">开始使用</p>
+
+    {/* 第一组卡片 */}
+    <div className="w-full max-w-6xl px-4 mb-4">
+      <CardGroup cols={3}>
+        <Card 
+          title="高级暴露发现"
+          href="/tools/index#discover"
+          img="/images/post-6.jpg"
+        >
+          映射您的互联网暴露资产并了解您的攻击面。
+        </Card>
+
+        <Card 
+          title="自动化自定义漏洞"
+          href="/templates"
+          img="/images/post-5.jpg"
+        >
+          创建和自动化自定义安全模板，以大规模检测漏洞。
+        </Card>
+
+        <Card 
+          title="漏洞信息源"
+          href="/api-reference/templates/get-early-template-list"
+          img="/images/post-3.jpg"
+        >
+          实时获取热门漏洞和安全漏洞的更新。
+        </Card>
+      </CardGroup>
+    </div>
+
+    <div className="card-group-divider" />
+    <p className="section-title text-s text-center mb-1">适用于组织</p>
+
+    {/* 第二组卡片 */}
+    <div className="w-full max-w-6xl px-4 mt-8">
+      <CardGroup cols={3}>
+        <Card 
+          title="开始使用"
+          href="/cloud/introduction"
+          img="/images/post-4.jpg"
+        >
+          通过我们的云平台和高级自动化扩展您的安全操作。
+        </Card>
+
+        <Card 
+          title="云监控"
+          href="/cloud/scanning"
+          img="/images/post-9.jpg"
+        >
+          连接并监控AWS、GCP、Cloudflare和Azure账户的安全漏洞。
+        </Card>
+
+        <Card 
+          title="设置团队集成"
+          href="/cloud/integrations"
+          img="/images/post-1.jpg"
+        >
+          与您现有的工单和警报工具集成。
+        </Card>
+      </CardGroup>
+    </div>
+
+    {/* 第三组卡片 */}
+    <div className="w-full max-w-6xl px-4 mt-8 mb-16">
+      <CardGroup cols={3}>
+        <Card 
+          title="API集成"
+          href="/api-reference/introduction"
+          img="/images/post-7.jpg"
+        >
+          使用我们全面的REST API构建和自动化自定义安全工作流程。
+        </Card>
+
+        <Card 
+          title="内部网络安全"
+          href="/cloud/scanning/internal-scan"
+          img="/images/post-2.jpg"
+        >
+          通过自动化漏洞评估和监控确保内部网络安全。
+        </Card>
+
+        <Card 
+          title="企业安全设置"
+          href="/cloud/admin"
+          img="/images/post-8.jpg"
+        >
+          为您的组织配置SAML SSO、IP白名单、自定义标头等。
+        </Card>
+      </CardGroup>
+    </div>
+
+    {/* 专家联系卡片 */}
+    <div className="w-full max-w-6xl px-4 mt-16 mb-12">
+      <Card
+        title="与我们的安全专家交流"
+        icon="headset"
+        iconType="duotone"
+        href="https://projectdiscovery.io/request-demo"
+      >
+        获取有关为您的组织实施安全工作流程的个性化指导。我们的团队随时准备帮助您扩展安全运营。
+      </Card>
+    </div>
+  </div>
+</div> 

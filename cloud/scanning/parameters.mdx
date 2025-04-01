@@ -1,0 +1,179 @@
+---
+title: "Scan & Template Configurations"
+description: "Configure custom scan settings, HTTP headers, template variables, and template profiles"
+sidebarTitle: "Configurations"
+---
+
+## Overview
+
+ProjectDiscovery's scanning engine supports various configuration options to customize scan behavior and template execution. This includes HTTP headers, template variables, interactsh settings, and template profiles. Some templates, particularly those requiring authentication or specific parameters, need additional configuration to work effectively in the cloud platform.
+
+## Scan Configurations
+
+### HTTP Headers
+Configure custom HTTP headers that will be included in all scan requests. This is useful for:
+- Adding authentication tokens
+- Setting specific User-Agent strings
+- Including custom tracking headers
+- Passing required API keys
+
+### Template Variables
+Define variables that templates can reference during execution. Common use cases include:
+- Authentication credentials
+- API tokens
+- Custom parameters
+- Environment-specific values
+
+### Interactsh Settings
+Configure out-of-band (OOB) testing parameters:
+- Custom Interactsh server settings
+- Correlation timeout values
+- Callback configurations
+
+## Authentication Example
+
+Let's look at a practical example using WordPress authentication, which is required by over 150 different Nuclei templates.
+
+Here's a template that requires authentication parameters:
+
+```yaml
+id: CVE-2023-1890
+info:
+  name: Tablesome < 1.0.9 - Cross-Site Scripting
+  severity: medium
+  
+http:
+  - raw:
+      - |
+        POST /wp-login.php HTTP/1.1
+        Host: {{Hostname}}
+        Content-Type: application/x-www-form-urlencoded
+
+        log={{username}}&pwd={{password}}&wp-submit=Log+In
+      - |
+        GET /wp-admin/edit.php?post_type=tablesome_cpt&a%22%3e%3cscript%3ealert`document.domain`%3c%2fscript%3e HTTP/1.1
+        Host: {{Hostname}}
+```
+
+This template uses two undefined variables (`{{username}}` and `{{password}}`). While in CLI you would use:
+```bash
+nuclei -id CVE-2023-1890 -var username=admin -var password=password123 -target https://example.com
+```
+
+In ProjectDiscovery Cloud, we need to configure these through the scan configuration interface.
+
+## Setting Up Scan Configurations
+
+### Creating a New Configuration
+
+<Steps>
+  <Step title="Access Configuration Settings">
+    1. Navigate to Scans → Configurations
+    2. Select "Scan Options"
+    3. Click "New Config"
+  </Step>
+
+  <Step title="Basic Configuration">
+    1. Enter a descriptive name (e.g., "WP Authentication")
+    2. Choose configuration type:
+       - HTTP Headers
+       - Template Variables
+       - Interactsh Settings
+  </Step>
+
+  <Step title="Add Parameters">
+    For template variables:
+    - Add key-value pairs (e.g., username: admin)
+    - Set scope (global or template-specific)
+    - Configure visibility settings
+    
+    For HTTP headers:
+    - Specify header name and value
+    - Set application conditions
+  </Step>
+
+  <Step title="Configure Application Scope">
+    1. Choose when to apply this configuration:
+       - Enable for all scans (global)
+       - Manual selection per scan
+    2. Set template matching criteria (optional)
+  </Step>
+</Steps>
+
+### Template Profiles
+
+Create custom template collections based on:
+- Severity levels (Critical, High, Medium, Low)
+- Tags (wordpress, cve2023, authenticated, etc.)
+- Protocol types (HTTP, DNS, TCP, etc.)
+- Template IDs
+
+To create a template profile:
+1. Navigate to Scans → Configurations → Template Profiles
+2. Click "New Profile"
+3. Select filtering criteria
+4. Save and name your profile
+
+## Advanced Configuration Examples
+
+### WordPress Authentication
+```yaml
+name: "WordPress Auth"
+type: template_variables
+variables:
+  username: "admin"
+  password: "secure_password"
+scope: "wordpress,wp-plugin"
+```
+
+### Custom Headers
+```yaml
+name: "API Authentication"
+type: http_headers
+headers:
+  Authorization: "Bearer {{token}}"
+  X-Custom-Header: "value"
+```
+
+### Interactsh Configuration
+```yaml
+name: "Custom OOB Settings"
+type: interactsh
+settings:
+  server: "custom.interactsh.com"
+  token: "your_token"
+  correlation_timeout: 30
+```
+
+## Best Practices
+
+1. **Security Considerations**
+   - Use environment variables for sensitive values
+   - Implement least-privilege access
+   - Regularly rotate credentials
+   - Audit configuration usage
+
+2. **Performance Optimization**
+   - Group related configurations
+   - Use template-specific variables when possible
+   - Monitor configuration impact on scan times
+
+3. **Maintenance**
+   - Document configuration purposes
+   - Review and update regularly
+   - Remove unused configurations
+   - Test changes before production use
+
+<Note>
+When using authentication credentials or sensitive parameters, ensure they are stored securely and accessed only by authorized users. Consider using environment variables or secure credential storage for sensitive values.
+</Note>
+
+## What's Next?
+
+After setting up configurations:
+1. Create new scans using your configurations
+2. Monitor scan results for proper parameter usage
+3. Adjust configurations based on results
+4. Create template profiles for specific use cases
+
+For template development guidance, visit our [Template Editor](/cloud/editor/overview) documentation.

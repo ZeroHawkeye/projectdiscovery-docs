@@ -1,0 +1,63 @@
+---
+title: "DNS 协议示例"
+description: "Nuclei 模板 DNS 协议示例"
+---
+
+## 基础模板
+
+基础 DNS 请求用于检测输入是否存在 CNAME 记录。
+
+```yaml
+id: basic-dns-example
+
+info:
+  name: Test DNS Template
+  author: pdteam
+  severity: info
+
+dns:
+  - name: "{{FQDN}}"
+    type: CNAME
+    class: inet
+    recursion: true
+    retries: 3
+    matchers:
+      - type: word
+        words:
+          # 响应必须包含 CNAME 记录
+          - "IN\tCNAME"
+```
+
+## 多重匹配器
+
+展示 nuclei 多重匹配器的示例，允许检测指向 `zendesk.com` 或 `github.io` 的具有 CNAME 记录的子域名。
+
+```yaml
+id: multiple-matcher
+
+info:
+  name: Test DNS Template
+  author: pdteam
+  severity: info
+
+dns:
+  - name: "{{FQDN}}"
+    type: CNAME
+    class: inet
+    recursion: true
+    retries: 5
+    matchers-condition: or
+    matchers:
+      - type: word
+        name: zendesk
+        words:
+          - "zendesk.com"
+      - type: word
+        name: github
+        words:
+          - "github.io"
+```
+
+<Tip>
+您可以在 `nuclei-templates` [GitHub 仓库](https://github.com/projectdiscovery/nuclei-templates/tree/main/dns)中找到更多 DNS 模板示例。
+</Tip>

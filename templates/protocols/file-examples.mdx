@@ -1,0 +1,59 @@
+---
+title: "File 协议示例"
+description: "File 协议 Nuclei 模板示例"
+---
+
+## 基本 File 模板
+
+此模板检查提供的文件中的特定模式。
+
+```yaml
+id: ssh-public-key
+
+info:
+  name: SSH Public Key 检测
+  author: pd-team
+  severity: low
+
+file:
+  - extensions:
+      - pub
+    max-size: 1024 # 读取非常小的块
+
+    matchers:
+      - type: word
+        words:
+          - "ssh-rsa"
+```
+
+## 使用无递归选项的扩展名黑名单
+
+以下模板与上一个类似，但它使用了扩展名黑名单以及无递归选项。
+
+```yaml
+id: ssh-private-key
+
+info:
+  name: SSH Private Key 检测
+  author: pd-team
+  severity: high
+
+file:
+  - extensions:
+      - all
+    denylist:
+      - pub
+    no-recursive: true
+    max-size: 1024 # 读取非常小的块
+
+    matchers:
+      - type: word
+        words:
+          - "BEGIN OPENSSH PRIVATE KEY"
+          - "BEGIN PRIVATE KEY"
+          - "BEGIN RSA PRIVATE KEY"
+          - "BEGIN DSA PRIVATE KEY"
+          - "BEGIN EC PRIVATE KEY"
+          - "BEGIN PGP PRIVATE KEY BLOCK"
+          - "ssh-rsa"
+```

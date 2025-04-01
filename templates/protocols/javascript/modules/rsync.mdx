@@ -1,0 +1,42 @@
+# Namespace: rsync
+
+## Table of contents
+
+### Interfaces
+
+- [IsRsyncResponse](/templates/protocols/javascript/modules/rsync.IsRsyncResponse)
+
+### Functions
+
+- [IsRsync](/templates/protocols/javascript/modules/rsync#isrsync)
+
+## Functions
+
+### IsRsync
+
+▸ **IsRsync**(`host`, `port`): [`IsRsyncResponse`](/templates/protocols/javascript/modules/rsync.IsRsyncResponse) \| ``null``
+
+IsRsync checks if a host is running a Rsync server.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `host` | `string` |
+| `port` | `number` |
+
+#### Returns
+
+[`IsRsyncResponse`](/templates/protocols/javascript/modules/rsync.IsRsyncResponse) \| ``null``
+
+**`Example`**
+
+```javascript
+const rsync = require('nuclei/rsync');
+const isRsync = rsync.IsRsync('acme.com', 873);
+log(toJSON(isRsync));
+```
+
+#### Defined in
+
+rsync.ts:12

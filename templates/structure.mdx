@@ -1,0 +1,73 @@
+---
+title: "Nuclei 模板结构"
+description: '了解创建 Nuclei 模板所需的常见元素'
+sidebarTitle: '结构'
+icon: "table-tree"
+iconType: "light"
+---
+
+# 模板结构
+
+Nuclei 模板使用基于 YAML 的自定义 DSL，其结构根据所使用的特定协议而变化。通常，模板包含以下元素：
+
+- 模板的[唯一 ID](#id)
+- 与模板相关的基本[信息](#information)和[元数据](#metadata)
+- 指定的协议，如 [HTTP](/templates/protocols/http/basic-http)、[DNS](/templates/protocols/dns)、[File](/templates/protocols/file) 等
+- 特定于所选协议的详细信息，如 HTTP 协议中发出的请求
+- 一系列[匹配器](/templates/reference/matchers)用于确认发现的存在
+- 必要的[提取器](/templates/reference/extractors)用于从结果中检索数据
+
+<Tip>
+要了解 nuclei 模板语法中所有可用内容的详细自动生成概述，您可以访问 GitHub 上的[语法参考](https://github.com/projectdiscovery/nuclei/blob/dev/SYNTAX-REFERENCE.md)
+</Tip>
+
+## ID
+
+每个模板都有一个唯一的 ID，用于在输出写入期间指定输出行的模板名称。
+
+模板文件以 **YAML** 扩展名结尾。模板文件可以使用您选择的任何文本编辑器创建。
+
+```yaml
+id: git-config
+```
+
+ID 不能包含空格。这样做是为了更容易解析输出。
+
+## 信息
+
+关于模板的下一个重要信息是 **info** 块。Info 块提供 **name**、**author**、**severity**、**description**、**reference**、**tags** 和 `metadata`。它还包含指示模板严重性的 **severity** 字段，**info** 块还支持动态字段，因此可以定义 N 个 `key: value` 块以提供关于模板的更多有用信息。**reference** 是另一个常用标签，用于定义模板的外部参考链接。
+
+在 `info` 块中始终添加的另一个有用标签是 **tags**。这允许您根据目的（如 `cve`、`rce` 等）为模板设置一些自定义标签。这使 nuclei 能够识别具有您输入标签的模板并仅运行这些模板。
+
+Info 块示例 -
+```yaml
+info:
+  name: Git Config File Detection Template
+  author: Ice3man
+  severity: medium
+  description: Searches for the pattern /.git/config on passed URLs.
+  reference: https://www.acunetix.com/vulnerabilities/web/git-repository-found/
+  tags: git,config
+```
+实际请求和相应的匹配器放置在 info 块下方，它们执行向目标服务器发出请求并确定模板请求是否成功的任务。
+
+每个模板文件可以包含多个要发出的请求。模板会被迭代，并逐一向目标站点发出所需的请求。
+
+最好的部分是，您可以简单地与团队成员、分类/安全团队共享您精心制作的模板，以便在另一端轻松复制问题。
+
+## 元数据
+
+可以添加元数据节点，例如，集成 [uncover](https://github.com/projectdiscovery/uncover)（参见 [Uncover 集成](https://docs.projectdiscovery.io/tools/nuclei/running#scan-on-internet-database)）。
+
+元数据节点的格式为：`<engine>-query: '<query>'`，其中：
+
+- `<engine>` 是搜索引擎，相当于 nuclei 的 `-ue` 选项或 uncover 的 `-e` 选项的值
+- `<query>` 是搜索查询，相当于 nuclei 的 `-uq` 选项或 uncover 的 `-q` 选项的值
+
+例如，对于 Shodan：
+
+```
+info:
+  metadata:
+    shodan-query: 'vuln:CVE-2021-26855'
+```

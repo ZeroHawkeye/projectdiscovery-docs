@@ -1,0 +1,80 @@
+---
+title: "ProjectDiscovery Vulnerability Scanning Overview"
+sidebarTitle: "Overview"
+---
+
+ProjectDiscovery's vulnerability scanning platform combines an attacker's mindset with powerful automation to uncover real security issues across your environment. It focuses on **exploitability**, meaning that identified vulnerabilities aren't just theoretical – they are validated through actual exploitation attempts. This approach contrasts with traditional scanners that often rely on version checks or CVE databases and can overwhelm teams with false positives. By leveraging the open-source **Nuclei** engine and its extensive template library, ProjectDiscovery delivers precise, actionable insights tailored to your assets, with far less noise and more relevant findings for your security and engineering teams.
+
+<CardGroup cols={3}>
+  <Card title="External Scanning" icon="globe" href="/cloud/scanning/external-scan">
+    Learn how to scan your internet-facing assets and discover vulnerabilities in your external attack surface
+  </Card>
+  <Card title="Internal Scanning" icon="network-wired" href="/cloud/scanning/internal-scan">
+    Set up and run vulnerability scans across your internal network infrastructure
+  </Card>
+  <Card title="Scan Configuration" icon="sliders" href="/cloud/scanning/parameters">
+    Configure and customize your scans with detailed scanning parameters and options
+  </Card>
+</CardGroup>
+
+## Attacker's Mindset vs Traditional Scanners
+
+Traditional vulnerability scanners tend to focus on known vulnerabilities by matching software versions to CVE entries or using simple signature checks. ProjectDiscovery's platform takes an attacker's perspective from the start:
+
+- **Active Exploitation Testing:** Instead of assuming a system is vulnerable because of its version, ProjectDiscovery actually attempts to exploit the issue (in a safe manner) to confirm the vulnerability is real. This dramatically reduces false positives because only genuine, exploitable weaknesses are reported.
+
+- **Beyond Just CVEs:** The platform detects misconfigurations and security gaps that traditional scanners often miss, such as open S3 buckets or enabled default passwords – issues that might not have a CVE ID but are severe if left unchecked.
+
+- **Proof-of-Concept Evidence:** Each vulnerability comes with evidence and details to prove its impact, providing clear proof-of-concept (PoC) data for every finding. This means when engineers receive a report, they also get the context needed to understand and reproduce the issue.
+
+- **Customization and Community-Powered Testing:** Unlike many closed-box scanners, ProjectDiscovery is highly customizable through Nuclei's YAML-based templates. Security teams can write **custom vulnerability checks** for unique scenarios, while benefiting from a global community contributing over 9,000 templates covering the latest threats.
+
+## Comprehensive Vulnerability Coverage
+
+ProjectDiscovery's scanning provides broad coverage across multiple security domains:
+
+- **Known CVEs:** Leverage an up-to-date repository of templates to catch systems vulnerable to high-profile CVEs, from critical remote code execution bugs to widely exploited vulnerabilities.
+
+- **Web Application Flaws:** Identify OWASP Top 10 issues and common web vulnerabilities through active testing and crawling of web applications.
+
+- **Misconfigurations:** Uncover security misconfigurations in software and services that could lead to breaches, including default credentials, exposed directories, and TLS/SSL issues.
+
+- **Exposed Services & Open Ports:** Discover and test services that shouldn't be publicly accessible, scanning everything from SSH to databases for security weaknesses.
+
+- **Cloud Infrastructure Issues:** Assess cloud environments for misconfigured resources, overly permissive settings, and exposed assets across major cloud providers.
+
+- **Custom and Emerging Threats:** Create and run specialized tests for your unique applications and infrastructure, with AI-assisted template generation to quickly adapt to new threats.
+
+## Scalability and Performance
+
+ProjectDiscovery Cloud delivers enterprise-grade scanning performance:
+
+- **Cloud-Native Speed:** Scan up to 50× faster than standard open-source scanning, handling hundreds of targets in parallel.
+- **Automated Asset Integration:** Newly discovered assets are automatically queued for scanning, keeping security assessments current.
+- **Multi-Protocol Support:** Cover 6+ different protocols (HTTP(S), TCP, DNS, SMB, etc.) in a single platform.
+- **High Accuracy:** Template-based matching conditions ensure high-confidence results focused on real-world impact.
+
+## Continuous Retesting and Workflow Integration
+
+The platform streamlines the entire vulnerability management lifecycle:
+
+- **One-Click Retesting:** Quickly verify fixes by retesting specific vulnerabilities without full rescans.
+- **Regression Prevention:** Continuously monitor fixed issues to prevent recurrence through configuration or code changes.
+- **Workflow Integration:** Automatically create and update tickets in systems like Jira, with notifications through Slack or Microsoft Teams.
+- **Progress Tracking:** Support multiple status designations with audit trails, making it easy to monitor remediation progress.
+
+## Value for Security and Engineering Teams
+
+ProjectDiscovery delivers clear benefits to both security and engineering teams:
+
+**For Security Teams:**
+- Comprehensive vulnerability coverage with evidence-based findings
+- Customizable scanning aligned with organizational threat models
+- Reduced false positives and noise in vulnerability reports
+
+**For Engineering Teams:**
+- Clear, actionable findings with reproduction steps
+- Seamless integration with existing development workflows
+- Quick validation of security fixes through automated retesting
+
+ProjectDiscovery transforms vulnerability management from a cumbersome process into a streamlined practice of finding and fixing issues that truly matter. By combining robust technical capabilities with ease of use, it helps organizations not only discover more relevant security issues but also remediate them faster and prevent their recurrence.

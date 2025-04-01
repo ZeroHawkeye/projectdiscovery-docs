@@ -1,0 +1,73 @@
+---
+title: "Cloud API 参考介绍"
+description: 'ProjectDiscovery API 详情'
+sidebarTitle: '介绍'
+---
+
+## 概述 
+
+ProjectDiscovery API v1 是基于 [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer) 构建的。我们的 API 具有面向资源的 URL，在大多数情况下接受并返回 JSON，并且 API 使用标准的 HTTP 响应代码、认证和动词。我们的 API 还符合 [OpenAPI 规范](https://www.openapis.org/)。
+
+本 API 文档将引导您了解每个可用资源，并提供 `cURL`、`Python`、`JavaScript`、`PHP`、`Go` 和 `Java` 的代码示例。每个端点包括所需的授权信息和参数，并提供您期望获得的响应示例。
+
+## 认证
+
+ProjectDiscovery API 使用 API 密钥进行请求认证。您可以在 https://cloud.projectdiscovery.io/ 的用户信息下查看和管理您的 API 密钥。
+
+API 认证是通过自定义请求头 `X-Api-Key` 执行的，其值应该是您在 ProjectDiscovery 账户中找到的 API 密钥。
+
+您必须通过 `HTTPS` 发出所有 API 调用。通过普通 HTTP 发出的调用将失败，没有认证或缺少所有必需参数的请求也会失败。
+
+## 资源
+下面（以及左侧菜单中）您可以找到 ProjectDiscovery API 提供的各种资源。
+
+<CardGroup cols={2}>
+  <Card
+    title="资产"
+    icon="server"
+    iconType="duotone"
+   href="/api-reference/assets"
+  >
+    用于扫描的资产（主机、CIDR 范围等）。
+  </Card>
+  <Card
+    title="模板"
+    icon="puzzle"
+    iconType="duotone"
+    href="/api-reference/templates"
+  >
+    访问公共和私有模板以及 AI 模板创建。
+  </Card>
+  <Card
+    title="扫描"
+    icon="radar"
+    iconType="duotone"
+    href="/api-reference/scans"
+  >
+    管理扫描、扫描计划并创建新扫描。
+  </Card>
+  <Card
+    title="结果"
+    icon="ballot-check"
+    iconType="duotone"
+    href="/api-reference/results"
+  >
+    查看和管理 PDCP 检测到的漏洞。
+  </Card>
+  <Card
+    title="重新测试"
+    icon="microscope"
+    iconType="duotone"
+    href="/api-reference/retest"
+  >
+    重新测试漏洞或运行单一模板/目标扫描。
+  </Card>
+  <Card
+    title="用户"
+    icon="user"
+    iconType="duotone"
+    href="/api-reference/results"
+  >
+    查看和管理用户设置、API 密钥等。
+  </Card>
+</CardGroup>

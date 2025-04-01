@@ -1,0 +1,647 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ProjectDiscovery 文档",
+  "colors": {
+    "primary": "#09090b",
+    "light": "#FAFAFA",
+    "dark": "#0D001D"
+  },
+  "favicon": "/favicon.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "首页",
+        "groups": [
+          {
+            "group": "首页",
+            "pages": [
+              "home"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "快速开始",
+        "groups": [
+          {
+            "group": "快速开始",
+            "pages": [
+              "quickstart/index"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "云平台",
+        "groups": [
+          {
+            "group": "云平台",
+            "pages": [
+              "cloud/introduction",
+              "cloud/ossvscloud",
+              "cloud/pricing",
+              "cloud/integrations",
+              {
+                "group": "资产",
+                "icon": {
+                  "name": "bullseye",
+                  "style": "regular"
+                },
+                "pages": [
+                  "cloud/assets/overview",
+                  "cloud/assets/adding-assets",
+                  "cloud/assets/screenshots",
+                  "cloud/assets/labeling",
+                  "cloud/assets/custom-labeling",
+                  "cloud/assets/subsidiary"
+                ]
+              },
+              {
+                "group": "漏洞扫描",
+                "icon": {
+                  "name": "radar",
+                  "style": "regular"
+                },
+                "pages": [
+                  "cloud/scanning/overview",
+                  "cloud/scanning/external-scan",
+                  "cloud/scanning/internal-scan",
+                  "cloud/scanning/retesting",
+                  "cloud/scanning/parameters",
+                  "cloud/scanning/real-time-scans"
+                ]
+              },
+              {
+                "group": "模板与编辑器",
+                "icon": {
+                  "name": "list-tree",
+                  "style": "regular"
+                },
+                "pages": [
+                  "cloud/editor/overview",
+                  "cloud/editor/faq",
+                  {
+                    "group": "编辑器",
+                    "pages": [
+                      "cloud/editor/ai",
+                      "cloud/editor/share",
+                      "cloud/editor/shortcuts"
+                    ]
+                  },
+                  "cloud/editor/recommended"
+                ]
+              },
+              {
+                "group": "一般管理",
+                "icon": {
+                  "name": "square-question",
+                  "style": "regular"
+                },
+                "pages": [
+                  "cloud/admin/audit-logs",
+                  "cloud/admin/scan-ips",
+                  "cloud/admin/saml-sso",
+                  "cloud/admin",
+                  "cloud/general-faq"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API 参考",
+        "groups": [
+          {
+            "group": "API 参考",
+            "pages": [
+              "api-reference/introduction",
+              {
+                "group": "资产",
+                "pages": [
+                  "api-reference/enumerations/get-enumeration-list",
+                  "api-reference/enumerations/create-enumeration",
+                  "api-reference/enumerations/get-enumeration",
+                  "api-reference/enumerations/delete-enumeration",
+                  "api-reference/enumerations/delete-assets-in-bulk",
+                  "api-reference/enumerations/update-enumeration",
+                  "api-reference/enumerations/get-enumeration-contents",
+                  "api-reference/enumerations/get-all-enumeration-contents",
+                  "api-reference/enumerations/stop-enumeration",
+                  "api-reference/enumerations/rescan-enumeration",
+                  "api-reference/enumerations/export-enumeration",
+                  "api-reference/update-enumeration-config",
+                  "api-reference/enumerations/get-enumeration-schedules",
+                  "api-reference/enumerations/set-enumeration-schedule",
+                  "api-reference/enumerations/delete-enumeration-schedule",
+                  "api-reference/enumerations/get-enumeration-stats",
+                  "api-reference/enumerations/get-all-enumeration-stats",
+                  "api-reference/enumerations/get-enumeration-config",
+                  "api-reference/enumerations/group-assets-by-filters",
+                  "api-reference/enumerations/group-assets-by-filters-for-an-enumeration",
+                  "api-reference/enumerations/export-enumeration-of-user",
+                  "api-reference/assets/upload-asset",
+                  "api-reference/assets/update-asset-content",
+                  "api-reference/assets/get-asset-metadata",
+                  "api-reference/assets/get-asset-content",
+                  "api-reference/assets/delete-asset"
+                ]
+              },
+              {
+                "group": "模板",
+                "pages": [
+                  "api-reference/templates/get-public-template-list",
+                  "api-reference/templates/get-early-template-list",
+                  "api-reference/templates/get-early-template",
+                  "api-reference/templates/get-public-template",
+                  "api-reference/templates/get-template-list",
+                  "api-reference/templates/create-template",
+                  "api-reference/templates/update-template",
+                  "api-reference/templates/get-template",
+                  "api-reference/templates/delete-template",
+                  "api-reference/templates/generate-ai-template",
+                  "api-reference/templates/get-share-status",
+                  "api-reference/templates/share-template",
+                  "api-reference/templates/get-shared-template",
+                  "api-reference/templates/get-github-template-list",
+                  "api-reference/templates/get-github-template",
+                  "api-reference/templates/get-public-template-stats"
+                ]
+              },
+              {
+                "group": "扫描",
+                "pages": [
+                  "api-reference/scans/get-scan-list",
+                  "api-reference/scans/create-scan",
+                  "api-reference/scans/get-scan",
+                  "api-reference/scans/delete-scan",
+                  "api-reference/scans/delete-scan-in-bulk",
+                  "api-reference/scans/update-scan",
+                  "api-reference/scans/import-oss-scan",
+                  "api-reference/scans/stop-scan",
+                  "api-reference/scans/rescan-scan",
+                  "api-reference/scans/get-all-scan-stats",
+                  "api-reference/scans/retest-vulnerability",
+                  "api-reference/scans/get-scan-schedules",
+                  "api-reference/scans/set-scan-schedule",
+                  "api-reference/scans/delete-scan-schedule",
+                  "api-reference/scans/get-scan-ips",
+                  "api-reference/scans/update-imported-scan",
+                  "api-reference/scans/export-scan",
+                  "api-reference/scans/export-filtered-scan",
+                  "api-reference/scans/export-scan-vulnerability",
+                  "api-reference/scans/delete-scan-vulnerability",
+                  "api-reference/scans/update-vulnerability-status",
+                  "api-reference/scans/update-vulnerability-labels",
+                  "api-reference/scans/get-scan-config",
+                  "api-reference/scans/update-scan-config",
+                  "api-reference/scans/get-all-scans-history",
+                  "api-reference/scans/get-scan-history",
+                  "api-reference/scans/create-vulns-export-to-tracker",
+                  "api-reference/scans/get-scans-token"
+                ]
+              },
+              {
+                "group": "配置",
+                "pages": [
+                  "api-reference/configurations/get-configs-list",
+                  "api-reference/configurations/add-config",
+                  "api-reference/configurations/get-config",
+                  "api-reference/configurations/delete-config",
+                  "api-reference/configurations/update-config",
+                  "api-reference/configurations/get-excluded-templates",
+                  "api-reference/configurations/add-excluded-templates",
+                  "api-reference/configurations/delete-excluded-template-ids"
+                ]
+              },
+              {
+                "group": "结果",
+                "pages": [
+                  "api-reference/results/get-scan-vulnerability",
+                  "api-reference/results/get-scan-results",
+                  "api-reference/results/get-all-results",
+                  "api-reference/results/get-scans-result-filters",
+                  "api-reference/results/get-results-stats"
+                ]
+              },
+              {
+                "group": "日志",
+                "pages": [
+                  "api-reference/elog/get-elogs-of-given-scan-id",
+                  "api-reference/scan_log/get-scan-log-of-given-scan-id",
+                  "api-reference/get-audit-logs-for-team"
+                ]
+              },
+              {
+                "group": "用户",
+                "pages": [
+                  "api-reference/users/get-user-profile",
+                  "api-reference/users/get-api-key",
+                  "api-reference/users/create-api-key",
+                  "api-reference/users/delete-api-key",
+                  "api-reference/users/rotate-api-key"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "工具",
+        "groups": [
+          {
+            "group": "工具",
+            "pages": [
+              "tools/index",
+              {
+                "group": "AlterX",
+                "icon": {
+                  "name": "cloud-word",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/alterx/overview",
+                  "tools/alterx/install",
+                  "tools/alterx/usage",
+                  "tools/alterx/running"
+                ]
+              },
+              {
+                "group": "Chaos",
+                "icon": {
+                  "name": "globe",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/chaos/overview",
+                  "tools/chaos/install",
+                  "tools/chaos/usage",
+                  "tools/chaos/running"
+                ]
+              },
+              {
+                "group": "Cloudlist",
+                "icon": {
+                  "name": "cloud",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/cloudlist/overview",
+                  "tools/cloudlist/install",
+                  "tools/cloudlist/usage",
+                  "tools/cloudlist/providers",
+                  "tools/cloudlist/running"
+                ]
+              },
+              {
+                "group": "cvemap",
+                "icon": {
+                  "name": "signs-post",
+                  "style": "solid"
+                },
+                "pages": [
+                  "tools/cvemap/overview",
+                  "tools/cvemap/install",
+                  "tools/cvemap/usage",
+                  "tools/cvemap/running"
+                ]
+              },
+              {
+                "group": "dnsx",
+                "icon": {
+                  "name": "tags",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/dnsx/overview",
+                  "tools/dnsx/install",
+                  "tools/dnsx/usage",
+                  "tools/dnsx/running"
+                ]
+              },
+              {
+                "group": "httpx",
+                "icon": {
+                  "name": "browser",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/httpx/overview",
+                  "tools/httpx/install",
+                  "tools/httpx/usage",
+                  "tools/httpx/running"
+                ]
+              },
+              {
+                "group": "Interactsh",
+                "icon": {
+                  "name": "whistle",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/interactsh/overview",
+                  "tools/interactsh/install",
+                  "tools/interactsh/usage",
+                  "tools/interactsh/running",
+                  "tools/interactsh/integrations",
+                  "tools/interactsh/server"
+                ]
+              },
+              {
+                "group": "Katana",
+                "icon": {
+                  "name": "sword",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/katana/overview",
+                  "tools/katana/install",
+                  "tools/katana/usage",
+                  "tools/katana/running"
+                ]
+              },
+              {
+                "group": "Naabu",
+                "icon": {
+                  "name": "person-to-portal",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/naabu/overview",
+                  "tools/naabu/install",
+                  "tools/naabu/usage",
+                  "tools/naabu/running"
+                ]
+              },
+              {
+                "group": "Notify",
+                "icon": {
+                  "name": "bell",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/notify/overview",
+                  "tools/notify/install",
+                  "tools/notify/usage",
+                  "tools/notify/provider-config",
+                  "tools/notify/running"
+                ]
+              },
+              {
+                "group": "Nuclei",
+                "icon": {
+                  "name": "atom",
+                  "style": "regular"
+                },
+                "pages": [
+                  "tools/nuclei/overview",
+                  "tools/nuclei/install",
+                  "tools/nuclei/running",
+                  "tools/nuclei/input-formats",
+                  "tools/nuclei/authenticated-scans",
+                  "tools/nuclei/mass-scanning-cli",
+                  "tools/nuclei/nuclei-sdk",
+                  "tools/nuclei/faq"
+                ]
+              },
+              {
+                "group": "PDTM",
+                "icon": {
+                  "name": "toolbox",
+                  "style": "regular"
+                },
+                "pages": [
+                  "tools/pdtm/overview",
+                  "tools/pdtm/install",
+                  "tools/pdtm/usage",
+                  "tools/pdtm/running"
+                ]
+              },
+              {
+                "group": "Subfinder",
+                "icon": {
+                  "name": "radar",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/subfinder/overview",
+                  "tools/subfinder/install",
+                  "tools/subfinder/usage",
+                  "tools/subfinder/running"
+                ]
+              },
+              {
+                "group": "uncover",
+                "icon": {
+                  "name": "telescope",
+                  "style": "duotone"
+                },
+                "pages": [
+                  "tools/uncover/overview",
+                  "tools/uncover/install",
+                  "tools/uncover/usage",
+                  "tools/uncover/running"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "模板",
+        "groups": [
+          {
+            "group": "模板",
+            "pages": [
+              "templates/introduction",
+              "templates/structure",
+              "templates/faq"
+            ]
+          },
+          {
+            "group": "协议",
+            "pages": [
+              {
+                "group": "HTTP",
+                "icon": {
+                  "name": "globe",
+                  "style": "solid"
+                },
+                "pages": [
+                  "templates/protocols/http/basic-http",
+                  "templates/protocols/http/raw-http",
+                  {
+                    "group": "HTTP 模糊测试",
+                    "pages": [
+                      "templates/protocols/http/fuzzing-overview",
+                      "templates/protocols/http/fuzzing-examples"
+                    ]
+                  },
+                  {
+                    "group": "HTTP 负载",
+                    "pages": [
+                      "templates/protocols/http/http-payloads",
+                      "templates/protocols/http/http-payloads-examples"
+                    ]
+                  },
+                  {
+                    "group": "高级 HTTP",
+                    "pages": [
+                      "templates/protocols/http/unsafe-http",
+                      "templates/protocols/http/value-sharing",
+                      "templates/protocols/http/connection-tampering",
+                      "templates/protocols/http/request-tampering",
+                      "templates/protocols/http/race-conditions"
+                    ]
+                  }
+                ]
+              },
+              "templates/protocols/headless",
+              "templates/protocols/network",
+              "templates/protocols/dns",
+              "templates/protocols/file",
+              {
+                "group": "JavaScript",
+                "icon": {
+                  "name": "square-js",
+                  "style": "solid"
+                },
+                "pages": [
+                  "templates/protocols/javascript/introduction",
+                  "templates/protocols/javascript/protocol",
+                  {
+                    "group": "Modules",
+                    "pages": [
+                      "templates/protocols/javascript/modules/bytes",
+                      "templates/protocols/javascript/modules/fs",
+                      "templates/protocols/javascript/modules/ikev2",
+                      "templates/protocols/javascript/modules/kerberos",
+                      "templates/protocols/javascript/modules/ldap",
+                      "templates/protocols/javascript/modules/mssql",
+                      "templates/protocols/javascript/modules/mysql",
+                      "templates/protocols/javascript/modules/net",
+                      "templates/protocols/javascript/modules/oracle",
+                      "templates/protocols/javascript/modules/pop3",
+                      "templates/protocols/javascript/modules/postgres",
+                      "templates/protocols/javascript/modules/rdp",
+                      "templates/protocols/javascript/modules/redis",
+                      "templates/protocols/javascript/modules/rsync",
+                      "templates/protocols/javascript/modules/smb",
+                      "templates/protocols/javascript/modules/smtp",
+                      "templates/protocols/javascript/modules/ssh",
+                      "templates/protocols/javascript/modules/structs",
+                      "templates/protocols/javascript/modules/telnet",
+                      "templates/protocols/javascript/modules/vnc"
+                    ]
+                  }
+                ]
+              },
+              "templates/protocols/code",
+              "templates/protocols/flow",
+              "templates/protocols/multi-protocol"
+            ]
+          },
+          {
+            "group": "参考",
+            "pages": [
+              "templates/reference/matchers",
+              "templates/reference/extractors",
+              "templates/reference/variables",
+              "templates/reference/helper-functions",
+              "templates/reference/js-helper-functions",
+              "templates/reference/preprocessors",
+              "templates/reference/template-signing",
+              "templates/reference/oob-testing"
+            ]
+          },
+          {
+            "group": "工作流",
+            "pages": [
+              "templates/workflows/overview",
+              "templates/workflows/examples"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "帮助",
+        "groups": [
+          {
+            "group": "API 参考",
+            "pages": [
+              {
+                "group": "帮助",
+                "pages": [
+                  "help/home"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/projectdiscovery",
+          "icon": "github"
+        },
+        {
+          "anchor": "网站",
+          "href": "https://projectdiscovery.io/",
+          "icon": "link"
+        },
+        {
+          "anchor": "社区",
+          "href": "https://projectdiscovery.io/community",
+          "icon": "discord"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/ProjectDiscovery-Logo-OnLight.svg",
+    "dark": "/logo/ProjectDiscovery-Logo-OnDark.svg"
+  },
+  "api": {
+    "openapi": "openapi.yaml"
+  },
+  "background": {
+    "image": "/images/background.png",
+    "color": {
+      "dark": "#09090b"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "登录",
+        "href": "https://cloud.projectdiscovery.io/"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "开始使用",
+      "href": "https://github.com/projectdiscovery/nuclei"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/projectdiscovery",
+      "twitter": "https://twitter.com/pdiscoveryio",
+      "discord": "https://discord.com/invite/projectdiscovery",
+      "linkedin": "https://www.linkedin.com/company/projectdiscovery",
+      "youtube": "https://www.youtube.com/@projectdiscovery"
+    }
+  },
+  "integrations": {
+    "fathom": {
+      "siteId": "ICPEDSUC"
+    },
+    "posthog": {
+      "apiKey": "phc_qgncJdQ3xs8FggnVsWkFokoej0Kk12czhKuArgNDMlQ"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+---
+title: "DNS 协议"
+description: "了解如何在 Nuclei 中使用 DNS"
+icon: "circle-nodes"
+iconType: "light"
+sidebarTitle: "DNS"
+---
+
+在 Nuclei 中可以轻松建模 DNS 协议。Nuclei 可以向域名服务器发送完全自定义的 DNS 请求，并对其响应执行匹配/提取操作。
+
+DNS 请求以 **dns** 块开始，该块指定模板请求的起始位置。
+
+```yaml
+# 在此处开始模板的请求
+dns:
+```
+
+### Type（类型）
+
+请求中的第一个内容是 **type**。请求类型可以是 **A**、**NS**、**CNAME**、**SOA**、**PTR**、**MX**、**TXT**、**AAAA**。
+
+```yaml
+# type 是 DNS 请求的类型
+type: A
+```
+
+### Name（名称）
+
+请求的下一部分是要解析的 DNS **name**。动态变量可以放置在路径中以在运行时修改其值。变量以 `{{` 开始，以 `}}` 结束，并且区分大小写。
+
+1. **FQDN** - 变量在运行时被目标的主机名/FQDN 替换。
+
+名称值示例：
+
+```yaml
+name: {{FQDN}}.com
+# 此值将在执行时替换为 FQDN。
+# 如果 FQDN 是 https://this.is.an.example，则
+# name 将被替换为：this.is.an.example.com
+```
+
+目前该工具每个请求仅支持一个名称。
+
+
+### Class（类）
+
+类类型可以是 **INET**、**CSNET**、**CHAOS**、**HESIOD**、**NONE** 和 **ANY**。通常，将其保留为 **INET** 就足够了。
+
+```yaml
+# method 是 DNS 请求的类
+class: inet
+```
+
+### Recursion（递归）
+
+Recursion 是一个布尔值，它决定解析器是仅返回缓存结果，还是遍历整个 DNS 根树以检索新结果。通常最好将其保留为 **true**。
+
+```yaml
+# Recursion 是确定请求是否递归的布尔值
+recursion: true
+```
+
+### Retries（重试）
+
+Retries 是在不同解析器之间重试 DNS 查询的次数，超过该次数后将放弃。建议使用一个合理的值，如 **3**。
+
+```yaml
+# Retries 是放弃 DNS 解析前的重试次数
+retries: 3
+```
+
+### Matchers / Extractor Parts（匹配器/提取器部分）
+
+**DNS** 协议支持的 Matchers / Extractor 的有效 `part` 值有：
+
+| 值              | 描述                     |
+|-----------------|-------------------------|
+| request         | DNS 请求                 |
+| rcode           | DNS 响应码               |
+| question        | DNS 问题消息              |
+| extra           | DNS 消息额外字段           |
+| answer          | DNS 消息应答字段           |
+| ns              | DNS 消息权威字段           |
+| raw / all / body | 原始 DNS 消息             |
+
+### **DNS 模板示例**
+
+执行 `A` 查询并检查响应中是否存在 CNAME 和 A 记录的最终示例模板文件如下：
+
+```yaml
+id: dummy-cname-a
+
+info:
+  name: Dummy A dns request
+  author: mzack9999
+  severity: info
+  description: Checks if CNAME and A record is returned.
+
+dns:
+  - name: "{{FQDN}}"
+    type: A
+    class: inet
+    recursion: true
+    retries: 3
+    matchers:
+      - type: word
+        words:
+          # 响应必须包含 CNAME 记录
+          - "IN\tCNAME"
+          # 并且至少包含 1 个 A 记录
+          - "IN\tA"
+        condition: and
+```
+
+<Tip>
+更完整的示例请参见[此处](/templates/protocols/dns-examples)
+</Tip>

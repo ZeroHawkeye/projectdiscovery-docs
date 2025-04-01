@@ -1,0 +1,153 @@
+# Namespace: fs
+
+## Table of contents
+
+### Functions
+
+- [ListDir](/templates/protocols/javascript/modules/fs#listdir)
+- [ReadFile](/templates/protocols/javascript/modules/fs#readfile)
+- [ReadFileAsString](/templates/protocols/javascript/modules/fs#readfileasstring)
+- [ReadFilesFromDir](/templates/protocols/javascript/modules/fs#readfilesfromdir)
+
+## Functions
+
+### ListDir
+
+▸ **ListDir**(`path`, `itemType`): `string`[] \| ``null``
+
+ListDir lists itemType values within a directory
+depending on the itemType provided
+itemType can be any one of ['file','dir',”]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `path` | `string` |
+| `itemType` | `string` |
+
+#### Returns
+
+`string`[] \| ``null``
+
+**`Example`**
+
+```javascript
+const fs = require('nuclei/fs');
+// this will only return files in /tmp directory
+const files = fs.ListDir('/tmp', 'file');
+```
+
+**`Example`**
+
+```javascript
+const fs = require('nuclei/fs');
+// this will only return directories in /tmp directory
+const dirs = fs.ListDir('/tmp', 'dir');
+```
+
+**`Example`**
+
+```javascript
+const fs = require('nuclei/fs');
+// when no itemType is provided, it will return both files and directories
+const items = fs.ListDir('/tmp');
+```
+
+#### Defined in
+
+fs.ts:26
+
+___
+
+### ReadFile
+
+▸ **ReadFile**(`path`): `Uint8Array` \| ``null``
+
+ReadFile reads file contents within permitted paths
+and returns content as byte array
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `path` | `string` |
+
+#### Returns
+
+`Uint8Array` \| ``null``
+
+**`Example`**
+
+```javascript
+const fs = require('nuclei/fs');
+// here permitted directories are $HOME/nuclei-templates/*
+const content = fs.ReadFile('helpers/usernames.txt');
+```
+
+#### Defined in
+
+fs.ts:42
+
+___
+
+### ReadFileAsString
+
+▸ **ReadFileAsString**(`path`): `string` \| ``null``
+
+ReadFileAsString reads file contents within permitted paths
+and returns content as string
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `path` | `string` |
+
+#### Returns
+
+`string` \| ``null``
+
+**`Example`**
+
+```javascript
+const fs = require('nuclei/fs');
+// here permitted directories are $HOME/nuclei-templates/*
+const content = fs.ReadFileAsString('helpers/usernames.txt');
+```
+
+#### Defined in
+
+fs.ts:58
+
+___
+
+### ReadFilesFromDir
+
+▸ **ReadFilesFromDir**(`dir`): `string`[] \| ``null``
+
+ReadFilesFromDir reads all files from a directory
+and returns a string array with file contents of all files
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dir` | `string` |
+
+#### Returns
+
+`string`[] \| ``null``
+
+**`Example`**
+
+```javascript
+const fs = require('nuclei/fs');
+// here permitted directories are $HOME/nuclei-templates/*
+const contents = fs.ReadFilesFromDir('helpers/ssh-keys');
+log(contents);
+```
+
+#### Defined in
+
+fs.ts:75

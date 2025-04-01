@@ -1,0 +1,80 @@
+---
+title: "Nuclei 模板常见问题"
+description: "关于Nuclei模板的常见问题和答案，包括使用技巧和最佳实践。"
+sidebarTitle: "常见问题"
+icon: "block-question"
+iconType: "solid"
+---
+
+<Tip>关于Nuclei模板编辑器或在我们的云平台上使用模板的信息 - [点击这里了解更多](/cloud/editor/overview)。</Tip> 
+<AccordionGroup>
+  <Accordion title="什么是Nuclei模板？" icon="circle-info" iconType="solid">
+    Nuclei[模板](http://github.com/projectdiscovery/nuclei-templates)是Nuclei项目的核心。这些模板包含用于检测各种漏洞的实际逻辑。该项目由**数千个**可即用的**[社区贡献](https://github.com/projectdiscovery/nuclei-templates/graphs/contributors)**的漏洞模板组成。
+  </Accordion>
+
+  <Accordion title="如何编写Nuclei模板？" icon="circle-info" iconType="solid">
+    我们维护了一个[模板指南](/templates/introduction/)用于编写新的和自定义的Nuclei模板。
+
+  </Accordion>
+
+  <Accordion title="编写Nuclei模板如何帮助我或我的组织？" icon="fire-flame-curved" iconType="solid">
+    对应用程序进行安全评估是耗时的工作。尽可能自动化步骤总是更好且节省时间的。一旦你发现了安全漏洞，你可以通过定义复现问题所需的HTTP请求来准备Nuclei模板，并轻松地在多个主机上测试相同的漏洞。值得一提的是==你只需编写模板一次就可以永久使用==，因为你不再需要手动测试该特定漏洞。
+
+    以下是来自社区使用模板自动化安全发现的几个例子：
+      - https://dhiyaneshgeek.github.io/web/security/2021/02/19/exploiting-out-of-band-xxe/
+    	- https://blog.melbadry9.xyz/fuzzing/nuclei-cache-poisoning
+    	- https://blog.melbadry9.xyz/dangling-dns/xyz-services/ddns-worksites
+    	- https://blog.melbadry9.xyz/dangling-dns/aws/ddns-ec2-current-state
+    	- https://projectdiscovery.io/blog/if-youre-not-writing-custom-nuclei-templates-youre-missing-out
+
+  </Accordion>
+
+  <Accordion title="如何运行Nuclei模板？" icon="circle-info" iconType="solid">
+    Nuclei模板可以使用模板名称或标签执行，分别使用`-templates`(`-t`)和`-tags`参数。
+
+    ```
+    nuclei -tags cve -list target_urls.txt
+    ```
+
+  </Accordion>
+  
+  <Accordion title="如何贡献Nuclei模板？" icon="circle-info" iconType="solid">
+   我们欢迎你与社区分享你的模板。你可以通过模板详情打开[GitHub issue](https://github.com/projectdiscovery/nuclei-templates/issues/new?assignees=&labels=nuclei-template&template=submit-template.md&title=%5Bnuclei-template%5D+template-name)或用你的nuclei模板打开GitHub[pull request](https://github.com/projectdiscovery/nuclei-templates/pulls)。如果你没有GitHub账户，你也可以使用[discord服务器](https://discord.gg/projectdiscovery)与我们分享模板。
+  </Accordion>
+
+  <Accordion title="我得到了误报结果！" icon="triangle-exclamation" iconType="solid">
+    Nuclei模板项目是一个**社区贡献项目**。ProjectDiscovery团队在将模板合并到项目之前会手动审查它们。尽管如此，仍有可能一些具有弱匹配器的模板会通过验证。这可能会产生误报结果。**模板的好坏取决于其匹配器的质量。**
+
+    如果你发现产生误报/误判结果的模板，以下是几个你可以快速修复它们的步骤。
+
+          <Accordion title="我发现了一个产生误报或误判结果的模板，但我不确定这是否准确。" icon="circle-info" iconType="solid">
+           在[Twitter](https://twitter.com/pdnuclei)或[Discord](https://discord.gg/projectdiscovery)上私信我们，确认模板的有效性。
+          </Accordion>
+
+          <Accordion title="我发现了一个产生误报或误判结果的模板，但我不知道如何修复它。" icon="circle-info" iconType="solid">
+           请打开GitHub[issue](https://github.com/projectdiscovery/nuclei-templates/issues/new?assignees=&labels=false-positive&template=false-positive.md&title=%5Bfalse-positive%5D+template-name+)并提供详情，我们将努力解决问题并更新模板。
+          </Accordion>
+
+          <Accordion title="我发现了一个产生误报或误判结果的模板，并且我知道如何修复它。" icon="circle-info" iconType="solid">
+           请打开GitHub[pull request](https://github.com/projectdiscovery/nuclei-templates/pulls)并提供修复。
+          </Accordion>
+
+  </Accordion>
+
+  <Accordion title="为什么我不能运行所有Nuclei模板？" icon="triangle-exclamation" iconType="solid">
+    Nuclei模板项目包含各种执行模糊测试和其他可能导致目标系统DoS的操作的模板（参见[此处列表](https://github.com/projectdiscovery/nuclei-templates/blob/master/.nuclei-ignore)）。为确保这些模板不会被意外运行，它们被标记并从默认扫描中排除。这些模板只能在使用`-itags`选项明确调用时执行。
+
+  </Accordion>
+
+{" "}
+
+<Accordion
+  title="模板存在于GitHub但不能用Nuclei运行？"
+  icon="triangle-exclamation"
+  iconType="solid"
+>
+  当你使用Nuclei二进制文件下载或更新Nuclei模板时，它会从最新的**发布版本**下载所有模板。所有在发布后添加的模板都存在于[master
+  分支](https://github.com/projectdiscovery/nuclei-templates)中，并在创建新的模板发布时添加到Nuclei中。
+</Accordion>
+
+</AccordionGroup>

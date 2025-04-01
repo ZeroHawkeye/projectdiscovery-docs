@@ -1,0 +1,72 @@
+# Namespace: net
+
+## Table of contents
+
+### Classes
+
+- [NetConn](/templates/protocols/javascript/modules/net.NetConn)
+
+### Functions
+
+- [Open](/templates/protocols/javascript/modules/net#open)
+- [OpenTLS](/templates/protocols/javascript/modules/net#opentls)
+
+## Functions
+
+### Open
+
+▸ **Open**(`protocol`): [`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
+
+Open opens a new connection to the address with a timeout.
+supported protocols: tcp, udp
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `protocol` | `string` |
+
+#### Returns
+
+[`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
+
+**`Example`**
+
+```javascript
+const net = require('nuclei/net');
+const conn = net.Open('tcp', 'acme.com:80');
+```
+
+#### Defined in
+
+net.ts:12
+
+___
+
+### OpenTLS
+
+▸ **OpenTLS**(`protocol`): [`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
+
+Open opens a new connection to the address with a timeout.
+supported protocols: tcp, udp
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `protocol` | `string` |
+
+#### Returns
+
+[`NetConn`](/templates/protocols/javascript/modules/net.NetConn) \| ``null``
+
+**`Example`**
+
+```javascript
+const net = require('nuclei/net');
+const conn = net.OpenTLS('tcp', 'acme.com:443');
+```
+
+#### Defined in
+
+net.ts:27

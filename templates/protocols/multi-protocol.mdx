@@ -1,0 +1,175 @@
+---
+title: "多协议"
+description: "了解Nuclei v3中的多协议支持"
+icon: "diagram-next"
+iconType: "solid"
+---
+
+
+Nuclei提供了对多种协议的支持，包括HTTP、DNS、Network、SSL和Code。这使用户能够为这些协议中的漏洞编写Nuclei模板。然而，有些情况下，漏洞测试或利用需要同步执行多个协议。一个典型的例子是**子域名接管**，这需要先检查子域名的CNAME记录，然后验证HTTP响应中的字符串。虽然在Nuclei中使用工作流可以部分实现这一点，但**Nuclei v3.0**的引入使得可以方便地编写能够同步执行多个协议的**模板**。这允许对每个协议的结果进行检查，并提供其他增强功能。
+
+**示例：**
+
+```yaml
+id: dns-http-template
+
+info:
+  name: dns + http takeover template
+  author: pdteam
+  severity: info
+
+dns:
+  - name: "{{FQDN}}" # dns请求
+    type: cname
+
+http:
+  - method: GET # http请求
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - contains(http_body,'Domain not found') # 检查http响应中的字符串
+          - contains(dns_cname, 'github.io') # 检查dns响应中的cname
+        condition: and
+```
+上面的示例表明，不需要新的逻辑或语法。只需编写每个协议的逻辑，然后使用带协议前缀的变量或[动态提取器](https://docs.projectdiscovery.io/templates/reference/extractors#dynamic-extractor)导出该变量。该变量随后可在所有协议间共享。我们将其称为**模板上下文**，它包含了所有在模板级别作用域内的变量。
+
+## 特性
+
+以下特性增强了多协议执行的能力：
+
+- 在协议之间共享的协议作用域变量
+- 使用动态提取器在协议之间导出数据
+
+### 协议作用域变量
+
+在前面的示例中，我们演示了如何导出DNS CNAME并在HTTP请求中使用它。然而，您可能会遇到一个模板包含四个以上协议的情况，并且需要导出各种响应字段，如`subject_dn`、`ns`、`cname`、`header`等。虽然可以通过添加更多的动态提取器来实现这一点，但这种方法可能会使模板变得混乱并引入冗余逻辑，使得跟踪和维护所有变量变得困难。
+
+为解决这个问题，多协议执行支持模板作用域的协议响应。这意味着模板中所有协议的所有响应字段都可以在模板上下文中使用，并带有协议前缀。
+
+下面是一个示例：
+
+ 协议 | 响应字段 | 导出变量 |
+ -------- | -------------- | ----------------- |
+ ssl      | subject_cn     | ssl_subject_cn    |
+ dns      | cname          | dns_cname         |
+ http     | header         | http_header       |
+ code     | response       | code_response     |
+
+这只是一个示例，但重要的是要注意，多协议模板中使用的所有协议的响应字段都会被导出。
+
+**示例：**
+
+```yaml
+id: dns-ssl-http-proto-prefix
+
+info:
+  name: multi protocol request with response fields
+  author: pdteam
+  severity: info
+
+dns:
+  - name: "{{FQDN}}" # DNS请求
+    type: cname
+
+ssl:
+  - address: "{{Hostname}}" # ssl请求
+
+http:
+  - method: GET # http请求
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - contains(http_body,'ProjectDiscovery.io') # 检查http字符串
+          - trim_suffix(dns_cname,'.ghost.io.') == 'projectdiscovery' # 检查cname（从dns响应中提取的信息）
+          - ssl_subject_cn == 'blog.projectdiscovery.io'
+        condition: and
+```
+要列出所有导出的响应字段，编写一个多协议模板并使用`-v -svd`标志运行它，它将打印所有导出的响应字段
+
+示例：
+ 
+```bash
+nuclei -t multi-protocol-template.yaml -u scanme.sh -debug -svd
+```
+
+### 跨协议数据导出
+
+如果您不熟悉动态提取器，我们建议先阅读[动态提取器](https://docs.projectdiscovery.io/templates/reference/extractors#dynamic-extractor)部分。
+
+以前，动态提取器只支持特定协议或工作流。然而，通过多协议执行，动态提取的值存储在模板上下文中，可以在所有协议中使用。
+
+**示例：**
+
+```yaml
+id: dns-http-template
+
+info:
+  name: dns + http takeover template
+  author: pdteam
+  severity: info
+
+dns:
+  - name: "{{FQDN}}" # dns请求
+    type: cname
+
+    extractors:
+      - type: dsl
+        name: exported_cname
+        dsl:
+          - cname
+        internal: true
+
+http:
+  - method: GET # http请求
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - contains(body,'Domain not found') # 检查http字符串
+          - contains(exported_cname, 'github.io') # 检查cname（从dns响应中提取的信息）
+        condition: and
+```
+## 多协议如何工作？
+
+到目前为止，我们已经看到了多协议模板的外观以及它带来的功能。现在让我们看看多协议模板是如何工作的，以及在编写它们时需要注意的事项。
+
+- 多协议模板按照模板中定义的协议顺序执行。
+- 多协议模板中的协议按串行方式执行，即一个接一个。
+- 一旦执行了该协议，协议的响应字段就会导出到模板上下文中。
+- 变量的作用域在模板级别，并在每个协议执行后进行评估。
+- 多协议为协议提供有限的间接支持，用于预处理（使用变量）和后处理（使用动态提取器）。
+
+## 常见问题
+
+**多协议执行模式支持哪些协议？**
+
+> 没有对任何协议的限制，nuclei引擎中可用/已实现的任何协议都可以在多协议模板中使用
+
+**多协议执行模式中可以使用多少个协议？**
+
+> 对协议数量没有限制，但目前不支持重复的协议，例如dns -> http -> ssl -> http。如果您有需要重复协议的漏洞/用例，请提交一个issue
+
+**如果一个协议失败了会发生什么？**
+
+> 多协议执行遵循出错即退出策略，即如果协议执行失败，则跳过剩余协议的执行并停止模板执行
+
+**多协议执行与工作流有何不同？**
+
+> 工作流顾名思义是基于工作流文件执行模板的工作流
+> - 工作流不包含漏洞的实际逻辑，只是执行不同模板的工作流
+> - 工作流支持多个模板的条件执行
+> - 工作流对变量和动态提取器的支持有限
+
+总结来说，工作流比模板高一级，根据工作流文件管理模板的执行
+
+**nuclei v2支持多协议执行吗？**
+
+> 不，多协议执行仅在nuclei v3及以上版本中支持

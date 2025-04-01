@@ -1,0 +1,50 @@
+# Namespace: mysql
+
+## Table of contents
+
+### Classes
+
+- [MySQLClient](/templates/protocols/javascript/modules/mysql.MySQLClient)
+
+### Interfaces
+
+- [MySQLInfo](/templates/protocols/javascript/modules/mysql.MySQLInfo)
+- [MySQLOptions](/templates/protocols/javascript/modules/mysql.MySQLOptions)
+- [SQLResult](/templates/protocols/javascript/modules/mysql.SQLResult)
+- [ServiceMySQL](/templates/protocols/javascript/modules/mysql.ServiceMySQL)
+
+### Functions
+
+- [BuildDSN](/templates/protocols/javascript/modules/mysql#builddsn)
+
+## Functions
+
+### BuildDSN
+
+▸ **BuildDSN**(`opts`): `string` \| ``null``
+
+BuildDSN builds a MySQL data source name (DSN) from the given options.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `opts` | [`MySQLOptions`](/templates/protocols/javascript/modules/mysql.MySQLOptions) |
+
+#### Returns
+
+`string` \| ``null``
+
+**`Example`**
+
+```javascript
+const mysql = require('nuclei/mysql');
+const options = new mysql.MySQLOptions();
+options.Host = 'acme.com';
+options.Port = 3306;
+const dsn = mysql.BuildDSN(options);
+```
+
+#### Defined in
+
+mysql.ts:14

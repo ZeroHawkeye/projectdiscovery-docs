@@ -1,0 +1,85 @@
+# Interface: ADObject
+
+[ldap](/templates/protocols/javascript/modules/ldap).ADObject
+
+ADObject represents an Active Directory object
+
+**`Example`**
+
+```javascript
+const ldap = require('nuclei/ldap');
+const client = new ldap.Client('ldap://ldap.example.com', 'acme.com');
+const users = client.GetADUsers();
+log(to_json(users));
+```
+
+## Table of contents
+
+### Properties
+
+- [DistinguishedName](/templates/protocols/javascript/modules/ldap.ADObject#distinguishedname)
+- [LastLogon](/templates/protocols/javascript/modules/ldap.ADObject#lastlogon)
+- [MemberOf](/templates/protocols/javascript/modules/ldap.ADObject#memberof)
+- [PWDLastSet](/templates/protocols/javascript/modules/ldap.ADObject#pwdlastset)
+- [SAMAccountName](/templates/protocols/javascript/modules/ldap.ADObject#samaccountname)
+- [ServicePrincipalName](/templates/protocols/javascript/modules/ldap.ADObject#serviceprincipalname)
+
+## Properties
+
+### DistinguishedName
+
+• `Optional` **DistinguishedName**: `string`
+
+#### Defined in
+
+ldap.ts:496
+
+___
+
+### LastLogon
+
+• `Optional` **LastLogon**: `string`
+
+#### Defined in
+
+ldap.ts:502
+
+___
+
+### MemberOf
+
+• `Optional` **MemberOf**: `string`[]
+
+#### Defined in
+
+ldap.ts:504
+
+___
+
+### PWDLastSet
+
+• `Optional` **PWDLastSet**: `string`
+
+#### Defined in
+
+ldap.ts:500
+
+___
+
+### SAMAccountName
+
+• `Optional` **SAMAccountName**: `string`
+
+#### Defined in
+
+ldap.ts:498
+
+___
+
+### ServicePrincipalName
+
+• `Optional` **ServicePrincipalName**: `string`[]
+
+#### Defined in
+
+ldap.ts:506

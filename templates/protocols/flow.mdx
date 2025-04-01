@@ -1,0 +1,276 @@
+---
+title: "Flow 协议"
+description: "了解 Nuclei v3 中的模板流引擎"
+icon: "arrow-progress"
+iconType: "solid"
+sidebarTitle: "Flow"
+---
+
+## 概述
+
+模板流引擎在 nuclei v3 中引入，为 Nuclei 带来了两项重要增强功能：
+
+- [条件执行请求](#conditional-execution)的能力
+- [请求执行的编排](#request-execution-orchestration)
+
+这些功能通过 [goja](https://github.com/dop251/goja) 后端使用 JavaScript (ECMAScript 5.1) 实现。
+
+## 条件执行
+
+在编写复杂模板时，我们可能需要在执行请求的某些部分之前添加一些额外的检查（或条件语句）。
+
+一个理想的例子是使用默认用户名和密码[暴力破解 WordPress 登录](https://cloud.projectdiscovery.io/public/wordpress-weak-credentials)，但如果我们仔细重新评估这个模板，我们可以看到模板发送了 276 个请求，而没有检查 URL 是否实际存在或目标站点是否确实是 WordPress 站点。
+
+随着 Nuclei v3 中 flow 的增加，我们可以重写此模板，首先检查目标是否为 WordPress 站点，如果是，则使用默认凭据暴力破解登录，这可以通过简单添加一行内容来实现，即 `flow: http(1) && http(2)`，nuclei 将处理其余一切。
+
+```yaml
+id: wordpress-bruteforce
+
+info:
+  name: WordPress Login Bruteforce
+  author: pdteam
+  severity: high
+
+flow: http(1) && http(2)
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-login.php"
+
+    matchers:
+      - type: word
+        words:
+          - "WordPress"
+
+  - method: POST
+    path:
+      - "{{BaseURL}}/wp-login.php"
+
+    body: |
+        log={{username}}&pwd={{password}}&wp-submit=Log+In
+
+    attack: clusterbomb 
+    payloads:
+      users: helpers/wordlists/wp-users.txt
+      passwords: helpers/wordlists/wp-passwords.txt
+
+    matchers:
+      - type: dsl
+        dsl:
+          - status_code == 302
+          - contains_all(header, "/wp-admin","wordpress_logged_in")
+        condition: and
+```
+
+更新后的模板现在看起来直接明了且易于理解。我们首先检查目标是否为 WordPress 站点，然后执行暴力破解请求。这只是条件执行的一个简单示例，flow 接受任何 JavaScript (ECMAScript 5.1) 表达式/代码，因此您可以自由创建任何条件执行逻辑。
+
+## 请求执行编排
+
+Flow 是 Nuclei 的一项强大功能，为执行请求提供了增强的编排能力。条件执行的简单性只是开始。使用 flow，您可以：
+
+-	遍历值列表并为每个值执行请求
+-	从请求中提取值，遍历它们，并为每个值执行另一个请求
+-	获取和设置模板上下文（全局变量）中的值
+-	将输出写入 stdout 用于调试目的或基于特定条件
+-	在模板执行期间引入自定义逻辑
+-	使用 ECMAScript 5.1 JavaScript 功能在运行时构建和修改变量
+-	在运行时更新变量并在后续请求中使用它们
+
+将请求执行编排视为 JavaScript 和 Nuclei 之间的桥梁，在特定模板内提供双向交互。
+
+**实际示例：Vhost 枚举**
+
+为了更好地说明 flow 的功能，让我们考虑开发一个用于 vhost（虚拟主机）枚举的模板。这组任务通常需要从头开始编写新工具。以下是我们需要遵循的步骤：
+1.	检索提供的 IP 的 SSL 证书（使用 tlsx）
+    - 从证书中提取 `subject_cn`（CN）
+    - 从证书中提取 `subject_an`（SAN）
+    - 从上述步骤中获取的值中删除通配符前缀
+2.	使用从 SSL 请求中找到的所有域名暴力破解请求
+
+您可以利用 flow 来简化此任务。下面的 JavaScript 代码编排了 vhost 枚举：
+
+```javascript
+ssl();
+for (let vhost of iterate(template["ssl_domains"])) {
+    set("vhost", vhost);
+    http();
+}
+```
+
+在此代码中，我们引入了 5 行额外的 JavaScript。这允许模板执行 vhost 枚举。最好的部分？您可以使用 Nuclei 的所有功能大规模运行它，使用支持的输入如 ASN、CIDR、URL。
+
+让我们分解 JavaScript 代码：
+
+1. `ssl()`：此函数执行 SSL 请求。
+2. `template["ssl_domains"]`：从模板上下文中检索 `ssl_domains` 的值。
+3. `iterate()`：辅助函数，可以遍历任何值类型，同时处理空值或 null 值。
+4. `set("vhost", vhost)`：在模板中创建一个新变量 `vhost`，并将 `vhost` 变量的值分配给它。
+5. `http()`：此函数执行 HTTP 请求。
+
+通过理解并利用 Nuclei 的 `flow`，您可以重新定义编排请求执行的方式，使您的模板更强大、更高效。
+
+以下是使用 flow 进行 vhost 枚举的工作模板：
+
+```yaml
+id: vhost-enum-flow
+
+info:
+  name: vhost enum flow
+  author: tarunKoyalwar
+  severity: info
+  description: |
+    vhost enumeration by extracting potential vhost names from ssl certificate.
+
+flow: |
+  ssl();
+  for (let vhost of iterate(template["ssl_domains"])) {
+    set("vhost", vhost);
+    http();
+  }
+
+ssl:
+  - address: "{{Host}}:{{Port}}"
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{vhost}}
+
+    matchers:
+      - type: dsl
+        dsl:
+          - status_code != 400
+          - status_code != 502
+
+    extractors:
+      - type: dsl
+        dsl:
+          - '"VHOST: " + vhost + ", SC: " + status_code + ", CL: " + content_length'
+```
+
+## JS 绑定
+
+本节简要描述所有 nuclei JS 绑定及其用法。
+
+### 协议执行函数
+
+在 nuclei 中，任何列出的协议都可以使用 `protocol_name()` 格式在 JavaScript 中调用或执行。例如，您可以使用 `http()`、`dns()`、`ssl()` 等。
+
+如果您想执行协议的特定请求（参考 nuclei-flow-dns 示例），可以通过传递以下任一项来实现：
+
+ - 协议中该请求的索引（例如，`dns(1)`、`dns(2)`）
+ - 协议中该请求的 ID（例如，`dns("extract-vps")`、`http("probe-http")`）
+
+对于需要执行单个协议的多个请求的更高级场景，您可以一个接一个地指定它们的索引或 ID（例如，dns("extract-vps","1")）。
+
+使用索引数字或 ID 字符串调用特定协议请求的这种灵活性提供了定制执行的控制，允许您构建更复杂和高效的工作流。更复杂的用例中，单个协议的多个请求可以通过一个接一个地指定它们的索引或 id 来执行（例如：`dns("extract-vps","1")`）
+
+### Iterate 辅助函数
+  
+Iterate 是一个 nuclei js 辅助函数，可用于遍历任何类型的值，如**数组**、**映射**、**字符串**、**数字**，同时处理空/nil 值。
+
+这是 nuclei 的附加辅助函数，用于省略检查值是否为空然后遍历它的样板代码
+
+```javascript
+iterate(123,{"a":1,"b":2,"c":3})
+
+// 使用自定义分隔符遍历数组
+iterate([1,2,3,4,5], " ")
+```
+
+### Set 辅助函数
+
+当遍历值/数组或其他用例时，我们可能想使用自定义/给定值调用请求，这可以通过使用 `set()` 辅助函数来实现。调用时，它将给定变量添加到模板上下文（全局变量）中，该值在执行请求/协议期间使用。`set()` 的格式是 `set("variable_name",value)`，例如：`set("username","admin")`。
+
+```javascript
+for (let vhost of myArray) {
+  set("vhost", vhost);
+  http(1)
+}
+```
+**注意：** 在上面的例子中，我们使用了 `set("vhost", vhost)`，它将 `vhost` 添加到模板上下文（全局变量）中，然后调用 `http(1)`，后者在请求中使用了这个值。
+
+### 模板上下文
+
+模板上下文只是一个包含所有数据的 map/jsonl，同时包含仅在运行时可用的内部/未导出数据（例如：从先前请求中提取的值，使用 `set()` 添加的变量等）。此模板上下文在 JavaScript 中作为 `template` 变量可用，可用于从中访问任何数据。例如：`template["dns_cname"]`、`template["ssl_subject_cn"]` 等。
+
+```javascript
+template["ssl_domains"] // 返回执行 ssl 请求后模板上下文中可用的 ssl_domains 的值
+template["ptrValue"]  // 返回使用带有 internal: true 的正则表达式提取的 ptrValue 的值
+```
+很多时候我们不知道模板上下文中有哪些数据，可以通过使用 `log()` 函数将其打印到 stdout 轻松找到
+
+```javascript
+log(template)
+```
+
+### Log 辅助函数
+
+它是 nuclei js 替代 `console.log` 的函数，以可读格式漂亮地打印 map 数据
+
+**注意：** 这应仅用于调试目的，因为它将数据打印到 stdout
+
+### Dedupe
+
+很多时候仅有数组/切片是不够的，我们可能需要删除重复变量。例如，在前面的 vhost 枚举中，我们没有删除任何重复项，因为 `ssl_subject_cn` 和 `ssl_subject_an` 中总是有重复值的可能，这可以通过使用 `dedupe()` 对象来实现。这是 nuclei js 辅助函数，用于抽象从数组/切片中删除重复项的样板代码
+
+```javascript
+let uniq = new Dedupe(); // 创建新的 dedupe 对象
+uniq.Add(template["ptrValue"]) 
+uniq.Add(template["ssl_subject_cn"]);
+uniq.Add(template["ssl_subject_an"]); 
+log(uniq.Values())
+```
+
+就这样，它自动将任何切片/数组转换为 map 并从中删除重复项，并返回唯一值的切片/数组
+
+> 类似于 DSL 辅助函数，我们可以使用 `Javascript (ECMAScript 5.1)` 提供的内置函数或使用 DSL 辅助函数，由用户决定使用哪一个。
+
+
+### 在多协议/Flow 模板中跳过内部匹配器
+
+在 nuclei v3.1.4 之前，像 [`CVE-2023-43177`](https://github.com/projectdiscovery/nuclei-templates/blob/c5be73e328ebd9a0c122ea0324f60bbdd7eb940d/http/cves/2023/CVE-2023-43177.yaml#L28) 这样的模板，它有多个请求/协议并使用 `flow` 进行逻辑处理，通常只返回一个结果，但当在 `flow` 中使用 `for` 循环时，这与逻辑冲突。为了解决这个问题，从 v3.1.4 开始，nuclei 引擎将打印模板中的所有事件/结果，模板编写者可以在匹配器中使用 `internal: true` 来跳过打印事件/结果，就像动态提取器一样。
+
+注意：这仅在先前请求/协议中使用了匹配器/提取器时相关
+
+使用新的 `internal: true` 逻辑的 [`CVE-2023-6553`](https://github.com/projectdiscovery/nuclei-templates/blob/c5be73e328ebd9a0c122ea0324f60bbdd7eb940d/http/cves/2023/CVE-2023-6553.yaml#L21) 示例如下：
+
+```yaml
+id: CVE-2023-6553
+
+info:
+  name: Worpress Backup Migration <= 1.3.7 - Unauthenticated Remote Code Execution
+  author: FLX
+  severity: critical
+
+flow: http(1) && http(2)
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-content/plugins/backup-backup/readme.txt"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - 'status_code == 200'
+          - 'contains(body, "Backup Migration")'
+        condition: and
+        internal: true  # <- 更新的逻辑（这将跳过打印此事件/结果）
+
+  - method: POST
+    path:
+      - "{{BaseURL}}/wp-content/plugins/backup-backup/includes/backup-heart.php"
+    headers:
+      Content-Dir: "{{rand_text_alpha(10)}}"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - 'len(body) == 0'
+          - 'status_code == 200'
+          - '!contains(body, "Incorrect parameters")'
+        condition: and
+```

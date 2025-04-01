@@ -1,0 +1,116 @@
+---
+title: "文件协议"
+description: "了解如何使用 Nuclei 操作本地文件系统"
+icon: "file"
+iconType: "regular"
+sidebarTitle: "File"
+---
+
+## 概述
+
+Nuclei 允许创建可以在本地文件系统上匹配/提取的模板。
+
+```yaml
+# 文件模板块开始
+file:
+```
+
+## 扩展名
+
+要匹配所有扩展名（默认拒绝列表中的除外），请使用以下方式 - 
+
+```yaml
+extensions:
+  - all
+```
+
+您也可以提供要匹配的自定义扩展名列表。
+
+```yaml
+extensions:
+  - py
+  - go
+```
+
+还可以提供扩展名的拒绝列表。具有这些扩展名的文件将不会被 nuclei 处理。
+
+```yaml
+extensions:
+  - all
+
+denylist:
+  - go
+  - py
+  - txt
+```
+
+默认情况下，nuclei 文件模块会排除某些扩展名。以下是这些扩展名的列表 - 
+
+```
+3g2,3gp,7z,apk,arj,avi,axd,bmp,css,csv,deb,dll,doc,drv,eot,exe,
+flv,gif,gifv,gz,h264,ico,iso,jar,jpeg,jpg,lock,m4a,m4v,map,mkv,
+mov,mp3,mp4,mpeg,mpg,msi,ogg,ogm,ogv,otf,pdf,pkg,png,ppt,psd,rar,
+rm,rpm,svg,swf,sys,tar,tar.gz,tif,tiff,ttf,txt,vob,wav,webm,wmv,
+woff,woff2,xcf,xls,xlsx,zip
+```
+
+## 更多选项
+
+可以提供 **max-size** 参数，它限制了 nuclei 引擎读取的文件的最大大小（以字节为单位）。
+
+默认的 `max-size` 值为 5 MB (5242880)，大于 `max-size` 的文件将不会被处理。
+
+-----
+
+**no-recursive** 选项在处理文件模块的输入时，禁用对目录/通配符的递归遍历。
+
+## 匹配器 / 提取器
+
+**文件**协议支持 2 种类型的匹配器 -
+
+| 匹配器类型 | 匹配部分 |
+|------------|----------|
+| word       | 全部     |
+| regex      | 全部     |
+
+
+| 提取器类型 | 匹配部分 |
+|------------|----------|
+| word       | 全部     |
+| regex      | 全部     |
+
+## **文件模板示例**
+
+以下是私钥检测的最终示例模板文件。
+
+```yaml
+id: google-api-key
+
+info:
+  name: Google API Key
+  author: pdteam
+  severity: info
+
+file:
+  - extensions:
+      - all
+      - txt
+
+    extractors:
+      - type: regex
+        name: google-api-key
+        regex:
+          - "AIza[0-9A-Za-z\\-_]{35}"
+```
+
+```bash
+# 在 http-response/ 目录上运行文件模板
+nuclei -t file.yaml -file -target http-response/
+
+# 在 output.txt 上运行文件模板
+nuclei -t file.yaml -file -target output.txt
+```
+
+<Tip>
+更完整的示例可在[此处](/templates/protocols/file-examples)找到
+</Tip>
