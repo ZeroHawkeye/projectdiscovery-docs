@@ -26,13 +26,13 @@ Katana 需要一个 URL 或端点来爬取，并且接受单个或多个输入�
 katana -u https://tesla.com
 ```
 
-#### Multiple URL Input (comma-separated)
+#### 多个 URL 输入（逗号分隔）
 
 ```sh
 katana -u https://tesla.com,https://google.com
 ```
 
-#### List Input
+#### 文件列表输入
 ```bash
 $ cat url_list.txt
 
@@ -44,7 +44,7 @@ https://google.com
 katana -list url_list.txt
 ```
 
-#### STDIN (piped) Input
+#### STDIN (piped) 输入
 
 ```sh
 echo https://tesla.com | katana
@@ -54,7 +54,7 @@ echo https://tesla.com | katana
 cat domains | httpx | katana
 ```
 
-Example running katana -
+运行 Katana 示例 -
 
 ```console
 katana -u https://youtube.com
@@ -103,44 +103,43 @@ https://www.youtube.com/jobs/
 https://www.youtube.com/kids/
 ```
 
+## 爬取模式
 
-## Crawling Mode
+### 标准模式
 
-### Standard Mode
+标准爬取模式在底层使用标准的 Go HTTP 库来处理 HTTP 请求/响应。由于没有浏览器开销,这种模式速度更快。但是它只会按原样分析 HTTP 响应体,不会执行任何 JavaScript 或 DOM 渲染,这可能会遗漏一些在复杂 Web 应用中依赖于浏览器特定事件的后期 DOM 渲染端点或异步端点调用。
 
-Standard crawling modality uses the standard go http library under the hood to handle HTTP requests/responses. This modality is much faster as it doesn't have the browser overhead. Still, it analyzes HTTP responses body as is, without any javascript or DOM rendering, potentially missing post-dom-rendered endpoints or asynchronous endpoint calls that might happen in complex web applications depending, for example, on browser-specific events.
+### 无头模式
 
-### Headless Mode
+无头模式通过在浏览器上下文中直接处理 HTTP 请求/响应来实现。这提供了两个优势:
+- HTTP 指纹(TLS 和用户代理)可以将客户端完全标识为合法浏览器
+- 覆盖范围更广,因为端点发现不仅分析标准原始响应(如前一种模式),还会分析启用了 JavaScript 的浏览器渲染响应。
 
-Headless mode hooks internal headless calls to handle HTTP requests/responses directly within the browser context. This offers two advantages:
-- The HTTP fingerprint (TLS and user agent) fully identify the client as a legitimate browser
-- Better coverage since the endpoints are discovered analyzing the standard raw response, as in the previous modality, and also the browser-rendered one with javascript enabled.
+无头爬取是可选的,可以使用 `-headless` 选项启用。
 
-Headless crawling is optional and can be enabled using `-headless` option.
-
-Here are other headless CLI options -
+以下是其他无头模式的命令行选项 -
 
 ```console
 katana -h headless
 
 Flags:
-HEADLESS:
-   -hl, -headless                    enable headless hybrid crawling (experimental)
-   -sc, -system-chrome               use local installed chrome browser instead of katana installed
-   -sb, -show-browser                show the browser on the screen with headless mode
-   -ho, -headless-options string[]   start headless chrome with additional options
-   -nos, -no-sandbox                 start headless chrome in --no-sandbox mode
-   -cdd, -chrome-data-dir string     path to store chrome browser data
-   -scp, -system-chrome-path string  use specified chrome browser for headless crawling
-   -noi, -no-incognito               start headless chrome without incognito mode
-   -cwu, -chrome-ws-url string       use chrome browser instance launched elsewhere with the debugger listening at this URL
-   -xhr, -xhr-extraction             extract xhr requests
+无头模式:
+   -hl, -headless                    启用无头混合爬取模式(实验性)
+   -sc, -system-chrome               使用本地安装的Chrome浏览器代替katana内置浏览器
+   -sb, -show-browser                在无头模式下显示浏览器界面
+   -ho, -headless-options string[]   使用额外选项启动无头Chrome浏览器
+   -nos, -no-sandbox                 以no-sandbox模式启动无头Chrome浏览器
+   -cdd, -chrome-data-dir string     Chrome浏览器数据存储路径
+   -scp, -system-chrome-path string  指定用于无头爬取的Chrome浏览器路径
+   -noi, -no-incognito               不使用隐身模式启动无头Chrome浏览器
+   -cwu, -chrome-ws-url string       使用在其他位置启动的带调试器的Chrome浏览器实例(指定WebSocket URL)
+   -xhr, -xhr-extraction             提取XHR请求
 ```
 
 ### `-no-sandbox`
 ----
 
-Runs headless chrome browser with **no-sandbox** option, useful when running as root user.
+使用 **no-sandbox** 选项运行无头 Chrome 浏览器,这在以 root 用户运行时很有用。
 
 ```console
 katana -u https://tesla.com -headless -no-sandbox
@@ -149,7 +148,7 @@ katana -u https://tesla.com -headless -no-sandbox
 ### *`-no-incognito`*
 ----
 
-Runs headless chrome browser without incognito mode, useful when using the local browser.
+在无头模式下运行Chrome浏览器时不使用隐身模式,这在使用本地浏览器时很有用。
 
 ```console
 katana -u https://tesla.com -headless -no-incognito
@@ -157,26 +156,24 @@ katana -u https://tesla.com -headless -no-incognito
 
 ### *`-headless-options`*
 ----
-
-When crawling in headless mode, additional chrome options can be specified using `-headless-options`, for example -
+在无头模式下爬取时,可以使用 `-headless-options` 指定额外的 Chrome 选项,例如:
 
 
 ```console
 katana -u https://tesla.com -headless -system-chrome -headless-options --disable-gpu,proxy-server=http://127.0.0.1:8080
 ```
 
+## 范围控制
 
-## Scope Control
-
-Crawling can be endless if not scoped, as such katana comes with multiple support to define the crawl scope.
+如果不限定范围,爬取可能会无休止地进行,因此 katana 提供了多种方式来定义爬取范围。
 
 ### *`-field-scope`*
 ----
-Most handy option to define scope with predefined field name, `rdn` being default option for field scope.
+最方便的范围定义选项,使用预定义的字段名称,默认使用 `rdn` 作为字段范围。
 
-   - `rdn` - crawling scoped to root domain name and all subdomains (e.g. `*example.com`) (default)
-   - `fqdn` - crawling scoped to given sub(domain) (e.g. `www.example.com` or `api.example.com`)
-   - `dn` - crawling scoped to domain name keyword (e.g. `example`)
+   - `rdn` - 爬取根域名及其所有子域名范围 (例如 `*example.com`) (默认)
+   - `fqdn` - 爬取指定的(子)域名范围 (例如 `www.example.com` 或 `api.example.com`)
+   - `dn` - 爬取域名关键词范围 (例如 `example`)
 
 ```console
 katana -u https://tesla.com -fs dn
@@ -186,13 +183,13 @@ katana -u https://tesla.com -fs dn
 ### *`-crawl-scope`*
 ------
 
-For advanced scope control, `-cs` option can be used that comes with **regex** support.
+对于高级范围控制,可以使用支持**正则表达式**的 `-cs` 选项。
 
 ```console
 katana -u https://tesla.com -cs login
 ```
 
-For multiple in scope rules, file input with multiline string / regex can be passed.
+对于多个范围规则,可以传入包含多行字符串/正则表达式的文件。
 
 ```bash
 $ cat in_scope.txt
@@ -211,13 +208,13 @@ katana -u https://tesla.com -cs in_scope.txt
 ### *`-crawl-out-scope`*
 -----
 
-For defining what not to crawl, `-cos` option can be used and also support **regex** input.
+要定义不爬取的内容,可以使用 `-cos` 选项,该选项也支持**正则表达式**输入。
 
 ```console
 katana -u https://tesla.com -cos logout
 ```
 
-For multiple out of scope rules, file input with multiline string / regex can be passed.
+对于多个排除范围规则,可以传入包含多行字符串/正则表达式的文件。
 
 ```bash
 $ cat out_of_scope.txt
@@ -233,7 +230,7 @@ katana -u https://tesla.com -cos out_of_scope.txt
 ### *`-no-scope`*
 ----
 
-Katana is default to scope `*.domain`, to disable this `-ns` option can be used and also to crawl the internet.
+Katana 默认的作用域是 `*.domain`，要禁用此默认作用域可以使用 `-ns` 选项，这样也可以爬取整个互联网。
 
 ```console
 katana -u https://tesla.com -ns
@@ -242,13 +239,13 @@ katana -u https://tesla.com -ns
 *`-display-out-scope`*
 ----
 
-As default, when scope option is used, it also applies for the links to display as output, as such **external URLs are default to exclude** and to overwrite this behavior, `-do` option can be used to display all the external URLs that exist in targets scoped URL / Endpoint.
+默认情况下,当使用范围选项时,它也会应用于显示为输出的链接,因此**外部 URL 默认被排除**。要覆盖此行为,可以使用 `-do` 选项来显示目标范围内 URL/端点中存在的所有外部 URL。
 
 ```
 katana -u https://tesla.com -do
 ```
 
-Here is all the CLI options for the scope control -
+以下是所有用于范围控制的 CLI 选项 -
 
 
 ```console
@@ -256,22 +253,18 @@ katana -h scope
 
 Flags:
 SCOPE:
-   -cs, -crawl-scope string[]       in scope url regex to be followed by crawler
-   -cos, -crawl-out-scope string[]  out of scope url regex to be excluded by crawler
-   -fs, -field-scope string         pre-defined scope field (dn,rdn,fqdn) (default "rdn")
-   -ns, -no-scope                   disables host based default scope
-   -do, -display-out-scope          display external endpoint from scoped crawling
+   -cs, -crawl-scope string[]       要爬取的URL正则表达式范围
+   -cos, -crawl-out-scope string[]  要排除的URL正则表达式范围
+   -fs, -field-scope string         预定义的范围字段(dn,rdn,fqdn)(默认为"rdn")
+   -ns, -no-scope                   禁用基于主机的默认范围
+   -do, -display-out-scope          显示范围内爬取的外部端点
+
 ```
-
-
-## Crawler Configuration
-
-Katana comes with multiple options to configure and control the crawl as the way we want.
 
 ### *`-depth`*
 ----
 
-Option to define the `depth` to follow the urls for crawling, the more depth the more number of endpoint being crawled + time for crawl.
+用于定义爬取 URL 的 `depth`(深度)的选项,深度越大,爬取的端点数量越多,爬取时间也越长。
 
 ```
 katana -u https://tesla.com -d 5
@@ -280,7 +273,7 @@ katana -u https://tesla.com -d 5
 ### *`-js-crawl`*
 ----
 
-Option to enable JavaScript file parsing + crawling the endpoints discovered in JavaScript files, disabled as default.
+用于启用 JavaScript 文件解析和爬取在 JavaScript 文件中发现的端点的选项,默认禁用。
 
 ```
 katana -u https://tesla.com -jc
@@ -289,7 +282,7 @@ katana -u https://tesla.com -jc
 ### *`-crawl-duration`*
 ----
 
-Option to predefined crawl duration, disabled as default.
+用于预定义爬取持续时间的选项,默认禁用。
 
 ```
 katana -u https://tesla.com -ct 2
@@ -297,7 +290,7 @@ katana -u https://tesla.com -ct 2
 
 ### *`-known-files`*
 ----
-Option to enable crawling `robots.txt` and `sitemap.xml` file, disabled as default.
+启用爬取 `robots.txt` 和 `sitemap.xml` 文件的选项,默认禁用。
 
 ```
 katana -u https://tesla.com -kf robotstxt,sitemapxml
@@ -305,33 +298,31 @@ katana -u https://tesla.com -kf robotstxt,sitemapxml
 
 ### *`-automatic-form-fill`*
 ----
+启用自动填充表单字段的选项,支持已知/未知字段。已知字段的值可以通过更新配置文件 `$HOME/.config/katana/form-config.yaml` 来自定义。
 
-Option to enable automatic form filling for known / unknown fields, known field values can be customized as needed by updating form config file at `$HOME/.config/katana/form-config.yaml`.
-
-Automatic form filling is experimental feature.
+自动填充表单是一个实验性功能。
 
 ```
 katana -u https://tesla.com -aff
 ```
+## 认证爬取
 
-## Authenticated Crawling
+认证爬取需要在 HTTP 请求中包含自定义 headers 或 cookies 来访问受保护的资源。这些 headers 提供认证或授权信息,使你能够爬取需要认证的内容/端点。你可以直接在命令行中指定 headers,也可以通过文件的方式提供给 katana 来执行认证爬取。
 
-Authenticated crawling involves including custom headers or cookies in HTTP requests to access protected resources. These headers provide authentication or authorization information, allowing you to crawl authenticated content / endpoint. You can specify headers directly in the command line or provide them as a file with katana to perfrom authenticated crawling.
-
-> **Note**: User needs to be manually perform the authentication and export the session cookie / header to file to use with katana.
+> **注意**: 用户需要手动执行认证并将会话 cookie/header 导出到文件中以供 katana 使用。
 
 ### *`-headers`*
 ----
 
-Option to add a custom header or cookie to the request. 
-> Syntax of [headers](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2) in the HTTP specification
+用于向请求添加自定义 header 或 cookie 的选项。
+> HTTP 规范中的 [headers](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2) 语法
 
-Here is an example of adding a cookie to the request:
+以下是向请求添加 cookie 的示例:
 ```
 katana -u https://tesla.com -H 'Cookie: usrsess=AmljNrESo'
 ```
 
-It is also possible to supply headers or cookies as a file. For example:
+也可以通过文件的方式提供 headers 或 cookies。例如:
 
 ```
 $ cat cookie.txt
@@ -346,38 +337,37 @@ katana -u https://tesla.com -H cookie.txt
 ```
 
 
-There are more options to configure when needed, here is all the config related CLI options - 
+在需要时还有更多配置选项,以下是所有与配置相关的命令行选项 -
 
 ```console
 katana -h config
 
 Flags:
-CONFIGURATION:
-   -r, -resolvers string[]       list of custom resolver (file or comma separated)
-   -d, -depth int                maximum depth to crawl (default 3)
-   -jc, -js-crawl                enable endpoint parsing / crawling in javascript file
-   -ct, -crawl-duration int      maximum duration to crawl the target for
-   -kf, -known-files string      enable crawling of known files (all,robotstxt,sitemapxml)
-   -mrs, -max-response-size int  maximum response size to read (default 9223372036854775807)
-   -timeout int                  time to wait for request in seconds (default 10)
-   -aff, -automatic-form-fill    enable automatic form filling (experimental)
-   -fx, -form-extraction         enable extraction of form, input, textarea & select elements
-   -retry int                    number of times to retry the request (default 1)
-   -proxy string                 http/socks5 proxy to use
-   -H, -headers string[]         custom header/cookie to include in request
-   -config string                path to the katana configuration file
-   -fc, -form-config string      path to custom form configuration file
-   -flc, -field-config string    path to custom field configuration file
-   -s, -strategy string          Visit strategy (depth-first, breadth-first) (default "depth-first")
+配置选项:
+   -r, -resolvers string[]       自定义解析器列表(文件或逗号分隔)
+   -d, -depth int                最大爬取深度(默认为3)
+   -jc, -js-crawl                启用JavaScript文件中的端点解析/爬取
+   -ct, -crawl-duration int      爬取目标的最大持续时间
+   -kf, -known-files string      启用已知文件的爬取(all,robotstxt,sitemapxml)
+   -mrs, -max-response-size int  要读取的最大响应大小(默认为9223372036854775807)
+   -timeout int                  请求等待时间(秒)(默认为10)
+   -aff, -automatic-form-fill    启用自动表单填充(实验性功能)
+   -fx, -form-extraction         启用表单、输入框、文本区域和选择元素的提取
+   -retry int                    重试请求的次数(默认为1)
+   -proxy string                 使用的http/socks5代理
+   -H, -headers string[]         请求中包含的自定义header/cookie
+   -config string                katana配置文件的路径
+   -fc, -form-config string      自定义表单配置文件的路径
+   -flc, -field-config string    自定义字段配置文件的路径
+   -s, -strategy string          访问策略(深度优先,广度优先)(默认为"depth-first")
 ```
+## 连接到活动浏览器会话
 
-## Connecting to Active Browser Session
+Katana 还可以连接到用户已登录和认证的活动浏览器会话,并用于爬取。唯一的要求是启动浏览器时需要启用远程调试。
 
-Katana can also connect to active browser session where user is already logged in and authenticated. and use it for crawling. The only requirement for this is to start browser with remote debugging enabled.
+以下是启用远程调试启动 Chrome 浏览器并与 katana 一起使用的示例 -
 
-Here is an example of starting chrome browser with remote debugging enabled and using it with katana -
-
-**step 1) First Locate path of chrome executable**
+**步骤 1) 首先找到 Chrome 浏览器可执行文件的路径**
 
 | Operating System | Chromium Executable Location | Google Chrome Executable Location |
 |------------------|------------------------------|-----------------------------------|
@@ -386,7 +376,7 @@ Here is an example of starting chrome browser with remote debugging enabled and 
 | macOS | `/Applications/Chromium.app/Contents/MacOS/Chromium` | `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome` |
 | Linux | `/usr/bin/chromium` | `/usr/bin/google-chrome` |
 
-**step 2) Start chrome with remote debugging enabled and it will return websocker url. For example, on MacOS, you can start chrome with remote debugging enabled using following command** -
+**步骤 2) 启用远程调试启动 Chrome 浏览器,它将返回 websocket url。例如,在 MacOS 上,您可以使用以下命令启用远程调试启动 Chrome** -
 
 ```console
 $ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
@@ -394,30 +384,28 @@ $ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugg
 
 DevTools listening on ws://127.0.0.1:9222/devtools/browser/c5316c9c-19d6-42dc-847a-41d1aeebf7d6
 ```
+> 现在登录到您想要爬取的网站并保持浏览器打开状态。
 
-> Now login to the website you want to crawl and keep the browser open.
-
-**step 3) Now use the websocket url with katana to connect to the active browser session and crawl the website**
+**步骤 3) 现在使用 websocket url 与 katana 连接到活动的浏览器会话并爬取网站**
 
 ```console
 katana -headless -u https://tesla.com -cwu ws://127.0.0.1:9222/devtools/browser/c5316c9c-19d6-42dc-847a-41d1aeebf7d6 -no-incognito
 ```
 
-> **Note**: you can use `-cdd` option to specify custom chrome data directory to store browser data and cookies but that does not save session data if cookie is set to `Session` only or expires after certain time.
+> **注意**: 您可以使用 `-cdd` 选项指定自定义的 Chrome 数据目录来存储浏览器数据和 cookie,但如果 cookie 设置为仅 `Session` 或在一定时间后过期,则不会保存会话数据。
 
-
-## Filters
+## 过滤器
 
 ### *`-field`*
 ----
 
-Katana comes with built in fields that can be used to filter the output for the desired information, `-f` option can be used to specify any of the available fields.
+Katana 内置了一些字段,可用于过滤输出以获取所需信息,可以使用 `-f` 选项来指定任何可用的字段。
 
 ```
-   -f, -field string  field to display in output (url,path,fqdn,rdn,rurl,qurl,qpath,file,key,value,kv,dir,udir)
+   -f, -field string  在输出中显示的字段 (url,path,fqdn,rdn,rurl,qurl,qpath,file,key,value,kv,dir,udir)
 ```
 
-Here is a table with examples of each field and expected output when used - 
+以下是每个字段及其使用时的预期输出示例 - 
 
 
 | FIELD   | DESCRIPTION                 | EXAMPLE                                                      |
@@ -437,7 +425,7 @@ Here is a table with examples of each field and expected output when used -
 | `dir`   | URL Directory name          | `/admin/`                                                    |
 | `udir`  | URL with Directory          | `https://admin.projectdiscovery.io/admin/`                   |
 
-Here is an example of using field option to only display all the urls with query parameter in it -
+以下是使用字段选项仅显示所有包含查询参数的 URL 的示例 -
 
 ```
 katana -u https://tesla.com -f qurl -silent
@@ -451,11 +439,10 @@ https://www.tesla.com/about?redirect=no
 https://www.tesla.com/about/legal?redirect=no
 https://www.tesla.com/findus/list?redirect=no
 ```
+### 自定义字段
 
-### Custom Fields
-
-You can create custom fields to extract and store specific information from page responses using regex rules. These custom fields are defined using a YAML config file and are loaded from the default location at `$HOME/.config/katana/field-config.yaml`. Alternatively, you can use the `-flc` option to load a custom field config file from a different location.
-Here is example custom field.
+您可以使用正则表达式规则创建自定义字段来从页面响应中提取和存储特定信息。这些自定义字段使用 YAML 配置文件定义,默认从 `$HOME/.config/katana/field-config.yaml` 位置加载。或者,您可以使用 `-flc` 选项从其他位置加载自定义字段配置文件。
+以下是自定义字段的示例。
 
 ```yaml
 - name: email
@@ -469,26 +456,25 @@ Here is example custom field.
   regex:
   - '\d{3}-\d{8}|\d{4}-\d{7}'
 ```
+定义自定义字段时,支持以下属性:
 
-When defining custom fields, following attributes are supported:
+- **name** (必需)
 
-- **name** (required)
+> **name** 属性的值用作 `-field` 命令行选项的值。
 
-> The value of **name** attribute is used as the `-field` cli option value.
+- **type** (必需)
 
-- **type** (required)
+> 自定义属性的类型,目前支持的选项 - `regex`
 
-> The type of custom attribute, currenly supported option - `regex` 
+- **part** (可选)
 
-- **part** (optional)
+> 从响应中提取信息的部分。默认值是 `response`,包括响应头和响应体。其他可能的值是 `header` 和 `body`。
 
-> The part of the response to extract the information from. The default value is `response`, which includes both the header and body. Other possible values are `header` and `body`.
+- **group** (可选)
 
-- group (optional)
+> 可以使用此属性选择正则表达式中的特定匹配组,例如: `group: 1`
 
-> You can use this attribute to select a specific matched group in regex, for example: `group: 1`
-
-#### Running katana using custom field:
+#### 使用自定义字段运行 katana:
 
 ```console
 katana -u https://tesla.com -f email,phone
@@ -497,7 +483,7 @@ katana -u https://tesla.com -f email,phone
 *`-store-field`*
 ---
 
-To compliment `field` option which is useful to filter output at run time, there is `-sf, -store-fields` option which works exactly like field option except instead of filtering, it stores all the information on the disk under `katana_field` directory sorted by target url.
+为了补充在运行时过滤输出的 `field` 选项,还有一个 `-sf, -store-fields` 选项,它的工作方式与 field 选项完全相同,只是它不进行过滤,而是将所有信息按目标 URL 排序存储在 `katana_field` 目录下的磁盘上。
 
 ```
 katana -u https://tesla.com -sf key,fqdn,qurl -silent
@@ -510,20 +496,19 @@ https_www.tesla.com_fqdn.txt
 https_www.tesla.com_key.txt
 https_www.tesla.com_qurl.txt
 ```
+`-store-field` 选项可用于收集信息以构建针对性的词表，其用途包括但不限于：
 
-The `-store-field` option can be useful for collecting information to build a targeted wordlist for various purposes, including but not limited to:
+- 识别最常用的参数
+- 发现经常使用的路径
+- 查找常用文件
+- 识别相关或未知的子域名
 
-- Identifying the most commonly used parameters
-- Discovering frequently used paths
-- Finding commonly used files
-- Identifying related or unknown subdomains
-
-## Katana Filters
+## Katana 过滤器
 
 ### *`-extension-match`*
 ---
 
-Crawl output can be easily matched for specific extension using `-em` option to ensure to display only output containing given extension.
+可以使用 `-em` 选项轻松匹配特定扩展名,该选项可以确保只显示包含指定扩展名的输出。
 
 ```
 katana -u https://tesla.com -silent -em js,jsp,json
@@ -532,7 +517,7 @@ katana -u https://tesla.com -silent -em js,jsp,json
 ### *`-extension-filter`*
 ---
 
-Crawl output can be easily filtered for specific extension using `-ef` option which ensure to remove all the urls containing given extension.
+可以使用 `-ef` 选项轻松过滤特定扩展名,该选项可以确保移除所有包含指定扩展名的 URL。
 
 ```
 katana -u https://tesla.com -silent -ef css,txt,md
@@ -540,67 +525,66 @@ katana -u https://tesla.com -silent -ef css,txt,md
 
 ### *`-match-regex`*
 ---
-The `-match-regex` or `-mr` flag allows you to filter output URLs using regular expressions. When using this flag, only URLs that match the specified regular expression will be printed in the output.
+`-match-regex` 或 `-mr` 标志允许使用正则表达式过滤输出的 URL。使用此标志时，只有与指定正则表达式匹配的 URL 才会在输出中显示。
 
 ```
 katana -u https://tesla.com -mr 'https://shop\.tesla\.com/*' -silent
 ```
 *`-filter-regex`*
 ---
-The `-filter-regex` or `-fr` flag allows you to filter output URLs using regular expressions. When using this flag, it will skip the URLs that are match the specified regular expression.
+`-filter-regex` 或 `-fr` 标志允许使用正则表达式过滤输出的 URL。使用此标志时,将会跳过与指定正则表达式匹配的 URL。
 
 ```
 katana -u https://tesla.com -fr 'https://www\.tesla\.com/*' -silent
 ```
+### 高级过滤
 
-### Advance Filtering
+Katana 支持基于 DSL 表达式的高级匹配和过滤功能:
 
-Katana supports DSL-based expressions for advanced matching and filtering capabilities:
-
-- To match endpoints with a 200 status code:
+- 匹配状态码为 200 的端点:
 ```shell
 katana -u https://www.hackerone.com -mdc 'status_code == 200'
 ```
-- To match endpoints that contain "default" and have a status code other than 403:
+- 匹配包含 "default" 且状态码不是 403 的端点:
 ```shell
 katana -u https://www.hackerone.com -mdc 'contains(endpoint, "default") && status_code != 403'
 ```
-- To match endpoints with PHP technologies:
+- 匹配使用 PHP 技术的端点:
 ```shell
 katana -u https://www.hackerone.com -mdc 'contains(to_lower(technologies), "php")'
 ```
-- To filter out endpoints running on Cloudflare:
+- 过滤掉运行在 Cloudflare 上的端点:
 ```shell
 katana -u https://www.hackerone.com -fdc 'contains(to_lower(technologies), "cloudflare")'
 ```
-DSL functions can be applied to any keys in the jsonl output. For more information on available DSL functions, please visit the [dsl project](https://github.com/projectdiscovery/dsl).
+DSL 函数可以应用于 jsonl 输出中的任意字段。有关可用 DSL 函数的更多信息,请访问 [dsl 项目](https://github.com/projectdiscovery/dsl)。
 
-Here are additional filter options -
+以下是其他过滤选项 -
 
 ```console
 katana -h filter
 
 Flags:
 FILTER:
-   -mr, -match-regex string[]       regex or list of regex to match on output url (cli, file)
-   -fr, -filter-regex string[]      regex or list of regex to filter on output url (cli, file)
-   -f, -field string                field to display in output (url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
-   -sf, -store-field string         field to store in per-host output (url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
-   -em, -extension-match string[]   match output for given extension (eg, -em php,html,js)
-   -ef, -extension-filter string[]  filter output for given extension (eg, -ef png,css)
-   -mdc, -match-condition string    match response with dsl based condition
-   -fdc, -filter-condition string   filter response with dsl based condition
+   -mr, -match-regex string[]       使用正则表达式匹配输出URL(支持命令行和文件输入)
+   -fr, -filter-regex string[]      使用正则表达式过滤输出URL(支持命令行和文件输入)
+   -f, -field string                指定输出显示的字段(url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
+   -sf, -store-field string         指定每个主机输出存储的字段(url,path,fqdn,rdn,rurl,qurl,qpath,file,ufile,key,value,kv,dir,udir)
+   -em, -extension-match string[]   匹配指定扩展名的输出(例如: -em php,html,js)
+   -ef, -extension-filter string[]  过滤指定扩展名的输出(例如: -ef png,css)
+   -mdc, -match-condition string    使用DSL条件表达式匹配响应
+   -fdc, -filter-condition string   使用DSL条件表达式过滤响应
 ```
 
 
-## Rate Limit
+## 速率限制
 
-It's easy to get blocked / banned while crawling if not following target websites limits, katana comes with multiple option to tune the crawl to go as fast / slow we want.
+如果不遵守目标网站的限制进行爬取,很容易被封禁/拉黑。Katana 提供了多个选项来调整爬取速度的快慢。
 
 ### *`-delay`*
 -----
 
-option to introduce a delay in seconds between each new request katana makes while crawling, disabled as default.
+用于在每个新请求之间引入延迟时间(以秒为单位)的选项,默认情况下禁用。
 
 ```
 katana -u https://tesla.com -delay 20
@@ -608,7 +592,7 @@ katana -u https://tesla.com -delay 20
 
 ### *`-concurrency`*
 -----
-option to control the number of urls per target to fetch at the same time.
+用于控制同时抓取每个目标的URL数量的选项。
 
 ```
 katana -u https://tesla.com -c 20
@@ -617,7 +601,7 @@ katana -u https://tesla.com -c 20
 
 ### *`-parallelism`*
 -----
-option to define number of target to process at same time from list input.
+用于定义从输入列表中同时处理目标的数量的选项。
 
 ```
 katana -u https://tesla.com -p 20
@@ -625,7 +609,7 @@ katana -u https://tesla.com -p 20
 
 ### *`-rate-limit`*
 -----
-option to use to define max number of request can go out per second.
+用于定义每秒最大请求数的选项。
 
 ```
 katana -u https://tesla.com -rl 100
@@ -633,33 +617,33 @@ katana -u https://tesla.com -rl 100
 
 ### *`-rate-limit-minute`*
 -----
-option to use to define max number of request can go out per minute.
+用于定义每分钟最大请求数的选项。
 
 ```
 katana -u https://tesla.com -rlm 500
 ```
 
-Here is all long / short CLI options for rate limit control -
+以下是所有用于速率限制控制的长/短 CLI 选项 -
 
 ```console
 katana -h rate-limit
 
 Flags:
 RATE-LIMIT:
-   -c, -concurrency int          number of concurrent fetchers to use (default 10)
-   -p, -parallelism int          number of concurrent inputs to process (default 10)
-   -rd, -delay int               request delay between each request in seconds
-   -rl, -rate-limit int          maximum requests to send per second (default 150)
-   -rlm, -rate-limit-minute int  maximum number of requests to send per minute
+   -c, -concurrency int          并发抓取器数量 (默认值 10)
+   -p, -parallelism int          并发处理输入的数量 (默认值 10)
+   -rd, -delay int               每个请求之间的延迟时间(秒)
+   -rl, -rate-limit int          每秒最大请求数 (默认值 150)
+   -rlm, -rate-limit-minute int  每分钟最大请求数
 ```
 
-## Output
+## 输出
 
-Katana support both file output in plain text format as well as JSON which includes additional information like, `source`, `tag`, and `attribute` name to co-related the discovered endpoint.
+Katana 支持纯文本格式和 JSON 格式的文件输出。JSON 格式包含了额外的信息,如 `source`、`tag` 和 `attribute` 名称,以关联发现的端点。
 
 ### *`-output`*
 
-By default, katana outputs the crawled endpoints in plain text format. The results can be written to a file by using the -output option.
+默认情况下,katana 以纯文本格式输出爬取的端点。可以使用 -output 选项将结果写入文件。
 
 
 ```console
@@ -712,7 +696,7 @@ katana -u https://example.com -jsonl | jq .
 ### *`-store-response`*
 ----
 
-The `-store-response` option allows for writing all crawled endpoint requests and responses to a text file. When this option is used, text files including the request and response will be written to the **katana_response** directory. If you would like to specify a custom directory, you can use the `-store-response-dir` option.
+`-store-response` 选项允许将所有爬取的端点请求和响应写入文本文件。使用此选项时，包含请求和响应的文本文件将被写入 **katana_response** 目录。如果您想指定自定义目录，可以使用 `-store-response-dir` 选项。
 
 ```console
 katana -u https://example.com -no-scope -store-response
